@@ -1,0 +1,203 @@
+{
+  "_meta": {
+    "language": "ko",
+    "version": "1.0.0",
+    "note": "영문(en.json)을 기준으로 번역된 파일입니다. 키 구조는 en.json과 동일해야 합니다. 번역이 누락된 항목은 영문 값을 사용합니다."
+  },
+
+  "common": {
+    "action": {
+      "save": "저장",
+      "saveChanges": "변경사항 저장",
+      "done": "완료",
+      "apply": "적용",
+      "cancel": "취소",
+      "delete": "삭제",
+      "remove": "제거",
+      "add": "추가",
+      "edit": "편집",
+      "next": "다음",
+      "back": "뒤로",
+      "tryAgain": "다시 시도",
+      "goHome": "홈으로",
+      "signIn": "로그인",
+      "signOut": "로그아웃",
+      "createAccount": "계정 만들기",
+      "viewAll": "전체 보기",
+      "clearFilters": "필터 초기화",
+      "close": "닫기",
+      "confirm": "확인",
+      "skip": "건너뛰기"
+    },
+    "status": {
+      "loading": "로딩 중\u2026",
+      "saving": "저장 중\u2026",
+      "uploading": "업로드 중\u2026",
+      "processing": "처리 중\u2026",
+      "updating": "업데이트 중\u2026",
+      "almostDone": "거의 완료됐어요\u2026",
+      "saved": "저장됨",
+      "done": "완료"
+    }
+  },
+
+  "error": {
+    "network": {
+      "headline": "인터넷에 연결되지 않았어요",
+      "body": "연결 상태를 확인하고 다시 시도해 주세요."
+    },
+    "server": {
+      "headline": "문제가 발생했어요",
+      "body": "잠시 후 다시 시도해 주세요."
+    },
+    "notFound": {
+      "headline": "페이지를 찾을 수 없어요",
+      "body": "페이지가 삭제되었거나 주소가 변경되었을 수 있어요."
+    },
+    "permission": {
+      "headline": "접근이 제한됐어요",
+      "body": "이 콘텐츠를 볼 권한이 없어요."
+    },
+    "sessionExpired": {
+      "headline": "로그아웃됐어요",
+      "body": "계속하려면 다시 로그인해 주세요."
+    },
+    "generic": {
+      "headline": "문제가 발생했어요",
+      "body": "예상치 못한 오류가 발생했어요."
+    }
+  },
+
+  "empty": {
+    "inbox": {
+      "headline": "메시지가 없어요",
+      "body": "메시지를 받으면 여기에 표시돼요."
+    },
+    "searchNoResults": {
+      "headline": "\u201c{query}\u201d 검색 결과가 없어요",
+      "body": "다른 검색어를 입력해 보세요."
+    },
+    "savedItems": {
+      "headline": "저장된 항목이 없어요",
+      "body": "항목의 북마크 아이콘을 탭해서 저장해 보세요."
+    },
+    "notifications": {
+      "headline": "새 알림이 없어요"
+    },
+    "devices": {
+      "headline": "연결된 기기가 없어요",
+      "body": "첫 번째 기기를 추가해 시작해 보세요.",
+      "action": "기기 추가"
+    },
+    "filterNoResults": {
+      "headline": "결과가 없어요",
+      "body": "필터를 일부 제거해 보세요.",
+      "action": "필터 초기화"
+    }
+  },
+
+  "auth": {
+    "signIn": {
+      "title": "로그인",
+      "emailLabel": "이메일 주소",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "비밀번호",
+      "passwordPlaceholder": "비밀번호를 입력해 주세요",
+      "forgotPassword": "비밀번호를 잊으셨나요?",
+      "submitButton": "로그인",
+      "noAccount": "계정이 없으신가요?",
+      "createAccount": "계정 만들기"
+    },
+    "signOut": {
+      "confirmTitle": "로그아웃할까요?",
+      "confirmBody": "앱을 사용하려면 다시 로그인해야 해요.",
+      "confirm": "로그아웃",
+      "cancel": "취소"
+    },
+    "createAccount": {
+      "title": "계정 만들기",
+      "nameLabel": "이름",
+      "namePlaceholder": "예: 신민재",
+      "emailLabel": "이메일 주소",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "비밀번호",
+      "passwordHint": "8자 이상이어야 해요",
+      "submitButton": "계정 만들기",
+      "alreadyHaveAccount": "이미 계정이 있으신가요?",
+      "signIn": "로그인"
+    }
+  },
+
+  "settings": {
+    "title": "설정",
+    "sections": {
+      "account": "계정",
+      "devices": "기기",
+      "notifications": "알림",
+      "appearance": "화면",
+      "about": "앱 정보"
+    },
+    "appearance": {
+      "theme": "테마",
+      "themeLight": "라이트",
+      "themeDark": "다크",
+      "themeSystem": "시스템 기본값"
+    },
+    "account": {
+      "profile": "프로필",
+      "changePassword": "비밀번호 변경",
+      "deleteAccount": "계정 삭제",
+      "deleteAccountConfirmTitle": "계정을 삭제할까요?",
+      "deleteAccountConfirmBody": "모든 데이터가 영구적으로 삭제돼요. 되돌릴 수 없어요.",
+      "deleteAccountConfirm": "삭제",
+      "deleteAccountCancel": "취소"
+    }
+  },
+
+  "device": {
+    "status": {
+      "online": "연결됨",
+      "offline": "오프라인",
+      "connecting": "연결 중\u2026"
+    },
+    "action": {
+      "add": "기기 추가",
+      "remove": "기기 제거",
+      "removeConfirmTitle": "기기를 제거할까요?",
+      "removeConfirmBody": "기기가 계정에서 연결 해제돼요.",
+      "removeConfirm": "제거",
+      "removeCancel": "취소"
+    }
+  },
+
+  "notification": {
+    "device": {
+      "offline": {
+        "title": "기기 오프라인",
+        "body": "{deviceName}의 연결이 끊겼어요."
+      },
+      "online": {
+        "title": "기기 온라인",
+        "body": "{deviceName}이(가) 다시 연결됐어요."
+      }
+    },
+    "update": {
+      "available": {
+        "title": "업데이트 가능",
+        "body": "탭하여 펌웨어 {version}을 설치하세요."
+      }
+    }
+  },
+
+  "accessibility": {
+    "closeButton": "닫기",
+    "backButton": "뒤로",
+    "menuButton": "메뉴 열기",
+    "themeToggle": "테마 전환",
+    "loadingIndicator": "로딩 중",
+    "errorIcon": "오류",
+    "successIcon": "성공",
+    "warningIcon": "경고",
+    "infoIcon": "정보"
+  }
+}

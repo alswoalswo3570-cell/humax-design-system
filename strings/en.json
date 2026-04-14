@@ -1,0 +1,203 @@
+{
+  "_meta": {
+    "language": "en",
+    "version": "1.0.0",
+    "note": "English is the Single Source of Truth. All other locale files are translations of this file. Keys must not be removed without updating all locale files."
+  },
+
+  "common": {
+    "action": {
+      "save": "Save",
+      "saveChanges": "Save changes",
+      "done": "Done",
+      "apply": "Apply",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "remove": "Remove",
+      "add": "Add",
+      "edit": "Edit",
+      "next": "Next",
+      "back": "Back",
+      "tryAgain": "Try again",
+      "goHome": "Go home",
+      "signIn": "Sign in",
+      "signOut": "Sign out",
+      "createAccount": "Create account",
+      "viewAll": "View all",
+      "clearFilters": "Clear filters",
+      "close": "Close",
+      "confirm": "Confirm",
+      "skip": "Skip"
+    },
+    "status": {
+      "loading": "Loading\u2026",
+      "saving": "Saving\u2026",
+      "uploading": "Uploading\u2026",
+      "processing": "Processing\u2026",
+      "updating": "Updating\u2026",
+      "almostDone": "Almost done\u2026",
+      "saved": "Saved",
+      "done": "Done"
+    }
+  },
+
+  "error": {
+    "network": {
+      "headline": "No internet connection",
+      "body": "Check your connection and try again."
+    },
+    "server": {
+      "headline": "Something went wrong",
+      "body": "We\u2019re having trouble on our end. Try again in a moment."
+    },
+    "notFound": {
+      "headline": "Page not found",
+      "body": "This page doesn\u2019t exist or has been moved."
+    },
+    "permission": {
+      "headline": "Access restricted",
+      "body": "You don\u2019t have permission to view this."
+    },
+    "sessionExpired": {
+      "headline": "You\u2019ve been signed out",
+      "body": "Sign in again to continue."
+    },
+    "generic": {
+      "headline": "Something went wrong",
+      "body": "An unexpected error occurred."
+    }
+  },
+
+  "empty": {
+    "inbox": {
+      "headline": "No messages yet",
+      "body": "When you receive messages, they\u2019ll appear here."
+    },
+    "searchNoResults": {
+      "headline": "No results for \u201c{query}\u201d",
+      "body": "Try a different search term."
+    },
+    "savedItems": {
+      "headline": "Nothing saved yet",
+      "body": "Tap the bookmark icon on any item to save it here."
+    },
+    "notifications": {
+      "headline": "You\u2019re all caught up"
+    },
+    "devices": {
+      "headline": "No devices connected",
+      "body": "Add your first device to get started.",
+      "action": "Add device"
+    },
+    "filterNoResults": {
+      "headline": "No matches",
+      "body": "Try removing some filters.",
+      "action": "Clear filters"
+    }
+  },
+
+  "auth": {
+    "signIn": {
+      "title": "Sign in",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "forgotPassword": "Forgot password?",
+      "submitButton": "Sign in",
+      "noAccount": "Don\u2019t have an account?",
+      "createAccount": "Create account"
+    },
+    "signOut": {
+      "confirmTitle": "Sign out?",
+      "confirmBody": "You\u2019ll need to sign in again to use the app.",
+      "confirm": "Sign out",
+      "cancel": "Stay signed in"
+    },
+    "createAccount": {
+      "title": "Create account",
+      "nameLabel": "Full name",
+      "namePlaceholder": "e.g., Minjae Shin",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordHint": "Must be at least 8 characters",
+      "submitButton": "Create account",
+      "alreadyHaveAccount": "Already have an account?",
+      "signIn": "Sign in"
+    }
+  },
+
+  "settings": {
+    "title": "Settings",
+    "sections": {
+      "account": "Account",
+      "devices": "Devices",
+      "notifications": "Notifications",
+      "appearance": "Appearance",
+      "about": "About"
+    },
+    "appearance": {
+      "theme": "Theme",
+      "themeLight": "Light",
+      "themeDark": "Dark",
+      "themeSystem": "System default"
+    },
+    "account": {
+      "profile": "Profile",
+      "changePassword": "Change password",
+      "deleteAccount": "Delete account",
+      "deleteAccountConfirmTitle": "Delete account?",
+      "deleteAccountConfirmBody": "All your data will be permanently deleted. This can\u2019t be undone.",
+      "deleteAccountConfirm": "Delete account",
+      "deleteAccountCancel": "Keep account"
+    }
+  },
+
+  "device": {
+    "status": {
+      "online": "Online",
+      "offline": "Offline",
+      "connecting": "Connecting\u2026"
+    },
+    "action": {
+      "add": "Add device",
+      "remove": "Remove device",
+      "removeConfirmTitle": "Remove device?",
+      "removeConfirmBody": "The device will be disconnected from your account.",
+      "removeConfirm": "Remove",
+      "removeCancel": "Keep"
+    }
+  },
+
+  "notification": {
+    "device": {
+      "offline": {
+        "title": "Device offline",
+        "body": "{deviceName} lost connection."
+      },
+      "online": {
+        "title": "Device online",
+        "body": "{deviceName} is back online."
+      }
+    },
+    "update": {
+      "available": {
+        "title": "Update available",
+        "body": "Tap to install firmware {version}."
+      }
+    }
+  },
+
+  "accessibility": {
+    "closeButton": "Close",
+    "backButton": "Back",
+    "menuButton": "Open menu",
+    "themeToggle": "Toggle theme",
+    "loadingIndicator": "Loading",
+    "errorIcon": "Error",
+    "successIcon": "Success",
+    "warningIcon": "Warning",
+    "infoIcon": "Information"
+  }
+}
