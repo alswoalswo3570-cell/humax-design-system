@@ -20,10 +20,10 @@ build/
 **/.idea/
 *.iml
 
-# Generated outputs (kept ignored so humans don't hand-edit)
-# Uncomment once Phase 1 pipeline emits these:
-# packages/humax_design_tokens/lib/tokens.g.dart
-# src/styles/tokens.css
+# Generated outputs — committed intentionally (deterministic build, CI verifies)
+# Hand-editing these files will be overwritten by `npm run build:tokens`
+# packages/humax_design_tokens/lib/src/tokens.dart  ← tracked
+# src/styles/tokens.css                              ← tracked
 
 # Editor
 .vscode/

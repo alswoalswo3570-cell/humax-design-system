@@ -1,0 +1,9 @@
+{
+  "name": "humax-build-tokens",
+  "version": "1.0.0",
+  "description": "Compile tokens/*.json into Dart constants and CSS variables",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs"
+  }
+}

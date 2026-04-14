@@ -1,0 +1,15 @@
+name: humax_design_tokens
+description: >
+  Auto-generated Dart constants compiled from the Humax Design System token JSON.
+  Do not hand-edit lib/src/tokens.dart — run `npm run build:tokens` from the repo root.
+version: 0.1.0
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
