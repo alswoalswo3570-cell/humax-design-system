@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { BookOpen, Palette, Component, Smartphone, Menu, Moon, Sun, LayoutTemplate, Layers, PanelLeft, Accessibility } from "lucide-react";
+import { BookOpen, Palette, Component, Smartphone, Menu, Moon, Sun, LayoutTemplate, Layers, PanelLeft, Accessibility, Rocket } from "lucide-react";
 import { useState, useEffect } from "react";
 import { cn } from "../lib/utils";
 import lightTokens from "../../tokens/light.json";
@@ -8,13 +8,14 @@ import baseTokens from "../../tokens/base.json";
 
 const navigation = [
   { name: "Overview", href: "/", icon: BookOpen },
+  { name: "Getting Started", href: "/getting-started", icon: Rocket },
   { name: "Design Tokens", href: "/tokens", icon: Palette },
   { name: "Layout & Grid", href: "/layout", icon: LayoutTemplate },
   { name: "Adaptive Navigation", href: "/adaptive-navigation", icon: PanelLeft },
   { name: "Input & Accessibility", href: "/input-accessibility", icon: Accessibility },
   { name: "Components", href: "/components", icon: Component },
   { name: "Patterns", href: "/patterns", icon: Layers },
-  { name: "Flutter Reference", href: "/flutter", icon: Smartphone },
+  { name: "Flutter Contracts", href: "/flutter", icon: Smartphone },
 ];
 
 function flattenTokens(obj: any, prefix = ''): Record<string, string> {

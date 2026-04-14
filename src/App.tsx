@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import Overview from './pages/Overview';
+import GettingStarted from './pages/GettingStarted';
 import Tokens from './pages/Tokens';
 import Components from './pages/Components';
 import FlutterReference from './pages/FlutterReference';
@@ -16,6 +17,7 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Overview />} />
+          <Route path="/getting-started" element={<GettingStarted />} />
           <Route path="/tokens" element={<Tokens />} />
           <Route path="/layout" element={<LayoutGrid />} />
           <Route path="/adaptive-navigation" element={<AdaptiveNavigation />} />
