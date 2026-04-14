@@ -1,0 +1,119 @@
+{
+  "component": "ErrorState",
+  "platform": "flutter",
+  "version": "1.0.0",
+  "purpose": "Communicate clearly that something went wrong, explain the situation in plain language without blame, and provide the user a concrete path to recover.",
+  "whenToUse": [
+    "A network request fails (no connectivity, timeout, 5xx server error).",
+    "The user does not have permission to view the requested content (403/404).",
+    "An unexpected application error occurs and the page cannot render.",
+    "A background sync or data refresh fails."
+  ],
+  "whenNotToUse": [
+    "For inline field validation errors — use the TextField error state instead.",
+    "For empty but successfully-loaded data — use EmptyState instead.",
+    "For non-critical warnings that do not block the user — use a SnackBar or inline notice."
+  ],
+  "errorTypes": [
+    {
+      "type": "network",
+      "headline": "No internet connection",
+      "body": "Check your connection and try again.",
+      "icon": "wifi_off",
+      "primaryAction": "Try again",
+      "showSecondaryAction": false
+    },
+    {
+      "type": "server",
+      "headline": "Something went wrong",
+      "body": "We're having trouble loading this. Please try again in a moment.",
+      "icon": "error_outline",
+      "primaryAction": "Try again",
+      "showSecondaryAction": false
+    },
+    {
+      "type": "notFound",
+      "headline": "Page not found",
+      "body": "The page you're looking for doesn't exist or has been moved.",
+      "icon": "search_off",
+      "primaryAction": "Go home",
+      "showSecondaryAction": false
+    },
+    {
+      "type": "permission",
+      "headline": "Access restricted",
+      "body": "You don't have permission to view this content.",
+      "icon": "lock_outline",
+      "primaryAction": "Go back",
+      "showSecondaryAction": false
+    },
+    {
+      "type": "generic",
+      "headline": "Something went wrong",
+      "body": "An unexpected error occurred.",
+      "icon": "error_outline",
+      "primaryAction": "Try again",
+      "showSecondaryAction": false
+    }
+  ],
+  "variants": [
+    {
+      "name": "pageLevelFull",
+      "description": "Full-page error — replaces entire page body. Used when the primary content cannot load at all. Centered layout with illustration/icon, headline, body, and retry CTA."
+    },
+    {
+      "name": "sectionLevel",
+      "description": "Replaces a section within a page (e.g., a list or card area). Compact layout with icon, headline, and optional retry."
+    },
+    {
+      "name": "inlineRetry",
+      "description": "Minimal — a single line of text + retry link/button. For small inline areas where layout space is tight."
+    }
+  ],
+  "states": [
+    { "name": "idle", "description": "Error is displayed, user has not interacted." },
+    { "name": "retrying", "description": "User tapped retry; show spinner inside the retry button (HumaxButton loading state)." },
+    { "name": "retrySuccess", "description": "Navigate away or replace ErrorState with real content via AnimatedSwitcher." },
+    { "name": "retryFailed", "description": "Return to idle state; the error message may optionally update to indicate repeated failure." }
+  ],
+  "writingGuidance": {
+    "headline": "State the situation, not the cause. Do NOT say 'Error 500' or 'Failed to fetch'. Max 5 words.",
+    "body": "Explain what the user can do, not what the system did. Avoid technical language.",
+    "action": "Use verbs that describe the action: 'Try again', 'Go back', 'Go home'. Not 'OK' or 'Cancel'.",
+    "tone": "Calm and helpful. Never use blame ('you did X wrong') or panic ('CRITICAL FAILURE')."
+  },
+  "accessibility": {
+    "liveRegion": "Wrap the error container with Semantics(liveRegion: true) so screen readers announce it when it appears.",
+    "focus": "When the error state replaces content, move focus to the error headline or the retry button.",
+    "iconDecoration": "Error icon should be accompanies by text (headline). If icon-only, add Semantics(label: errorType).",
+    "retryButton": "Must be ≥ 48 × 48 dp touch target."
+  },
+  "tokenBindings": {
+    "iconColor": "color.feedback.error.text",
+    "headlineColor": "color.text.primary",
+    "bodyColor": "color.text.secondary",
+    "backgroundColor": "transparent",
+    "headlineStyle": "typography.textStyle.headingMd",
+    "bodyStyle": "typography.textStyle.bodyMd",
+    "iconSize": "48dp (page-level) / 24dp (section-level)",
+    "gapBetweenElements": "space.lg",
+    "actionTopGap": "space.xl"
+  },
+  "flutterMappingNotes": {
+    "widget": "HumaxErrorState extends StatelessWidget",
+    "errorTypeEnum": "enum ErrorStateType { network, server, notFound, permission, generic }",
+    "retryButton": "HumaxButton(variant: ButtonVariant.primary, label: 'Try again', isLoading: isRetrying, onPressed: onRetry)",
+    "layout": "Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center)",
+    "transition": "AnimatedSwitcher to replace with real content on success",
+    "note": "Provide an onRetry callback; the parent widget owns the retry logic and loading state."
+  },
+  "exampleUsage": {
+    "widgetName": "HumaxErrorState",
+    "props": {
+      "type": "network",
+      "variant": "pageLevelFull",
+      "onRetry": "() => context.read<MyBloc>().add(RetryEvent())",
+      "isRetrying": "state.isRetrying"
+    }
+  }
+}

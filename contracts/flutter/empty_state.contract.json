@@ -1,0 +1,93 @@
+{
+  "component": "EmptyState",
+  "platform": "flutter",
+  "version": "1.0.0",
+  "purpose": "Communicate to the user that a list, page, or section has no content yet, and optionally guide them toward a next action.",
+  "whenToUse": [
+    "A list or feed has no items (first-time use, cleared inbox, no search results).",
+    "A section has no data yet because the user has not set it up.",
+    "Content was deleted and nothing remains."
+  ],
+  "whenNotToUse": [
+    "As a loading state — use LoadingState / Skeleton instead.",
+    "As an error state — use ErrorState with retry CTA instead.",
+    "When the list is partially populated; show real content and suppress the empty state."
+  ],
+  "anatomy": {
+    "illustration": "Optional. SVG or Lottie asset that visually reinforces the context. Should not be decorative-only — must relate to the empty situation.",
+    "icon": "Optional alternative to illustration when a lightweight indicator is sufficient.",
+    "headline": "Required. Short (≤ 5 words), plain-language statement of the empty situation.",
+    "bodyText": "Optional. 1–2 sentences explaining why it is empty or what the user can do.",
+    "primaryAction": "Optional. Primary CTA button — most common next action (e.g., 'Add your first item').",
+    "secondaryAction": "Optional. Secondary / ghost button for an alternative path (e.g., 'Learn more')."
+  },
+  "variants": [
+    {
+      "name": "iconOnly",
+      "description": "Icon + headline + optional body. No illustration. Lightweight, suitable for dense UIs or small containers."
+    },
+    {
+      "name": "illustrated",
+      "description": "Illustration (SVG/Lottie) + headline + optional body + optional actions. Full-page empty states."
+    },
+    {
+      "name": "actionable",
+      "description": "Either variant above plus at least one CTA. Used when the user can immediately fix the empty situation."
+    },
+    {
+      "name": "readOnly",
+      "description": "Headline + optional body only, no actions. Used when the empty state is informational and the user cannot fix it."
+    }
+  ],
+  "sizes": [
+    {
+      "name": "compact",
+      "description": "For small containers (list section, card body). Icon 24 dp, headline labelMd, no illustration."
+    },
+    {
+      "name": "standard",
+      "description": "Default. For page-level empty states. Icon 48 dp or illustration up to 200 dp."
+    }
+  ],
+  "states": [
+    { "name": "default", "description": "Static empty state." },
+    { "name": "animating", "description": "Lottie animation playing (illustrated variant only)." }
+  ],
+  "accessibility": {
+    "semanticLabel": "The headline and body text must be readable by screen readers. Illustration/icon should have a Semantics label describing the visual context or be marked excludeSemantics: true if purely decorative.",
+    "focusOrder": "If actions are present, the primary action should receive focus first.",
+    "minTouchTarget": "Action buttons must be at least 48 × 48 dp."
+  },
+  "tokenBindings": {
+    "iconColor": "color.text.tertiary",
+    "headlineColor": "color.text.primary",
+    "bodyColor": "color.text.secondary",
+    "backgroundColor": "transparent",
+    "illustrationMaxWidth": "200px",
+    "headlineStyle": "typography.textStyle.headingMd",
+    "bodyStyle": "typography.textStyle.bodyMd",
+    "gapBetweenElements": "space.lg",
+    "actionTopGap": "space.xl"
+  },
+  "flutterMappingNotes": {
+    "widget": "HumaxEmptyState extends StatelessWidget",
+    "illustration": "Use SvgPicture.asset or Lottie.asset. Wrap in SizedBox(width: 200) for standard size.",
+    "layout": "Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center)",
+    "primaryAction": "HumaxButton(variant: ButtonVariant.primary, ...)",
+    "secondaryAction": "HumaxButton(variant: ButtonVariant.ghost, ...)"
+  },
+  "exampleUsage": {
+    "widgetName": "HumaxEmptyState",
+    "props": {
+      "variant": "illustrated",
+      "size": "standard",
+      "illustrationAsset": "assets/illustrations/empty_inbox.svg",
+      "headline": "No messages yet",
+      "body": "When you receive messages, they'll appear here.",
+      "primaryAction": {
+        "label": "Compose message",
+        "onPressed": "() => navigateToCompose()"
+      }
+    }
+  }
+}

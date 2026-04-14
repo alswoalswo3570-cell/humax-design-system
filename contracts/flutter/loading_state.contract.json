@@ -1,0 +1,102 @@
+{
+  "component": "LoadingState",
+  "platform": "flutter",
+  "version": "1.0.0",
+  "purpose": "Communicate to the user that content is being fetched or processed, and provide a visual placeholder that matches the expected layout to reduce perceived wait time.",
+  "whenToUse": [
+    "Initial page or section load where content is fetched asynchronously.",
+    "Lazy-loaded list items while additional data pages are fetched.",
+    "Any async operation where the result will replace the placeholder in-place.",
+    "Refreshing content via pull-to-refresh."
+  ],
+  "whenNotToUse": [
+    "For actions that complete in under 300 ms — omit the skeleton to avoid flicker.",
+    "As an error state — use ErrorState if the fetch fails.",
+    "As an empty state — use EmptyState when the data loaded successfully but has no items.",
+    "Inside buttons or small interactive controls — use a spinner inside the control instead (see HumaxButton loading prop)."
+  ],
+  "variants": [
+    {
+      "name": "skeleton",
+      "description": "Placeholder shapes that mimic the real content layout. Preferred for list items, cards, and profile headers. Animated with a shimmer effect (left-to-right gradient sweep)."
+    },
+    {
+      "name": "spinner",
+      "description": "Circular indeterminate progress indicator. Use when layout cannot be predicted (e.g., dialog loading, inline fetch result). Maps to Flutter CircularProgressIndicator."
+    },
+    {
+      "name": "progressBar",
+      "description": "Linear indeterminate or determinate progress. Use for file uploads, multi-step processes where a percentage is known."
+    }
+  ],
+  "skeletonElements": [
+    {
+      "name": "SkeletonBox",
+      "description": "Rectangular placeholder. Use for image thumbnails, hero images, card backgrounds.",
+      "props": ["width", "height", "borderRadius"]
+    },
+    {
+      "name": "SkeletonLine",
+      "description": "Single-line text placeholder. Width should reflect expected text length (e.g., 80% for body, 50% for label).",
+      "props": ["width (fraction or dp)", "height (defaults to current body line height)"]
+    },
+    {
+      "name": "SkeletonAvatar",
+      "description": "Circular placeholder for user avatars.",
+      "props": ["size (dp)"]
+    },
+    {
+      "name": "SkeletonListItem",
+      "description": "Composite — SkeletonAvatar + 2 SkeletonLines. Mirrors a standard list tile.",
+      "props": ["showAvatar (bool, default true)"]
+    },
+    {
+      "name": "SkeletonCard",
+      "description": "Composite — SkeletonBox (image area) + 2–3 SkeletonLines. Mirrors a content card.",
+      "props": ["showImage (bool, default true)", "lineCount (default 3)"]
+    }
+  ],
+  "progressiveLoadingGuidance": {
+    "above_the_fold": "Render above-the-fold skeleton immediately. Load real content into the skeleton frames.",
+    "list_pagination": "Show SkeletonListItem for the next page while fetching. Replace when data arrives.",
+    "minimum_display_time": "200 ms — avoid skeleton flash if data arrives very quickly. Use a minimum display timer.",
+    "transition": "Fade out skeleton and fade in content over 150 ms (HumaxDuration.fast) using AnimatedSwitcher."
+  },
+  "accessibility": {
+    "semanticLabel": "Wrap skeleton container with Semantics(label: 'Loading…', liveRegion: true) so screen readers announce the loading state.",
+    "removeWhenDone": "When content loads, ensure the Semantics live region announces the new content naturally (no manual announcement needed if the widget tree replaces the skeleton).",
+    "spinner": "CircularProgressIndicator should have semanticsLabel: 'Loading' set."
+  },
+  "tokenBindings": {
+    "skeletonBaseColor": "color.background.surfaceHover",
+    "skeletonHighlightColor": "color.background.surface",
+    "shimmerDuration": "motion.duration.slow",
+    "shimmerCurve": "motion.easing.ease-in-out",
+    "borderRadius": "radius.md",
+    "spinnerColor": "color.action.primary.default",
+    "progressBarColor": "color.action.primary.default",
+    "progressBarTrackColor": "color.border.default"
+  },
+  "flutterMappingNotes": {
+    "shimmer": "Use the `shimmer` pub.dev package or a custom ShaderMask animation. The gradient direction is left-to-right.",
+    "spinner": "CircularProgressIndicator(color: HumaxColors.actionPrimaryDefault)",
+    "progressBar": "LinearProgressIndicator(color: HumaxColors.actionPrimaryDefault, backgroundColor: HumaxColors.borderDefault)",
+    "transition": "AnimatedSwitcher(duration: HumaxDuration.fast, child: isLoading ? SkeletonWidget() : RealWidget())"
+  },
+  "exampleUsage": {
+    "skeleton_list": {
+      "widgetName": "HumaxSkeletonList",
+      "props": {
+        "itemCount": 5,
+        "showAvatar": true
+      }
+    },
+    "spinner_inline": {
+      "widgetName": "HumaxSpinner",
+      "props": {
+        "size": "standard",
+        "semanticsLabel": "Loading results"
+      }
+    }
+  }
+}
