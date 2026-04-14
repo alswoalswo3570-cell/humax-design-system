@@ -1,0 +1,22 @@
+name: example_app
+description: >
+  Humax Design System example gallery.
+  Every widget and pattern is sourced exclusively from
+  humax_design_tokens + humax_design_system — no hand-rolled styles.
+  Gaps found here are filed as contract/token issues, not worked around in-app.
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  humax_design_tokens:
+    path: ../../packages/humax_design_tokens
+  humax_design_system:
+    path: ../../packages/humax_design_system
+
+flutter:
+  uses-material-design: true
