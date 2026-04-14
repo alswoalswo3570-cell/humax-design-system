@@ -1,0 +1,30 @@
+# Node / Vite
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+pubspec.lock
+build/
+**/.idea/
+*.iml
+
+# Generated outputs (kept ignored so humans don't hand-edit)
+# Uncomment once Phase 1 pipeline emits these:
+# packages/humax_design_tokens/lib/tokens.g.dart
+# src/styles/tokens.css
+
+# Editor
+.vscode/
+.idea/

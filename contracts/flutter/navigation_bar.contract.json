@@ -1,0 +1,108 @@
+{
+  "name": "NavigationBar",
+  "platform": "Flutter",
+  "purpose": "Provides primary navigation between top-level destinations in an app, typically placed at the bottom of the screen.",
+  "whenToUse": [
+    "Switching between 2 to 5 top-level destinations",
+    "Mobile primary navigation"
+  ],
+  "whenNotToUse": [
+    "More than 5 destinations (use NavigationDrawer)",
+    "Desktop/Web primary navigation (use NavigationRail or Drawer)",
+    "Secondary navigation within a screen (use TabBar)"
+  ],
+  "anatomy": [
+    "Container",
+    "Destination Item",
+    "Icon",
+    "Active Indicator",
+    "Label"
+  ],
+  "variants": [
+    "default"
+  ],
+  "states": [
+    "default",
+    "selected",
+    "disabled"
+  ],
+  "accessibility": {
+    "semantics": "Ensure each destination has a clear, descriptive label for screen readers.",
+    "contrast": "Ensure sufficient contrast between the active indicator, icon, and background.",
+    "touchTarget": "Ensure each destination has a minimum touch target of 48x48 logical pixels."
+  },
+  "tokenBindings": {
+    "container": {
+      "backgroundColor": "color.background.surface",
+      "surfaceTintColor": "color.background.surfaceHover",
+      "elevation": 3.0
+    },
+    "itemStates": {
+      "default": {
+        "iconColor": "color.text.secondary",
+        "textColor": "color.text.secondary"
+      },
+      "selected": {
+        "indicatorColor": "color.action.primary.default",
+        "iconColor": "color.action.primary.text",
+        "textColor": "color.text.primary"
+      },
+      "disabled": {
+        "iconColor": "color.text.disabled",
+        "textColor": "color.text.disabled"
+      }
+    },
+    "typography": {
+      "labelTextStyle": "typography.textStyle.labelSm"
+    }
+  },
+  "flutterMappingNotes": [
+    "Map container backgroundColor to NavigationBar.backgroundColor.",
+    "Map container surfaceTintColor to NavigationBar.surfaceTintColor.",
+    "Map itemStates.selected.indicatorColor to NavigationBar.indicatorColor.",
+    "Use NavigationBarThemeData with WidgetStateProperty to map iconColor and textColor for selected, default, and disabled states.",
+    "Map typography tokens to NavigationBar.labelTextStyle.",
+    "Use NavigationDestination widgets for the destinations property."
+  ],
+  "exampleUsage": {
+    "component": "NavigationBar",
+    "props": {
+      "selectedIndex": 0,
+      "onDestinationSelected": "handleNavigation",
+      "backgroundColor": "color.background.surface",
+      "indicatorColor": "color.action.primary.default",
+      "destinations": [
+        {
+          "component": "NavigationDestination",
+          "props": {
+            "icon": {
+              "component": "Icon",
+              "props": {
+                "icon": "Icons.home_outlined"
+              }
+            },
+            "selectedIcon": {
+              "component": "Icon",
+              "props": {
+                "icon": "Icons.home"
+              }
+            },
+            "label": "Home"
+          }
+        },
+        {
+          "component": "NavigationDestination",
+          "props": {
+            "icon": {
+              "component": "Icon",
+              "props": {
+                "icon": "Icons.search"
+              }
+            },
+            "label": "Search"
+          }
+        }
+      ]
+    }
+  }
+}

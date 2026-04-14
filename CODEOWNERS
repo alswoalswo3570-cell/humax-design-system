@@ -1,0 +1,32 @@
+# CODEOWNERS — Humax Design System
+#
+# Review ownership. GitHub automatically requests a review from the matching owner
+# when a PR touches a file in the pattern. Later patterns override earlier ones.
+#
+# TODO: Replace the placeholders below with actual GitHub handles before enabling
+# branch protection. Until handles are filled in, this file documents intent only.
+
+# Default — any change requires sign-off
+*                                    @PLACEHOLDER-LEAD
+
+# SSoT — tokens and contracts require Designer + Senior Dev
+/tokens/                             @PLACEHOLDER-DESIGNER @PLACEHOLDER-LEAD
+/contracts/                          @PLACEHOLDER-DESIGNER @PLACEHOLDER-LEAD
+
+# Flutter packages — require Senior Flutter Dev
+/packages/humax_design_system/       @PLACEHOLDER-FLUTTER-LEAD @PLACEHOLDER-LEAD
+/packages/humax_design_tokens/       @PLACEHOLDER-FLUTTER-LEAD @PLACEHOLDER-LEAD
+
+# Build pipeline — require tooling owner
+/tools/                              @PLACEHOLDER-LEAD
+
+# Docs site — any core contributor
+/src/                                @PLACEHOLDER-LEAD
+/docs/                               @PLACEHOLDER-LEAD
+/patterns/                           @PLACEHOLDER-DESIGNER @PLACEHOLDER-LEAD
+
+# Governance files — lead only
+/CODEOWNERS                          @PLACEHOLDER-LEAD
+/CHANGELOG.md                        @PLACEHOLDER-LEAD
+/CONTRIBUTING.md                     @PLACEHOLDER-LEAD
+/README.md                           @PLACEHOLDER-LEAD

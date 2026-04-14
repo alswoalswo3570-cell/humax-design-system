@@ -1,0 +1,120 @@
+{
+"name": "SnackBar",
+"platform": "Flutter",
+"purpose": "Provides brief, temporary feedback about an operation through a message at the bottom of the screen. The 'default' variant covers both neutral and success feedback.",
+"whenToUse": [
+"Confirming a successful action (e.g., 'Message sent').",
+"Notifying of a minor error that doesn't require immediate blocking action.",
+"Providing an 'Undo' action for a recent destructive operation."
+],
+"whenNotToUse": [
+"For critical errors requiring user intervention (use Dialog).",
+"For long or complex messages that require reading time.",
+"For persistent system status (use a persistent banner or indicator)."
+],
+"anatomy": [
+"Container",
+"Message text",
+"Action button (optional)",
+"Close icon (optional)"
+],
+"variants": [
+"default",
+"error"
+],
+"states": [
+"entering",
+"visible",
+"exiting"
+],
+"accessibility": {
+"screenReaders": "Snackbars should be automatically announced by screen readers when they appear.",
+"timing": "Ensure the duration is long enough for users to read the message. Minimum 4 seconds for text only, up to 10 seconds if an action is present.",
+"focus": "If a SnackBar contains an action, it should be reachable via keyboard navigation."
+},
+"tokenBindings": {
+"container": {
+"paddingX": "space.md",
+"paddingY": "space.sm",
+"radius": "radius.md",
+"shadow": "shadow.md"
+},
+"typography": {
+"message": "typography.textStyle.bodySm",
+"action": "typography.textStyle.labelSm"
+},
+"variants": {
+"default": {
+"background": "color.background.inverse",
+"text": "color.text.inverse",
+"actionText": "color.action.primary.default"
+},
+"error": {
+"background": "color.action.destructive.default",
+"text": "color.action.destructive.text",
+"actionText": "color.text.inverse"
+}
+},
+"motion": {
+"enter": "motion.duration.normal",
+"exit": "motion.duration.fast",
+"easing": "motion.easing.ease-out"
+}
+},
+"flutterMappingNotes": [
+"Use ScaffoldMessenger.of(context).showSnackBar() to display.",
+"Map 'default' variant to standard SnackBar with SnackBarBehavior.floating.",
+"Do not map CSS shadow tokens directly to elevation. Use Flutter's native elevation (e.g., elevation: 4.0) for floating SnackBars to achieve the appropriate material shadow.",
+"Apply radius.md to the shape property using RoundedRectangleBorder.",
+"Map 'error' variant to backgroundColor property.",
+"Configure the action using the SnackBarAction widget.",
+"Use the showCloseIcon property (available in Material 3) to display an optional close icon.",
+"Set duration to at least 4000ms for standard messages, and up to 10000ms if an action is present."
+],
+"exampleUsage": {
+"component": "ScaffoldMessenger.of(context).showSnackBar",
+"props": {
+"snackBar": {
+"component": "SnackBar",
+"props": {
+"behavior": "SnackBarBehavior.floating",
+"elevation": 4.0,
+"duration": {
+"component": "Duration",
+"props": {
+"milliseconds": 4000
+}
+},
+"showCloseIcon": true,
+"content": {
+"component": "Text",
+"props": {
+"data": "Item archived"
+}
+},
+"shape": {
+"component": "RoundedRectangleBorder",
+"props": {
+"borderRadius": {
+"component": "BorderRadius.circular",
+"props": {
+"radius": 8
+}
+}
+}
+},
+"action": {
+"component": "SnackBarAction",
+"props": {
+"label": "Undo",
+"onPressed": {
+"type": "Function",
+"value": "undoAction"
+}
+}
+}
+}
+}
+}
+}
+}

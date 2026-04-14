@@ -1,0 +1,62 @@
+{
+  "name": "Dialog",
+  "platform": "Flutter",
+  "purpose": "Interrupts the user with important information, requiring an action or decision.",
+  "whenToUse": [
+    "Confirming destructive actions (e.g., Delete account)",
+    "Requesting critical permissions",
+    "Displaying important alerts that require acknowledgment"
+  ],
+  "whenNotToUse": [
+    "Non-critical information (use Snackbar or inline messages)",
+    "Complex forms or multi-step processes (use a full screen or BottomSheet)"
+  ],
+  "anatomy": [
+    "Container",
+    "Title (optional)",
+    "Content/Message",
+    "Actions (Buttons)"
+  ],
+  "variants": [
+    "alert",
+    "simple",
+    "custom"
+  ],
+  "accessibility": {
+    "role": "alertdialog",
+    "focus": "Focus should automatically move to the dialog when opened, typically to the primary action or the first focusable element.",
+    "dismissal": "Must be dismissible via the Escape key (unless it's a critical alert requiring explicit action)."
+  },
+  "tokenBindings": {
+    "container": {
+      "backgroundColor": "color.background.surface",
+      "borderRadius": "radius.xl",
+      "elevation": 3.0,
+      "shadowColor": "color.background.overlay"
+    },
+    "title": {
+      "typography": "typography.textStyle.headingMd",
+      "color": "color.text.primary"
+    },
+    "content": {
+      "typography": "typography.textStyle.bodyMd",
+      "color": "color.text.secondary"
+    }
+  },
+  "flutterMappingNotes": [
+    "Use showDialog() with an AlertDialog widget.",
+    "Map container tokens to DialogThemeData or directly on AlertDialog properties (backgroundColor, shape, elevation).",
+    "Set barrierDismissible to false for destructive confirmation dialogs.",
+    "Consider useSafeArea to ensure the dialog is not obscured by system UI.",
+    "Expansion notes for DialogThemeData: actionsPadding, iconColor, surfaceTintColor."
+  ],
+  "exampleUsage": {
+    "component": "AlertDialog",
+    "props": {
+      "title": "Text('Delete Item?')",
+      "content": "Text('Are you sure you want to delete this item? This action cannot be undone.')",
+      "actions": "[TextButton(child: Text('Cancel')), ElevatedButton(child: Text('Delete'))]",
+      "barrierDismissible": false
+    }
+  }
+}

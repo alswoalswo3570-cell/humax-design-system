@@ -1,0 +1,63 @@
+{
+  "name": "Switch",
+  "platform": "Flutter",
+  "purpose": "Toggles the state of a single setting on or off.",
+  "whenToUse": [
+    "To toggle a single setting or feature on or off.",
+    "When changes should take effect immediately without requiring a save button."
+  ],
+  "whenNotToUse": [
+    "For selecting multiple options from a list (use Checkbox).",
+    "For selecting a single option from a mutually exclusive list (use Radio).",
+    "When explicit submission or confirmation is required before applying the change."
+  ],
+  "anatomy": [
+    "Track",
+    "Thumb",
+    "Icon (Optional)"
+  ],
+  "variants": [
+    "default",
+    "withIcon"
+  ],
+  "sizes": [
+    "default"
+  ],
+  "states": [
+    "on",
+    "off",
+    "disabled",
+    "pressed",
+    "focus"
+  ],
+  "accessibility": {
+    "touchTargets": "Ensure minimum touch target of 48x48dp, usually achieved by wrapping the Switch in a SwitchListTile or adding padding.",
+    "semantics": "Always associate the switch with a descriptive label using SwitchListTile or Semantics so screen readers can announce its purpose.",
+    "stateFeedback": "Screen readers automatically announce the toggled state based on the value property."
+  },
+  "tokenBindings": {
+    "track.on.background": "color.action.primary.default",
+    "track.off.background": "color.border.default",
+    "thumb.on.background": "color.background.surface",
+    "thumb.off.background": "color.text.secondary"
+  },
+  "flutterMappingNotes": [
+    "Map the 'on' or 'off' state to the `value` property (true = on, false = off).",
+    "Use the `onChanged` callback to handle state updates and trigger rebuilds.",
+    "The switch automatically enters the 'disabled' state when `onChanged` is set to null.",
+    "Map track.on.background and track.off.background using `trackColor` (MaterialStateProperty) or the simpler `activeTrackColor` and `inactiveTrackColor`.",
+    "Map thumb.on.background and thumb.off.background using `thumbColor` (MaterialStateProperty) or the simpler `activeThumbColor` and `inactiveThumbColor`.",
+    "Use `trackOutlineColor` and `trackOutlineWidth` (MaterialStateProperty) to customize or remove the track's border.",
+    "Use `thumbIcon` (MaterialStateProperty) to add icons to the thumb for different states (e.g., checkmark when on, cross when off).",
+    "Use `overlayColor` (MaterialStateProperty) to define visual feedback for pressed and focus states."
+  ],
+  "exampleUsage": {
+    "widget": "Switch",
+    "properties": {
+      "value": true,
+      "onChanged": "(bool newValue) { setState(() { _isSwitched = newValue; }); }",
+      "activeThumbColor": "Theme.of(context).colorScheme.surface",
+      "activeTrackColor": "Theme.of(context).colorScheme.primary"
+    }
+  }
+}

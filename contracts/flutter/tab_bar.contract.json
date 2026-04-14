@@ -1,0 +1,119 @@
+{
+  "name": "TabBar",
+  "platform": "Flutter",
+  "purpose": "Organizes and allows navigation between related groups of content at the same level of hierarchy.",
+  "whenToUse": [
+    "To switch between different views within the same context or screen.",
+    "To organize closely related content into distinct sections.",
+    "As secondary navigation below an AppBar."
+  ],
+  "whenNotToUse": [
+    "For top-level app navigation (use NavigationBar or NavigationRail instead).",
+    "For sequential steps (use a Stepper).",
+    "When comparing content simultaneously (use a Grid or Split View)."
+  ],
+  "anatomy": [
+    "Container",
+    "Tab Item",
+    "Label",
+    "Icon (Optional)",
+    "Active Indicator"
+  ],
+  "variants": [
+    "fixed",
+    "scrollable"
+  ],
+  "sizes": [
+    "default"
+  ],
+  "states": [
+    "default",
+    "selected",
+    "pressed",
+    "focus"
+  ],
+  "accessibility": {
+    "touchTargets": "Ensure minimum touch target of 48x48dp for each tab.",
+    "semantics": "Provide clear semantics for selected state.",
+    "keyboardNavigation": "Support keyboard navigation (arrow keys to switch tabs)."
+  },
+  "tokenBindings": {
+    "container.background": "color.background.surface",
+    "item.selected.text": "color.action.primary.default",
+    "item.unselected.text": "color.text.secondary",
+    "item.selected.icon": "color.action.primary.default",
+    "item.unselected.icon": "color.text.secondary",
+    "indicator.color": "color.action.primary.default",
+    "indicator.height": "space.xs"
+  },
+  "flutterMappingNotes": [
+    "Use DefaultTabController to wrap the Scaffold or the specific section containing the TabBar and TabBarView.",
+    "Variants: Set isScrollable to false for 'fixed' (equal width tabs) and true for 'scrollable' (variable width tabs).",
+    "Sizes: TabBar height is typically determined by its content and padding, rather than a fixed 48dp height, unless explicitly defined as a team standard.",
+    "States: Disabled tabs require custom product-level handling (e.g., ignoring taps and applying disabled text colors manually), as Flutter's TabBar does not have a built-in disabled state for individual tabs.",
+    "States: Use overlayColor (MaterialStateProperty) to define visual feedback for pressed and focus states.",
+    "Map item.selected.text to labelColor and labelStyle.",
+    "Map item.unselected.text to unselectedLabelColor and unselectedLabelStyle.",
+    "Map indicator.color to indicatorColor and indicator.height to indicatorWeight. Alternatively, use a custom Decoration for the indicator property for complex styling.",
+    "Use indicatorSize (TabBarIndicatorSize.tab or TabBarIndicatorSize.label) to control the width of the indicator.",
+    "Use tabAlignment (e.g., TabAlignment.start, TabAlignment.center) to control the alignment of tabs, especially when isScrollable is true."
+  ],
+  "exampleUsage": {
+    "widget": "DefaultTabController",
+    "properties": {
+      "length": 3,
+      "child": {
+        "widget": "Column",
+        "children": [
+          {
+            "widget": "TabBar",
+            "properties": {
+              "labelColor": "Theme.of(context).colorScheme.primary",
+              "unselectedLabelColor": "Theme.of(context).colorScheme.onSurfaceVariant",
+              "indicatorColor": "Theme.of(context).colorScheme.primary",
+              "indicatorWeight": 3.0,
+              "indicatorSize": "TabBarIndicatorSize.tab",
+              "tabs": [
+                {
+                  "widget": "Tab",
+                  "properties": {
+                    "text": "Recent"
+                  }
+                },
+                {
+                  "widget": "Tab",
+                  "properties": {
+                    "text": "Favorites"
+                  }
+                },
+                {
+                  "widget": "Tab",
+                  "properties": {
+                    "text": "Shared"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "widget": "Expanded",
+            "child": {
+              "widget": "TabBarView",
+              "children": [
+                {
+                  "widget": "RecentView"
+                },
+                {
+                  "widget": "FavoritesView"
+                },
+                {
+                  "widget": "SharedView"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "name": "AppBar",
+  "platform": "Flutter",
+  "purpose": "Provides a top-level navigation and action bar for the current screen.",
+  "whenToUse": [
+    "Displaying the current screen title",
+    "Providing top-level navigation (e.g., back button, drawer menu)",
+    "Housing primary screen-level actions (e.g., search, filter, profile)"
+  ],
+  "whenNotToUse": [
+    "Bottom navigation or persistent footers",
+    "Inline toolbars within specific content sections",
+    "Immersive full-screen experiences where persistent headers are distracting"
+  ],
+  "anatomy": [
+    "Leading (Navigation Icon/Button)",
+    "Title (Text or Widget)",
+    "Actions (List of Icons/Buttons)",
+    "FlexibleSpace (Background/Expanded content)",
+    "Bottom (e.g., TabBar)"
+  ],
+  "variants": [
+    "default",
+    "primary"
+  ],
+  "states": [
+    "default",
+    "scrolled",
+    "elevated"
+  ],
+  "accessibility": {
+    "semantics": "The title should implicitly or explicitly be treated as a header for screen readers.",
+    "actions": "All icon buttons in the leading and actions properties must have descriptive tooltips or semantic labels.",
+    "contrast": "Ensure sufficient contrast between the AppBar background color and the foreground text/icons."
+  },
+  "tokenBindings": {
+    "variants": {
+      "default": {
+        "backgroundColor": "color.background.surface",
+        "foregroundColor": "color.text.primary",
+        "iconColor": "color.text.secondary"
+      },
+      "primary": {
+        "backgroundColor": "color.action.primary.default",
+        "foregroundColor": "color.action.primary.text",
+        "iconColor": "color.action.primary.text"
+      }
+    },
+    "states": {
+      "default": {
+        "elevation": 0.0
+      },
+      "scrolled": {
+        "scrolledUnderElevation": 4.0,
+        "surfaceTintColor": "color.background.surfaceHover"
+      },
+      "elevated": {
+        "elevation": 4.0
+      }
+    },
+    "typography": {
+      "titleTextStyle": "typography.textStyle.headingMd"
+    },
+    "spacing": {
+      "titleSpacing": "space.md"
+    }
+  },
+  "flutterMappingNotes": [
+    "Map variant backgroundColor to AppBar.backgroundColor.",
+    "Map variant foregroundColor to AppBar.foregroundColor, which automatically styles the title text and icons.",
+    "Use AppBar.iconTheme to specifically target icon colors if they differ from the foregroundColor.",
+    "Map typography tokens to AppBar.titleTextStyle.",
+    "Use AppBar.scrolledUnderElevation to automatically handle the 'scrolled' state in Material 3.",
+    "Do not bind Flutter shadowColor to CSS-style shadow tokens; rely on elevation and Flutter's default shadow rendering.",
+    "Use centerTitle to explicitly align the title (e.g., true for iOS-style, false for Android-style).",
+    "Set toolbarHeight if a custom height is required beyond the default Material specification.",
+    "Use systemOverlayStyle (SystemUiOverlayStyle) to ensure status bar icons contrast appropriately with the AppBar backgroundColor."
+  ],
+  "exampleUsage": {
+    "component": "AppBar",
+    "props": {
+      "title": {
+        "component": "Text",
+        "children": "Dashboard"
+      },
+      "elevation": 0.0,
+      "scrolledUnderElevation": 4.0,
+      "backgroundColor": "color.background.surface",
+      "foregroundColor": "color.text.primary",
+      "surfaceTintColor": "color.background.surfaceHover",
+      "centerTitle": false,
+      "systemOverlayStyle": "SystemUiOverlayStyle.dark",
+      "actions": [
+        {
+          "component": "IconButton",
+          "props": {
+            "icon": "Icons.search",
+            "tooltip": "Search"
+          }
+        }
+      ]
+    }
+  }
+}

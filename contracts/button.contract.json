@@ -1,0 +1,161 @@
+{
+  "name": "Button",
+  "purpose": "Triggers an action or event, such as submitting a form, opening a dialog, or performing a destructive operation.",
+  "whenToUse": [
+    "Submitting or resetting a form",
+    "Triggering a modal, dialog, or popover",
+    "Navigating to the next step in a sequential flow",
+    "Confirming or canceling an action"
+  ],
+  "whenNotToUse": [
+    "Inline text links within a paragraph (use Link component)",
+    "Standard navigation between pages where a primary CTA is not required (use Link component)"
+  ],
+  "variants": [
+    "filled",
+    "outlined",
+    "text",
+    "destructive"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "states": [
+    "default",
+    "pressed",
+    "focus",
+    "disabled",
+    "loading"
+  ],
+  "accessibility": {
+    "role": "button",
+    "keyboard": [
+      "Enter",
+      "Space"
+    ],
+    "focus": "Must display a visible focus ring using the defined focusRing tokens when navigated via keyboard. Focus is critical for accessibility even in mobile-first systems.",
+    "aria": "Provide aria-label if the button contains only an icon or if the visible text is not sufficiently descriptive.",
+    "disabled": "Native buttons should use the disabled attribute. Using aria-disabled=\"true\" alone does not prevent interaction or focus without additional handling."
+  },
+  "contentRules": [
+    "Use strong, actionable verbs (e.g., 'Save', 'Delete', 'Submit', 'Create').",
+    "Keep labels concise, ideally 1-3 words.",
+    "Use sentence case for button labels (e.g., 'Save changes', not 'Save Changes')."
+  ],
+  "tokenBindings": {
+    "variants": {
+      "filled": {
+        "default": {
+          "background": "color.action.primary.default",
+          "text": "color.action.primary.text",
+          "border": "none"
+        },
+        "pressed": {
+          "background": "color.action.primary.active"
+        },
+        "disabled": {
+          "background": "color.action.primary.disabled",
+          "text": "color.action.primary.disabledText"
+        }
+      },
+      "outlined": {
+        "default": {
+          "background": "color.action.secondary.default",
+          "text": "color.action.secondary.text",
+          "border": "1px solid {color.action.secondary.border}"
+        },
+        "pressed": {
+          "background": "color.action.secondary.active",
+          "border": "1px solid {color.action.secondary.borderActive}"
+        },
+        "disabled": {
+          "background": "color.action.secondary.disabled",
+          "text": "color.action.secondary.disabledText",
+          "border": "1px solid {color.action.secondary.borderDisabled}"
+        }
+      },
+      "text": {
+        "default": {
+          "background": "color.action.ghost.default",
+          "text": "color.action.ghost.text",
+          "border": "none"
+        },
+        "pressed": {
+          "background": "color.action.ghost.active"
+        },
+        "disabled": {
+          "background": "color.action.ghost.disabled",
+          "text": "color.action.ghost.disabledText"
+        }
+      },
+      "destructive": {
+        "default": {
+          "background": "color.action.destructive.default",
+          "text": "color.action.destructive.text",
+          "border": "none"
+        },
+        "pressed": {
+          "background": "color.action.destructive.active"
+        },
+        "disabled": {
+          "background": "color.action.destructive.disabled",
+          "text": "color.action.destructive.disabledText"
+        }
+      }
+    },
+    "sizes": {
+      "sm": {
+        "paddingX": "space.sm",
+        "paddingY": "space.xs",
+        "typography": "typography.textStyle.labelSm",
+        "radius": "radius.md"
+      },
+      "md": {
+        "paddingX": "space.md",
+        "paddingY": "space.sm",
+        "typography": "typography.textStyle.labelMd",
+        "radius": "radius.md"
+      },
+      "lg": {
+        "paddingX": "space.lg",
+        "paddingY": "space.md",
+        "typography": "typography.textStyle.bodyMd",
+        "radius": "radius.md"
+      }
+    },
+    "states": {
+      "focus": {
+        "ringColor": "color.focusRing.color",
+        "ringOffsetColor": "color.focusRing.offsetColor",
+        "ringThickness": "focusRing.thickness",
+        "ringOffset": "focusRing.offset"
+      },
+      "loading": {
+        "opacity": "0.7",
+        "cursor": "wait (Web preview only)"
+      }
+    },
+    "motion": {
+      "transitionDuration": "motion.duration.fast",
+      "transitionTimingFunction": "motion.easing.ease-in-out"
+    }
+  },
+  "flutterMappingNotes": [
+    "Map 'filled' to FilledButton.",
+    "Map 'outlined' to OutlinedButton.",
+    "Map 'text' to TextButton.",
+    "Map 'destructive' to FilledButton with error colors.",
+    "Use MaterialStateProperty to handle 'pressed', 'focus', and 'disabled' states natively.",
+    "For 'loading' state, replace child Text with a SizedBox containing a CircularProgressIndicator.",
+    "Note: Cursor-based feedback like 'wait' is applicable only for web/desktop targets, not native mobile."
+  ],
+  "exampleUsage": {
+    "component": "FilledButton",
+    "props": {
+      "onPressed": "() => handleSubmit()",
+      "child": "Text('Save changes')"
+    }
+  }
+}

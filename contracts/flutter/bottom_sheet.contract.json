@@ -1,0 +1,70 @@
+{
+  "name": "BottomSheet",
+  "platform": "Flutter",
+  "purpose": "Displays supplementary content or actions anchored to the bottom of the screen.",
+  "whenToUse": [
+    "Presenting a list of contextual actions (e.g., share menu)",
+    "Providing supplementary information without losing context of the underlying screen",
+    "Temporary sub-tasks or forms"
+  ],
+  "whenNotToUse": [
+    "Primary app navigation (use NavigationBar)",
+    "Critical alerts requiring immediate user decision (use AlertDialog)",
+    "Complex, multi-step flows that require full screen focus"
+  ],
+  "anatomy": [
+    "Scrim/Overlay (Modal only)",
+    "Container/Surface",
+    "Drag Handle (Optional)",
+    "Content Area"
+  ],
+  "variants": [
+    "modal",
+    "standard"
+  ],
+  "states": [
+    "default"
+  ],
+  "accessibility": {
+    "semantics": "Modal bottom sheets should trap focus and be dismissible via the Escape key or back button.",
+    "dragHandle": "If a drag handle is present, it should have a semantic label indicating it can be dragged to expand or dismiss.",
+    "contrast": "Ensure sufficient contrast between the bottom sheet surface and the underlying content, typically achieved via a scrim or shadow."
+  },
+  "tokenBindings": {
+    "container": {
+      "backgroundColor": "color.background.surface",
+      "elevation": 1.0,
+      "borderRadiusTop": "radius.lg"
+    },
+    "dragHandle": {
+      "color": "color.border.strong",
+      "width": 32.0,
+      "height": 4.0,
+      "borderRadius": "radius.full"
+    },
+    "scrim": {
+      "color": "color.background.overlay"
+    }
+  },
+  "flutterMappingNotes": [
+    "Use showModalBottomSheet() for the modal variant and Scaffold.showBottomSheet() for the standard variant.",
+    "Map container.backgroundColor to the backgroundColor property of the bottom sheet.",
+    "Map container.borderRadiusTop to the shape property using RoundedRectangleBorder with top-left and top-right radii.",
+    "Map scrim.color to the barrierColor property in showModalBottomSheet().",
+    "Use the showDragHandle property (available in Material 3) to automatically render a drag handle, mapping dragHandle tokens to BottomSheetThemeData.dragHandleColor and dragHandleSize."
+  ],
+  "exampleUsage": {
+    "component": "showModalBottomSheet",
+    "props": {
+      "backgroundColor": "color.background.surface",
+      "showDragHandle": true,
+      "shape": {
+        "component": "RoundedRectangleBorder",
+        "props": {
+          "borderRadius": "BorderRadius.vertical(top: Radius.circular(16.0))"
+        }
+      },
+      "builder": "BottomSheetContent()"
+    }
+  }
+}

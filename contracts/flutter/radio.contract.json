@@ -1,0 +1,89 @@
+{
+  "name": "Radio",
+  "platform": "Flutter",
+  "purpose": "Allows the user to select one option from a set of mutually exclusive options.",
+  "whenToUse": [
+    "To select a single option from a list of mutually exclusive choices.",
+    "When all available options need to be visible at once for comparison."
+  ],
+  "whenNotToUse": [
+    "When multiple options can be selected simultaneously (use Checkbox).",
+    "When toggling a single independent setting on or off (use Switch).",
+    "When there are many options that would clutter the screen (consider DropdownButton)."
+  ],
+  "anatomy": [
+    "Outer Circle",
+    "Inner Circle (Indicator)",
+    "Label (via RadioListTile)"
+  ],
+  "variants": [
+    "default"
+  ],
+  "sizes": [
+    "default"
+  ],
+  "states": [
+    "selected",
+    "unselected",
+    "disabled",
+    "pressed",
+    "focus"
+  ],
+  "accessibility": {
+    "touchTargets": "Ensure minimum touch target of 48x48dp, usually achieved by wrapping the Radio in a RadioListTile or adding padding.",
+    "semantics": "Always associate the radio button with a descriptive label using RadioListTile or Semantics so screen readers can announce its purpose.",
+    "stateFeedback": "Screen readers automatically announce the selected state based on whether value matches the group's selected value."
+  },
+  "tokenBindings": {
+    "circle.selected.border": "color.action.primary.default",
+    "circle.unselected.border": "color.border.default",
+    "indicator.selected.background": "color.action.primary.default"
+  },
+  "flutterMappingNotes": [
+    "Wrap individual Radio or RadioListTile widgets in a RadioGroup ancestor to manage the selected state centrally.",
+    "The RadioGroup handles the selected value and onChanged callback, replacing the deprecated pattern of setting groupValue and onChanged on individual Radio widgets.",
+    "Assign a unique identifier to the `value` property for each Radio in the group.",
+    "Note: `RadioListTile.selected` does not automatically follow the checked state unless explicitly set to match the group's current value.",
+    "The radio automatically enters the 'disabled' state when the RadioGroup's `onChanged` is set to null.",
+    "Prefer using `RadioListTile` to easily combine a Radio with a Text label and expand the touch target to the full row.",
+    "Map circle.selected.border and indicator.selected.background to `activeColor` or use `fillColor` (MaterialStateProperty) for more granular state control.",
+    "Use `overlayColor` (MaterialStateProperty) to define visual feedback for pressed, hovered, and focus states."
+  ],
+  "exampleUsage": {
+    "widget": "RadioGroup",
+    "properties": {
+      "value": "_selectedValue",
+      "onChanged": "(String? newValue) { setState(() { _selectedValue = newValue; }); }",
+      "children": [
+        {
+          "widget": "RadioListTile",
+          "properties": {
+            "value": "option_1",
+            "title": {
+              "widget": "Text",
+              "properties": {
+                "text": "Option 1"
+              }
+            },
+            "selected": "_selectedValue == 'option_1'",
+            "activeColor": "Theme.of(context).colorScheme.primary"
+          }
+        },
+        {
+          "widget": "RadioListTile",
+          "properties": {
+            "value": "option_2",
+            "title": {
+              "widget": "Text",
+              "properties": {
+                "text": "Option 2"
+              }
+            },
+            "selected": "_selectedValue == 'option_2'",
+            "activeColor": "Theme.of(context).colorScheme.primary"
+          }
+        }
+      ]
+    }
+  }
+}

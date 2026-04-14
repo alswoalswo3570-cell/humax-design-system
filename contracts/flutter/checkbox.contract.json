@@ -1,0 +1,71 @@
+{
+  "name": "Checkbox",
+  "platform": "Flutter",
+  "purpose": "Allows the user to select one or more items from a set.",
+  "whenToUse": [
+    "To select multiple options from a list.",
+    "To agree to terms and conditions.",
+    "To toggle a boolean value within a form where explicit submission is expected."
+  ],
+  "whenNotToUse": [
+    "When only one option can be selected from a mutually exclusive list (use Radio).",
+    "When changes should take effect immediately without requiring a save or submit action (use Switch)."
+  ],
+  "anatomy": [
+    "Box",
+    "Checkmark (Icon)",
+    "Label (via CheckboxListTile)"
+  ],
+  "variants": [
+    "default",
+    "tristate"
+  ],
+  "sizes": [
+    "default"
+  ],
+  "states": [
+    "checked",
+    "unchecked",
+    "disabled",
+    "error",
+    "focus"
+  ],
+  "accessibility": {
+    "touchTargets": "Ensure minimum touch target of 48x48dp, usually achieved by wrapping the Checkbox in a CheckboxListTile or adding padding.",
+    "semantics": "Always associate the checkbox with a descriptive label using CheckboxListTile or Semantics so screen readers can announce its purpose.",
+    "stateFeedback": "Screen readers automatically announce the checked, unchecked, or mixed state based on the value property."
+  },
+  "tokenBindings": {
+    "box.checked.background": "color.action.primary.default",
+    "box.unchecked.border": "color.border.default",
+    "icon.checked.color": "color.action.primary.text",
+    "box.error.border": "color.action.destructive.default"
+  },
+  "flutterMappingNotes": [
+    "Map the checked or unchecked state to the `value` property (true = checked, false = unchecked).",
+    "Use the `onChanged` callback to handle state updates and trigger rebuilds.",
+    "The checkbox automatically enters the 'disabled' state when `onChanged` is set to null.",
+    "Set `tristate: true` to allow `value` to be null, representing an indeterminate/mixed state (useful for 'select all' parent checkboxes).",
+    "Prefer using `CheckboxListTile` to easily combine a Checkbox with a Text label and expand the touch target to the full row.",
+    "Map box.checked.background to `activeColor` or use `fillColor` (MaterialStateProperty) for more granular state control.",
+    "Map icon.checked.color to `checkColor`.",
+    "Map box.error.border to `side` (BorderSide) using MaterialState.error, or use the `isError` property on CheckboxListTile if applicable.",
+    "Use `overlayColor` (MaterialStateProperty) to define visual feedback for pressed, hovered, and focus states."
+  ],
+  "exampleUsage": {
+    "widget": "CheckboxListTile",
+    "properties": {
+      "value": true,
+      "onChanged": "(bool? newValue) { setState(() { _isChecked = newValue ?? false; }); }",
+      "title": {
+        "widget": "Text",
+        "properties": {
+          "text": "Accept Terms and Conditions"
+        }
+      },
+      "activeColor": "Theme.of(context).colorScheme.primary",
+      "checkColor": "Theme.of(context).colorScheme.onPrimary",
+      "controlAffinity": "ListTileControlAffinity.leading"
+    }
+  }
+}

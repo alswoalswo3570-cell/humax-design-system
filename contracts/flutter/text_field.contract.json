@@ -1,0 +1,128 @@
+{
+  "name": "TextField",
+  "platform": "Flutter",
+  "purpose": "Allows users to enter and edit single-line text data.",
+  "whenToUse": [
+    "Collecting short, single-line text (e.g., names, emails, passwords)",
+    "Search fields",
+    "Form data entry"
+  ],
+  "whenNotToUse": [
+    "Collecting multi-line text (use TextField with maxLines > 1)",
+    "Selecting from a predefined list (use DropdownButton or similar)"
+  ],
+  "anatomy": [
+    "Container/Background",
+    "Border/Outline",
+    "Text Input Area",
+    "Placeholder/Hint Text",
+    "Prefix/Suffix Icons (optional)",
+    "Error Text (optional)"
+  ],
+  "variants": [
+    "default"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "disabled",
+    "error",
+    "readOnly"
+  ],
+  "accessibility": {
+    "semantics": "Ensure the TextField is wrapped in appropriate Semantics if custom behavior is added.",
+    "label": "Use decoration labelText to provide context for screen readers. Do not rely solely on hintText as a replacement for a proper label.",
+    "error": "Provide clear errorText in InputDecoration so it is announced by assistive technologies.",
+    "disabled": "Set enabled to false to properly communicate the disabled state to the accessibility tree."
+  },
+  "tokenBindings": {
+    "variants": {
+      "default": {
+        "default": {
+          "fillColor": "color.background.surface",
+          "textColor": "color.text.primary",
+          "hintColor": "color.text.tertiary",
+          "borderColor": "color.border.default",
+          "borderWidth": 1.0
+        },
+        "hover": {
+          "borderColor": "color.border.strong"
+        },
+        "focus": {
+          "borderColor": "color.border.focus"
+        },
+        "error": {
+          "borderColor": "color.border.error"
+        },
+        "disabled": {
+          "fillColor": "color.background.surfaceHover",
+          "textColor": "color.text.disabled",
+          "borderColor": "color.border.subtle"
+        },
+        "readOnly": {
+          "fillColor": "color.background.surfaceHover",
+          "textColor": "color.text.primary",
+          "borderColor": "color.border.default"
+        }
+      }
+    },
+    "sizes": {
+      "sm": {
+        "contentPaddingX": "space.sm",
+        "contentPaddingY": "space.xs",
+        "typography": "typography.textStyle.bodySm",
+        "borderRadius": "radius.md"
+      },
+      "md": {
+        "contentPaddingX": "space.md",
+        "contentPaddingY": "space.sm",
+        "typography": "typography.textStyle.bodyMd",
+        "borderRadius": "radius.md"
+      },
+      "lg": {
+        "contentPaddingX": "space.lg",
+        "contentPaddingY": "space.md",
+        "typography": "typography.textStyle.bodyMd",
+        "borderRadius": "radius.md"
+      }
+    },
+    "states": {
+      "focus": {
+        "ringColor": "color.focusRing.color",
+        "ringOffsetColor": "color.focusRing.offsetColor",
+        "ringThickness": "focusRing.thickness",
+        "ringOffset": "focusRing.offset"
+      }
+    },
+    "motion": {
+      "transitionDuration": "motion.duration.fast",
+      "transitionCurve": "motion.easing.ease-in-out"
+    }
+  },
+  "flutterMappingNotes": [
+    "Map tokenBindings to InputDecoration properties (e.g., fillColor, enabledBorder, focusedBorder, errorBorder, disabledBorder).",
+    "Use OutlineInputBorder to apply border radius and color tokens.",
+    "Map typography tokens to TextStyle for the 'style' and 'decoration.hintStyle' properties.",
+    "Map padding to 'contentPadding' in InputDecoration.",
+    "Hover states can be managed via MouseRegion or by relying on InputDecoration.hoverColor if using a filled decoration.",
+    "Hover state is primarily applicable to Flutter desktop and web platforms, rather than primary mobile touch usage."
+  ],
+  "exampleUsage": {
+    "component": "TextField",
+    "props": {
+      "decoration": {
+        "hintText": "Enter your email address",
+        "filled": true
+      },
+      "enabled": true,
+      "readOnly": false,
+      "keyboardType": "TextInputType.emailAddress"
+    }
+  }
+}

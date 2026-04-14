@@ -1,0 +1,90 @@
+{
+  "color": {
+    "background": {
+      "page": "#111827",
+      "surface": "#1f2937",
+      "surfaceHover": "#374151",
+      "surfaceActive": "#4b5563",
+      "inverse": "#ffffff",
+      "overlay": "rgba(0, 0, 0, 0.6)"
+    },
+    "text": {
+      "primary": "#f9fafb",
+      "secondary": "#d1d5db",
+      "tertiary": "#9ca3af",
+      "disabled": "#6b7280",
+      "inverse": "#111827"
+    },
+    "border": {
+      "subtle": "#374151",
+      "default": "#4b5563",
+      "strong": "#6b7280",
+      "focus": "#3b82f6",
+      "error": "#ef4444"
+    },
+    "action": {
+      "primary": {
+        "default": "#3b82f6",
+        "hover": "#60a5fa",
+        "active": "#93c5fd",
+        "disabled": "#1e3a8a",
+        "text": "#ffffff",
+        "disabledText": "#93c5fd"
+      },
+      "secondary": {
+        "default": "#1f2937",
+        "hover": "#374151",
+        "active": "#4b5563",
+        "disabled": "#111827",
+        "text": "#f9fafb",
+        "disabledText": "#6b7280",
+        "border": "#4b5563",
+        "borderHover": "#6b7280",
+        "borderActive": "#9ca3af",
+        "borderDisabled": "#374151"
+      },
+      "ghost": {
+        "default": "transparent",
+        "hover": "#1e3a8a",
+        "active": "#1e40af",
+        "disabled": "transparent",
+        "text": "#60a5fa",
+        "disabledText": "#6b7280"
+      },
+      "destructive": {
+        "default": "#ef4444",
+        "hover": "#f87171",
+        "active": "#fca5a5",
+        "disabled": "#7f1d1d",
+        "text": "#ffffff",
+        "disabledText": "#fca5a5"
+      }
+    },
+    "feedback": {
+      "success": {
+        "background": "#064e3b",
+        "text": "#34d399",
+        "border": "#065f46"
+      },
+      "warning": {
+        "background": "#78350f",
+        "text": "#fbbf24",
+        "border": "#92400e"
+      },
+      "error": {
+        "background": "#7f1d1d",
+        "text": "#f87171",
+        "border": "#991b1b"
+      },
+      "info": {
+        "background": "#1e3a8a",
+        "text": "#60a5fa",
+        "border": "#1e40af"
+      }
+    },
+    "focusRing": {
+      "color": "#3b82f6",
+      "offsetColor": "#111827"
+    }
+  }
+}
