@@ -33,9 +33,9 @@ class MyApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: HumaxColors.backgroundBase,
         textTheme: TextTheme(
-          bodyMedium: HumaxTextStyle.bodyMd,
-          bodySmall: HumaxTextStyle.bodySm,
-          labelMedium: HumaxTextStyle.labelMd,
+          bodyMedium: HumaxTextStyle.bodyCommon,
+          bodySmall: HumaxTextStyle.captionCommon,
+          labelMedium: HumaxTextStyle.bodyPoint,
         ),
       ),
       // Optional: dark theme uses HumaxDarkColors

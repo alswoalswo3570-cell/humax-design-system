@@ -91,7 +91,7 @@ export default function Tokens() {
                 <tr key={key}>
                   <td className="px-6 py-4 font-mono text-gray-600 dark:text-gray-300">{key}</td>
                   <td className="px-6 py-4 text-gray-500 dark:text-gray-400">{style.fontSize} / {style.fontWeight}</td>
-                  <td className="px-6 py-4 text-gray-900 dark:text-white" style={{ fontSize: style.fontSize, fontWeight: style.fontWeight, lineHeight: style.lineHeight }}>
+                  <td className="px-6 py-4 text-gray-900 dark:text-white" style={{ fontSize: style.fontSize, fontWeight: style.fontWeight, lineHeight: style.lineHeight, textDecoration: style.textDecoration, fontFamily: "'Archivo', 'Noto Sans', system-ui, sans-serif" }}>
                     {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())} Example
                   </td>
                 </tr>
