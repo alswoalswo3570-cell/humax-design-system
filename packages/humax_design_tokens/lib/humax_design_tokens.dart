@@ -8,7 +8,7 @@
 ///   'Hello',
 ///   style: TextStyle(
 ///     color: HumaxColors.textPrimary,
-///     fontSize: HumaxFontSize.base,
+///     fontSize: HumaxFontSize.sm,
 ///   ),
 /// )
 /// ```

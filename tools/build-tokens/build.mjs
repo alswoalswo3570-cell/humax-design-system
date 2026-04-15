@@ -228,7 +228,26 @@ ${body}
 `;
 }
 
+/** Parse lineHeight value. If it has a unit (px/rem) return px value; otherwise treat as unitless multiplier. */
+function parseLineHeight(value, fontSizePx) {
+  if (typeof value !== 'string') return { kind: 'multiplier', value: parseFloat(value) };
+  if (value.endsWith('px') || value.endsWith('rem')) {
+    const lhPx = lengthToDouble(value);
+    const multiplier = fontSizePx > 0 ? lhPx / fontSizePx : 1;
+    return { kind: 'px', value: multiplier };
+  }
+  return { kind: 'multiplier', value: parseFloat(value) };
+}
+
+/** Trim trailing zeros from a fixed-precision number. "1.2500" → "1.25" */
+function trimFloat(n) {
+  return parseFloat(n.toFixed(4)).toString();
+}
+
 function genTypographyClasses(typo) {
+  const primaryFamily = typo.fontFamily?.primary;
+  const fallbackFamily = typo.fontFamily?.fallback;
+
   const fontSizeBody = Object.entries(typo.fontSize)
     .map(([k, v]) => `  static const double ${toDartId(k)} = ${lengthToDouble(v)};`)
     .join('\n');
@@ -244,14 +263,31 @@ function genTypographyClasses(typo) {
   const textStyleBody = Object.entries(typo.textStyle)
     .map(([k, style]) => {
       const fs = lengthToDouble(style.fontSize);
-      const lh = parseFloat(style.lineHeight);
+      const lh = parseLineHeight(style.lineHeight, fs);
       const fw = fontWeightToFlutter(style.fontWeight);
-      return `  static const TextStyle ${toDartId(k)} = TextStyle(\n    fontSize: ${fs},\n    height: ${lh},\n    fontWeight: ${fw},\n  );`;
+      const fields = [
+        primaryFamily  ? `    fontFamily: '${primaryFamily}',` : null,
+        fallbackFamily ? `    fontFamilyFallback: <String>['${fallbackFamily}'],` : null,
+        `    fontSize: ${fs},`,
+        `    height: ${trimFloat(lh.value)},`,
+        `    fontWeight: ${fw},`,
+        style.textDecoration === 'underline' ? `    decoration: TextDecoration.underline,` : null,
+      ].filter(Boolean).join('\n');
+      return `  static const TextStyle ${toDartId(k)} = TextStyle(\n${fields}\n  );`;
     })
-    .join('\n');
+    .join('\n\n');
+
+  const familyClass = primaryFamily
+    ? `class HumaxFontFamily {
+  HumaxFontFamily._();
+  static const String primary = '${primaryFamily}';
+${fallbackFamily ? `  static const List<String> fallback = <String>['${fallbackFamily}'];\n` : ''}}
+
+`
+    : '';
 
   return `// ─── Typography ──────────────────────────────────────────────────────────────
-class HumaxFontSize {
+${familyClass}class HumaxFontSize {
   HumaxFontSize._();
 ${fontSizeBody}
 }
