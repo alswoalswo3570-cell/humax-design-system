@@ -33,9 +33,9 @@ class _ExampleAppState extends State<ExampleApp> {
         ),
         scaffoldBackgroundColor: HumaxColors.backgroundBase,
         textTheme: TextTheme(
-          bodyMedium: HumaxTextStyle.bodyMd,
-          bodySmall: HumaxTextStyle.bodySm,
-          labelMedium: HumaxTextStyle.labelMd,
+          bodyMedium: HumaxTextStyle.bodyCommon,
+          bodySmall: HumaxTextStyle.captionCommon,
+          labelMedium: HumaxTextStyle.bodyPoint,
         ),
       ),
       darkTheme: ThemeData(
@@ -47,9 +47,9 @@ class _ExampleAppState extends State<ExampleApp> {
         ),
         scaffoldBackgroundColor: HumaxDarkColors.backgroundBase,
         textTheme: TextTheme(
-          bodyMedium: HumaxTextStyle.bodyMd,
-          bodySmall: HumaxTextStyle.bodySm,
-          labelMedium: HumaxTextStyle.labelMd,
+          bodyMedium: HumaxTextStyle.bodyCommon,
+          bodySmall: HumaxTextStyle.captionCommon,
+          labelMedium: HumaxTextStyle.bodyPoint,
         ),
       ),
       home: ExampleGallery(onThemeChange: _toggleTheme),
@@ -70,7 +70,7 @@ class ExampleGallery extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Humax DS · Examples',
-          style: HumaxTextStyle.headingMd.copyWith(
+          style: HumaxTextStyle.titleLarge.copyWith(
             color: isDark ? HumaxDarkColors.textPrimary : HumaxColors.textPrimary,
           ),
         ),
@@ -163,7 +163,7 @@ class _GalleryTile extends StatelessWidget {
               child: Center(
                 child: Text(
                   '$index',
-                  style: HumaxTextStyle.labelMd.copyWith(
+                  style: HumaxTextStyle.bodyPoint.copyWith(
                     color: HumaxColors.actionPrimaryDefault,
                   ),
                 ),
@@ -176,11 +176,11 @@ class _GalleryTile extends StatelessWidget {
                 children: [
                   Text(label,
                       style:
-                          HumaxTextStyle.labelMd.copyWith(color: textPrimary)),
+                          HumaxTextStyle.bodyPoint.copyWith(color: textPrimary)),
                   const SizedBox(height: 3),
                   Text(description,
                       style:
-                          HumaxTextStyle.bodySm.copyWith(color: textSecondary)),
+                          HumaxTextStyle.captionCommon.copyWith(color: textSecondary)),
                 ],
               ),
             ),

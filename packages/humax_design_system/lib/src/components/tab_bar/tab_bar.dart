@@ -84,9 +84,9 @@ class HumaxTabBar extends StatelessWidget {
           : TabAlignment.fill,
       labelColor: HumaxColors.actionPrimaryDefault,
       unselectedLabelColor: HumaxColors.textSecondary,
-      labelStyle: HumaxTextStyle.labelMd
+      labelStyle: HumaxTextStyle.bodyPoint
           .copyWith(fontWeight: FontWeight.w600),
-      unselectedLabelStyle: HumaxTextStyle.labelMd,
+      unselectedLabelStyle: HumaxTextStyle.bodyPoint,
       indicatorColor: HumaxColors.actionPrimaryDefault,
       indicatorWeight: HumaxSpace.xs,
       indicatorSize: TabBarIndicatorSize.tab,

@@ -76,7 +76,7 @@ class HumaxNavigationBar extends StatelessWidget {
       elevation: 3,
       labelTextStyle: WidgetStateProperty.resolveWith((states) {
         final isSelected = states.contains(WidgetState.selected);
-        return HumaxTextStyle.labelSm.copyWith(
+        return HumaxTextStyle.captionPoint.copyWith(
           color: isSelected
               ? HumaxColors.textPrimary
               : HumaxColors.textSecondary,

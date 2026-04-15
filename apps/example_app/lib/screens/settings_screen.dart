@@ -42,7 +42,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           children: [
             Text(
               'Appearance',
-              style: HumaxTextStyle.headingMd
+              style: HumaxTextStyle.titleLarge
                   .copyWith(color: HumaxColors.textPrimary),
             ),
             const SizedBox(height: HumaxSpace.sm),
@@ -51,7 +51,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 contentPadding: EdgeInsets.zero,
                 title: Text(
                   option,
-                  style: HumaxTextStyle.bodyMd
+                  style: HumaxTextStyle.bodyCommon
                       .copyWith(color: HumaxColors.textPrimary),
                 ),
                 trailing: _appearance == option
@@ -162,11 +162,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Padding(
               padding: const EdgeInsets.all(HumaxSpace.xl),
               child: HumaxEmptyState(
-                title: 'No devices linked',
-                message:
+                icon: Icons.devices_outlined,
+                headline: 'No devices linked',
+                body:
                     'Add a Humax device to monitor and control it from the app.',
-                actionLabel: 'Add device',
-                onAction: () {
+                primaryActionLabel: 'Add device',
+                onPrimaryAction: () {
                   // In a real app: navigate to device pairing flow.
                   HumaxSnackBar.show(
                     context: context,
@@ -188,7 +189,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 title: Text(
                   device,
-                  style: HumaxTextStyle.bodyMd
+                  style: HumaxTextStyle.bodyCommon
                       .copyWith(color: HumaxColors.textPrimary),
                 ),
                 trailing: IconButton(
@@ -240,7 +241,7 @@ class _SectionHeader extends StatelessWidget {
       ),
       child: Text(
         label.toUpperCase(),
-        style: HumaxTextStyle.labelSm.copyWith(
+        style: HumaxTextStyle.captionPoint.copyWith(
           color: HumaxColors.textTertiary,
           letterSpacing: 0.8,
         ),
@@ -269,7 +270,7 @@ class _SettingsRow extends StatelessWidget {
       onTap: onTap,
       title: Text(
         label,
-        style: HumaxTextStyle.bodyMd.copyWith(
+        style: HumaxTextStyle.bodyCommon.copyWith(
           color: textColor ?? HumaxColors.textPrimary,
         ),
       ),
@@ -279,7 +280,7 @@ class _SettingsRow extends StatelessWidget {
           if (value != null) ...[
             Text(
               value!,
-              style: HumaxTextStyle.bodyMd
+              style: HumaxTextStyle.bodyCommon
                   .copyWith(color: HumaxColors.textSecondary),
             ),
             const SizedBox(width: HumaxSpace.xs),

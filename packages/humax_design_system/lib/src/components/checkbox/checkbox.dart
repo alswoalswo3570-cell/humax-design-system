@@ -110,7 +110,7 @@ class HumaxCheckbox extends StatelessWidget {
         controlAffinity: controlAffinity,
         title: Text(
           label,
-          style: HumaxTextStyle.bodyMd.copyWith(
+          style: HumaxTextStyle.bodyCommon.copyWith(
             color: onChanged == null
                 ? HumaxColors.textTertiary
                 : HumaxColors.textPrimary,
@@ -119,7 +119,7 @@ class HumaxCheckbox extends StatelessWidget {
         subtitle: subtitle != null
             ? Text(
                 subtitle!,
-                style: HumaxTextStyle.bodySm
+                style: HumaxTextStyle.captionCommon
                     .copyWith(color: HumaxColors.textSecondary),
               )
             : null,

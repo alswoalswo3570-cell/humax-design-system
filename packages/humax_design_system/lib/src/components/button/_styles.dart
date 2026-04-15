@@ -110,9 +110,9 @@ class HumaxButtonStyles {
 
   static TextStyle textStyleFor(HumaxButtonSize size) {
     switch (size) {
-      case HumaxButtonSize.sm: return HumaxTextStyle.labelSm;
-      case HumaxButtonSize.md: return HumaxTextStyle.labelMd;
-      case HumaxButtonSize.lg: return HumaxTextStyle.bodyMd;
+      case HumaxButtonSize.sm: return HumaxTextStyle.captionPoint;
+      case HumaxButtonSize.md: return HumaxTextStyle.bodyPoint;
+      case HumaxButtonSize.lg: return HumaxTextStyle.bodyCommon;
     }
   }
 

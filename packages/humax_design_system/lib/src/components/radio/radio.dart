@@ -101,7 +101,7 @@ class HumaxRadioGroup<T> extends StatelessWidget {
             overlayColor: _overlayColor,
             title: Text(
               option.label,
-              style: HumaxTextStyle.bodyMd.copyWith(
+              style: HumaxTextStyle.bodyCommon.copyWith(
                 color: onChanged == null
                     ? HumaxColors.textTertiary
                     : HumaxColors.textPrimary,
@@ -110,7 +110,7 @@ class HumaxRadioGroup<T> extends StatelessWidget {
             subtitle: option.subtitle != null
                 ? Text(
                     option.subtitle!,
-                    style: HumaxTextStyle.bodySm
+                    style: HumaxTextStyle.captionCommon
                         .copyWith(color: HumaxColors.textSecondary),
                   )
                 : null,

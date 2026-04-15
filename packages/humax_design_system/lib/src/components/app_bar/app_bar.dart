@@ -103,7 +103,7 @@ class HumaxAppBar extends StatelessWidget implements PreferredSizeWidget {
       label: titleSemantics ?? title,
       child: Text(
         title,
-        style: HumaxTextStyle.headingMd.copyWith(color: _foregroundColor),
+        style: HumaxTextStyle.titleLarge.copyWith(color: _foregroundColor),
       ),
     );
   }
@@ -148,7 +148,7 @@ class HumaxAppBar extends StatelessWidget implements PreferredSizeWidget {
         header: true,
         child: Text(
           title,
-          style: HumaxTextStyle.headingMd.copyWith(color: HumaxColors.textPrimary),
+          style: HumaxTextStyle.titleLarge.copyWith(color: HumaxColors.textPrimary),
         ),
       ),
       leading: leading,
@@ -167,7 +167,7 @@ class HumaxAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? FlexibleSpaceBar(
               title: Text(
                 title,
-                style: HumaxTextStyle.headingLg
+                style: HumaxTextStyle.headlineSmall
                     .copyWith(color: HumaxColors.textPrimary),
               ),
               background: Container(color: bg),

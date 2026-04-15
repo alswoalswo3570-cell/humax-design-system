@@ -104,7 +104,7 @@ class HumaxTextField extends StatelessWidget {
         onChanged: onChanged,
         onSubmitted: onSubmitted,
         maxLines: maxLines,
-        style: HumaxTextStyle.bodyMd.copyWith(
+        style: HumaxTextStyle.bodyCommon.copyWith(
           color: _isReadOnly
               ? HumaxColors.textSecondary
               : HumaxColors.textPrimary,
@@ -122,22 +122,22 @@ class HumaxTextField extends StatelessWidget {
               : HumaxColors.backgroundSurface,
 
           // Label style
-          labelStyle: HumaxTextStyle.labelMd.copyWith(
+          labelStyle: HumaxTextStyle.bodyPoint.copyWith(
             color: _hasError
                 ? HumaxColors.feedbackErrorText
                 : HumaxColors.textSecondary,
           ),
-          floatingLabelStyle: HumaxTextStyle.labelSm.copyWith(
+          floatingLabelStyle: HumaxTextStyle.captionPoint.copyWith(
             color: _hasError
                 ? HumaxColors.feedbackErrorText
                 : HumaxColors.actionPrimaryDefault,
           ),
 
           // Helper / error text
-          helperStyle: HumaxTextStyle.labelSm.copyWith(
+          helperStyle: HumaxTextStyle.captionPoint.copyWith(
             color: HumaxColors.textTertiary,
           ),
-          errorStyle: HumaxTextStyle.labelSm.copyWith(
+          errorStyle: HumaxTextStyle.captionPoint.copyWith(
             color: HumaxColors.feedbackErrorText,
           ),
 

@@ -110,13 +110,13 @@ class _HumaxDialogWidget extends StatelessWidget {
       title: title != null
           ? Text(
               title!,
-              style: HumaxTextStyle.headingMd
+              style: HumaxTextStyle.titleLarge
                   .copyWith(color: HumaxColors.textPrimary),
             )
           : null,
       content: Text(
         content,
-        style: HumaxTextStyle.bodyMd.copyWith(color: HumaxColors.textSecondary),
+        style: HumaxTextStyle.bodyCommon.copyWith(color: HumaxColors.textSecondary),
       ),
       actionsPadding: const EdgeInsets.fromLTRB(
         HumaxSpace.md,

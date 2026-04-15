@@ -114,7 +114,7 @@ class HumaxEmptyState extends StatelessWidget {
         // Headline
         Text(
           headline,
-          style: (_isCompact ? HumaxTextStyle.labelMd : HumaxTextStyle.headingMd)
+          style: (_isCompact ? HumaxTextStyle.bodyPoint : HumaxTextStyle.titleLarge)
               .copyWith(color: HumaxColors.textPrimary),
           textAlign: TextAlign.center,
         ),
@@ -124,7 +124,7 @@ class HumaxEmptyState extends StatelessWidget {
           const SizedBox(height: HumaxSpace.sm),
           Text(
             body!,
-            style: HumaxTextStyle.bodyMd.copyWith(color: HumaxColors.textSecondary),
+            style: HumaxTextStyle.bodyCommon.copyWith(color: HumaxColors.textSecondary),
             textAlign: TextAlign.center,
           ),
         ],

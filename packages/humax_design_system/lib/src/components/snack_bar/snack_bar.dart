@@ -95,7 +95,7 @@ abstract class HumaxSnackBar {
       ),
       content: Text(
         message,
-        style: HumaxTextStyle.bodySm.copyWith(color: textColor),
+        style: HumaxTextStyle.captionCommon.copyWith(color: textColor),
       ),
       action: hasAction
           ? SnackBarAction(

@@ -88,14 +88,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 // ── Headline ──────────────────────────────────────────────
                 Text(
                   'Welcome back',
-                  style: HumaxTextStyle.headingLg
+                  style: HumaxTextStyle.headlineSmall
                       .copyWith(color: HumaxColors.textPrimary),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: HumaxSpace.xs),
                 Text(
                   'Sign in to your Humax account',
-                  style: HumaxTextStyle.bodyMd
+                  style: HumaxTextStyle.bodyCommon
                       .copyWith(color: HumaxColors.textSecondary),
                   textAlign: TextAlign.center,
                 ),
@@ -156,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     child: Text(
                       'Forgot password?',
-                      style: HumaxTextStyle.bodySm,
+                      style: HumaxTextStyle.captionCommon,
                     ),
                   ),
                 ),
@@ -180,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         horizontal: HumaxSpace.sm),
                     child: Text(
                       'or',
-                      style: HumaxTextStyle.bodySm
+                      style: HumaxTextStyle.captionCommon
                           .copyWith(color: HumaxColors.textTertiary),
                     ),
                   ),

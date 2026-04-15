@@ -169,14 +169,14 @@ class HumaxErrorState extends StatelessWidget {
             const SizedBox(height: HumaxSpace.lg),
             Text(
               _headline,
-              style: HumaxTextStyle.headingMd
+              style: HumaxTextStyle.titleLarge
                   .copyWith(color: HumaxColors.textPrimary),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: HumaxSpace.sm),
             Text(
               _body,
-              style: HumaxTextStyle.bodyMd
+              style: HumaxTextStyle.bodyCommon
                   .copyWith(color: HumaxColors.textSecondary),
               textAlign: TextAlign.center,
             ),
@@ -209,7 +209,7 @@ class HumaxErrorState extends StatelessWidget {
           Expanded(
             child: Text(
               _headline,
-              style: HumaxTextStyle.labelMd
+              style: HumaxTextStyle.bodyPoint
                   .copyWith(color: HumaxColors.textPrimary),
             ),
           ),
@@ -232,14 +232,14 @@ class HumaxErrorState extends StatelessWidget {
       children: [
         Text(
           '$_headline ',
-          style: HumaxTextStyle.bodySm.copyWith(color: HumaxColors.textSecondary),
+          style: HumaxTextStyle.captionCommon.copyWith(color: HumaxColors.textSecondary),
         ),
         if (onRetry != null)
           GestureDetector(
             onTap: isRetrying ? null : onRetry,
             child: Text(
               _action,
-              style: HumaxTextStyle.bodySm.copyWith(
+              style: HumaxTextStyle.captionCommon.copyWith(
                 color: HumaxColors.actionPrimaryDefault,
                 decoration: TextDecoration.underline,
               ),
