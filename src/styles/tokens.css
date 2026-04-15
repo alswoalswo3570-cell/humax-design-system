@@ -127,7 +127,7 @@
   --humax-color-action-primary-hover: #D4A51F;
   --humax-color-action-primary-active: #BF921B;
   --humax-color-action-primary-disabled: #F5D98A;
-  --humax-color-action-primary-text: #333333;
+  --humax-color-action-primary-text: #FFFFFF;
   --humax-color-action-primary-disabledText: #AAAAAA;
   --humax-color-action-secondary-default: #FFFFFF;
   --humax-color-action-secondary-hover: #F5F5F5;
@@ -165,6 +165,32 @@
   --humax-color-feedback-info-border: #017AFF;
   --humax-color-focusRing-color: #017AFF;
   --humax-color-focusRing-offsetColor: #FFFFFF;
+
+  /* Non-prefixed aliases — consumed by React doc pages */
+  --color-action-primary-default: var(--humax-color-action-primary-default);
+  --color-action-primary-hover: var(--humax-color-action-primary-hover);
+  --color-action-primary-active: var(--humax-color-action-primary-active);
+  --color-action-primary-disabled: var(--humax-color-action-primary-disabled);
+  --color-action-primary-text: var(--humax-color-action-primary-text);
+  --color-action-secondary-default: var(--humax-color-action-secondary-default);
+  --color-action-secondary-hover: var(--humax-color-action-secondary-hover);
+  --color-action-secondary-text: var(--humax-color-action-secondary-text);
+  --color-action-secondary-border: var(--humax-color-action-secondary-border);
+  --color-action-ghost-default: var(--humax-color-action-ghost-default);
+  --color-action-ghost-text: var(--humax-color-action-ghost-text);
+  --color-action-destructive-default: var(--humax-color-action-destructive-default);
+  --color-action-destructive-text: var(--humax-color-action-destructive-text);
+  --color-border-default: var(--humax-color-border-default);
+  --color-border-focus: var(--humax-color-border-focus);
+  --color-border-error: var(--humax-color-border-error);
+  --color-text-primary: var(--humax-color-text-primary);
+  --color-text-secondary: var(--humax-color-text-secondary);
+  --color-background-surface: var(--humax-color-background-surface);
+  --space-xs: var(--humax-space-xs);
+  --space-sm: var(--humax-space-s);
+  --space-md: var(--humax-space-m);
+  --space-lg: var(--humax-space-xl);
+  --radius-md: var(--humax-radius-md);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -189,7 +215,7 @@
   --humax-color-action-primary-hover: #F0C84D;
   --humax-color-action-primary-active: #D4A51F;
   --humax-color-action-primary-disabled: #5A4200;
-  --humax-color-action-primary-text: #1A1A1A;
+  --humax-color-action-primary-text: #FFFFFF;
   --humax-color-action-primary-disabledText: #666666;
   --humax-color-action-secondary-default: #262626;
   --humax-color-action-secondary-hover: #333333;
@@ -251,7 +277,7 @@
   --humax-color-action-primary-hover: #F0C84D;
   --humax-color-action-primary-active: #D4A51F;
   --humax-color-action-primary-disabled: #5A4200;
-  --humax-color-action-primary-text: #1A1A1A;
+  --humax-color-action-primary-text: #FFFFFF;
   --humax-color-action-primary-disabledText: #666666;
   --humax-color-action-secondary-default: #262626;
   --humax-color-action-secondary-hover: #333333;

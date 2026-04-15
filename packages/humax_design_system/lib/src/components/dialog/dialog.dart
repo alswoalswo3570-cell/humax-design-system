@@ -1,73 +1,83 @@
 import 'package:flutter/material.dart';
 import 'package:humax_design_tokens/humax_design_tokens.dart';
 import '../../theme/humax_theme.dart';
-import '../button/button.dart';
 
-/// Variant of [HumaxDialog].
+/// Semantic variant that controls icon color and title color.
 enum HumaxDialogVariant {
-  /// Standard informational alert — dismissible, single confirm action.
-  alert,
+  /// Neutral / informational — title uses [HumaxColorScheme.textPrimary].
+  info,
 
-  /// Destructive confirmation — warns the user before an irreversible action.
-  /// Sets `barrierDismissible: false` and renders the confirm button as
-  /// [HumaxButtonVariant.destructive].
-  destructive,
+  /// Destructive / error — title uses the danger red
+  /// ([HumaxColorScheme.actionDestructiveDefault]).
+  error,
+
+  /// Positive outcome — title uses the success green
+  /// ([HumaxColorScheme.feedbackSuccessBorder]).
+  success,
+
+  /// Cautionary — title uses the warning amber
+  /// ([HumaxColorScheme.feedbackWarningBorder]).
+  warning,
 }
 
-/// A token-driven dialog satisfying the Humax Dialog contract.
+/// Moni-spec dialog widget.
 ///
-/// Wraps [showDialog] + [AlertDialog] with token-bound styling.
+/// Wraps [showDialog] with a custom-layout panel that matches the Figma
+/// spec: colored title, 32 × 32 icon slot, flat action row with a vertical
+/// divider between two actions (or a full-width single action).
 ///
+/// **1-button (acknowledge):**
 /// ```dart
-/// // Informational alert
 /// HumaxDialog.show(
 ///   context: context,
-///   title: 'Update available',
-///   content: 'A new firmware version is ready to install.',
-///   confirmLabel: 'Install now',
-///   onConfirm: () => installUpdate(),
-/// );
-///
-/// // Destructive confirmation — cannot be dismissed by tapping outside
-/// HumaxDialog.show(
-///   context: context,
-///   variant: HumaxDialogVariant.destructive,
-///   title: 'Delete account?',
-///   content: 'This action permanently removes all your data and cannot be undone.',
-///   confirmLabel: 'Delete',
-///   cancelLabel: 'Cancel',
-///   onConfirm: () => deleteAccount(),
+///   variant: HumaxDialogVariant.success,
+///   icon: Icon(Icons.check_circle, color: …, size: 32),
+///   title: 'Success',
+///   content: 'Your device has been registered.',
+///   confirmLabel: 'Done',
 /// );
 /// ```
 ///
-/// **Accessibility:** role is `alertdialog`. Focus moves to the primary action
-/// when the dialog opens.
+/// **2-button (confirm / cancel):**
+/// ```dart
+/// HumaxDialog.show(
+///   context: context,
+///   variant: HumaxDialogVariant.error,
+///   icon: Icon(Icons.error, color: …, size: 32),
+///   title: 'Sign In Error',
+///   content: 'There are already registered devices. Please delete the existing device and try again.',
+///   confirmLabel: 'OK',
+///   cancelLabel: 'Cancel',
+///   onConfirm: () => handleOk(),
+///   onCancel: () => handleCancel(),
+/// );
+/// ```
 abstract class HumaxDialog {
   HumaxDialog._();
 
-  /// Shows a Humax dialog.
-  ///
-  /// Returns `true` if the user confirmed, `false` if cancelled, or `null`
-  /// if the dialog was dismissed by tapping outside (alert variant only).
+  /// Shows the dialog and returns `true` on confirm, `false` on cancel,
+  /// or `null` if dismissed by tapping the barrier (barrier is always
+  /// non-dismissible — returns `null` only if `Navigator.pop()` is called
+  /// with no value).
   static Future<bool?> show({
     required BuildContext context,
+    required String title,
     required String content,
-    String? title,
+    Widget? icon,
     String confirmLabel = 'OK',
     String? cancelLabel,
     VoidCallback? onConfirm,
     VoidCallback? onCancel,
-    HumaxDialogVariant variant = HumaxDialogVariant.alert,
+    HumaxDialogVariant variant = HumaxDialogVariant.info,
   }) {
-    final isDestructive = variant == HumaxDialogVariant.destructive;
-
     return showDialog<bool>(
       context: context,
-      barrierDismissible: !isDestructive,
+      barrierDismissible: false,
       barrierColor: context.humaxColors.backgroundOverlay,
       builder: (ctx) => _HumaxDialogWidget(
         title: title,
         content: content,
+        icon: icon,
         confirmLabel: confirmLabel,
         cancelLabel: cancelLabel,
         onConfirm: onConfirm,
@@ -78,75 +88,191 @@ abstract class HumaxDialog {
   }
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+
 class _HumaxDialogWidget extends StatelessWidget {
   const _HumaxDialogWidget({
+    required this.title,
     required this.content,
     required this.confirmLabel,
     required this.variant,
-    this.title,
+    this.icon,
     this.cancelLabel,
     this.onConfirm,
     this.onCancel,
   });
 
-  final String? title;
+  final String title;
   final String content;
+  final Widget? icon;
   final String confirmLabel;
   final String? cancelLabel;
   final VoidCallback? onConfirm;
   final VoidCallback? onCancel;
   final HumaxDialogVariant variant;
 
+  Color _titleColor(HumaxColorScheme c) {
+    switch (variant) {
+      case HumaxDialogVariant.error:
+        // #DC362E — Moni Figma exact match
+        return c.actionDestructiveDefault;
+      case HumaxDialogVariant.success:
+        // #6FD94A — Moni Figma exact match (light mode)
+        return c.feedbackSuccessBorder;
+      case HumaxDialogVariant.warning:
+        // #EAB722 — Moni Figma exact match
+        return c.feedbackWarningBorder;
+      case HumaxDialogVariant.info:
+        return c.textPrimary;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final c = context.humaxColors;
-    final isDestructive = variant == HumaxDialogVariant.destructive;
+    final hasTwoActions = cancelLabel != null;
 
-    return AlertDialog(
-      backgroundColor: c.backgroundSurface,
-      surfaceTintColor: Colors.transparent,
-      elevation: 3,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(HumaxRadius.xl),
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      // 300 dp fixed width per Moni spec; horizontal padding fills remaining space
+      insetPadding: EdgeInsets.symmetric(
+        horizontal: (MediaQuery.sizeOf(context).width - 300) / 2,
+        vertical: 24,
       ),
-      title: title != null
-          ? Text(
-              title!,
-              style: HumaxTextStyle.titleLarge
-                  .copyWith(color: c.textPrimary),
-            )
-          : null,
-      content: Text(
-        content,
-        style: HumaxTextStyle.bodyCommon.copyWith(color: c.textSecondary),
-      ),
-      actionsPadding: const EdgeInsets.fromLTRB(
-        HumaxSpace.m,
-        HumaxSpace.xxs,
-        HumaxSpace.m,
-        HumaxSpace.m,
-      ),
-      actions: [
-        if (cancelLabel != null)
-          HumaxButton(
-            label: cancelLabel!,
-            variant: HumaxButtonVariant.text,
-            onPressed: () {
-              Navigator.of(context).pop(false);
-              onCancel?.call();
-            },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // ── Content area ──────────────────────────────────────────────
+          Container(
+            padding: const EdgeInsets.all(HumaxSpace.m),
+            decoration: BoxDecoration(
+              color: c.backgroundSurface,
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(HumaxRadius.lg), // 8 dp
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Icon slot — 32 × 32
+                if (icon != null) ...[
+                  SizedBox(width: 32, height: 32, child: icon),
+                  const SizedBox(height: HumaxSpace.xs),
+                ],
+                // Title
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: HumaxTextStyle.titleMedium.copyWith(
+                    color: _titleColor(c),
+                  ),
+                ),
+                const SizedBox(height: HumaxSpace.xs),
+                // Body
+                Text(
+                  content,
+                  textAlign: TextAlign.center,
+                  style: HumaxTextStyle.bodyCommon.copyWith(
+                    color: c.textPrimary,
+                  ),
+                ),
+              ],
+            ),
           ),
-        HumaxButton(
-          label: confirmLabel,
-          variant: isDestructive
-              ? HumaxButtonVariant.destructive
-              : HumaxButtonVariant.filled,
-          onPressed: () {
-            Navigator.of(context).pop(true);
-            onConfirm?.call();
-          },
+
+          // ── Horizontal divider ─────────────────────────────────────────
+          Container(height: 1, color: c.borderSubtle),
+
+          // ── Action row ─────────────────────────────────────────────────
+          ClipRRect(
+            borderRadius: const BorderRadius.vertical(
+              bottom: Radius.circular(HumaxRadius.lg), // 8 dp
+            ),
+            child: hasTwoActions
+                ? IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // Cancel — left half
+                        Expanded(
+                          child: _DialogAction(
+                            label: cancelLabel!,
+                            color: c.textTertiary,
+                            onPressed: () {
+                              Navigator.of(context).pop(false);
+                              onCancel?.call();
+                            },
+                          ),
+                        ),
+                        // Vertical divider between the two actions
+                        VerticalDivider(
+                          width: 1,
+                          thickness: 1,
+                          color: c.borderSubtle,
+                        ),
+                        // Confirm — right half
+                        Expanded(
+                          child: _DialogAction(
+                            label: confirmLabel,
+                            color: c.textPrimary,
+                            onPressed: () {
+                              Navigator.of(context).pop(true);
+                              onConfirm?.call();
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : _DialogAction(
+                    label: confirmLabel,
+                    color: c.textPrimary,
+                    onPressed: () {
+                      Navigator.of(context).pop(true);
+                      onConfirm?.call();
+                    },
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// Flat 56 dp tap target used inside the dialog action row.
+class _DialogAction extends StatelessWidget {
+  const _DialogAction({
+    required this.label,
+    required this.color,
+    required this.onPressed,
+  });
+
+  final String label;
+  final Color color;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.humaxColors;
+    return Material(
+      color: c.backgroundSurface,
+      child: InkWell(
+        onTap: onPressed,
+        child: SizedBox(
+          height: 56,
+          child: Center(
+            child: Text(
+              label,
+              style: HumaxTextStyle.titleSmall.copyWith(color: color),
+            ),
+          ),
         ),
-      ],
+      ),
     );
   }
 }

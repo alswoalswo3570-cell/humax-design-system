@@ -1,62 +1,74 @@
 {
   "name": "Dialog",
   "platform": "Flutter",
-  "purpose": "Interrupts the user with important information, requiring an action or decision.",
+  "purpose": "Interrupts the user with important information or status, requiring an acknowledgment or decision.",
   "whenToUse": [
-    "Confirming destructive actions (e.g., Delete account)",
-    "Requesting critical permissions",
-    "Displaying important alerts that require acknowledgment"
+    "Reporting an error that blocks the user's flow (error variant)",
+    "Confirming a successful operation (success variant)",
+    "Warning the user before a potentially harmful action (warning variant)",
+    "Displaying critical information requiring explicit acknowledgment (info variant)"
   ],
   "whenNotToUse": [
-    "Non-critical information (use Snackbar or inline messages)",
-    "Complex forms or multi-step processes (use a full screen or BottomSheet)"
+    "Non-critical notifications — use Snackbar or inline messages instead",
+    "Complex forms or multi-step processes — use BottomSheet or a full screen instead"
   ],
   "anatomy": [
-    "Container",
-    "Title (optional)",
-    "Content/Message",
-    "Actions (Buttons)"
+    "Icon (32 × 32, optional)",
+    "Title (colored by variant)",
+    "Body content",
+    "Horizontal divider",
+    "Action row: 1-button (full-width) or 2-button (Cancel | OK, split with vertical divider)"
   ],
-  "variants": [
-    "alert",
-    "simple",
-    "custom"
-  ],
+  "variants": ["info", "error", "success", "warning"],
+  "actionLayouts": {
+    "singleAction": "Full-width confirm button (e.g. Done, OK) — used for info/success/warning acknowledgments",
+    "twoAction": "Cancel (left, tertiary text color) | Confirm (right, primary text color) — used for error / critical decisions"
+  },
   "accessibility": {
     "role": "alertdialog",
-    "focus": "Focus should automatically move to the dialog when opened, typically to the primary action or the first focusable element.",
-    "dismissal": "Must be dismissible via the Escape key (unless it's a critical alert requiring explicit action)."
+    "barrierDismissible": false,
+    "focus": "Focus should automatically move to the dialog confirm action when opened."
   },
   "tokenBindings": {
     "container": {
       "backgroundColor": "color.background.surface",
-      "borderRadius": "radius.xl",
-      "elevation": 3.0,
-      "shadowColor": "color.background.overlay"
+      "borderRadius": "radius.lg (8 dp)",
+      "width": "300 dp (fixed per Moni spec)"
     },
     "title": {
-      "typography": "typography.textStyle.headingMd",
+      "typography": "typography.textStyle.titleMedium (18 / 26 / 700)",
+      "color": {
+        "info": "color.text.primary",
+        "error": "color.action.destructive.default (#DC362E)",
+        "success": "color.feedback.success.border (#6FD94A)",
+        "warning": "color.feedback.warning.border (#EAB722)"
+      }
+    },
+    "body": {
+      "typography": "typography.textStyle.bodyCommon (14 / 18 / 400)",
       "color": "color.text.primary"
     },
-    "content": {
-      "typography": "typography.textStyle.bodyMd",
-      "color": "color.text.secondary"
+    "divider": {
+      "color": "color.border.subtle",
+      "thickness": "1 dp"
+    },
+    "actionRow": {
+      "height": "56 dp",
+      "backgroundColor": "color.background.surface",
+      "cancelTextColor": "color.text.tertiary",
+      "confirmTextColor": "color.text.primary",
+      "typography": "typography.textStyle.titleSmall (16 / 24 / 700)"
     }
   },
   "flutterMappingNotes": [
-    "Use showDialog() with an AlertDialog widget.",
-    "Map container tokens to DialogThemeData or directly on AlertDialog properties (backgroundColor, shape, elevation).",
-    "Set barrierDismissible to false for destructive confirmation dialogs.",
-    "Consider useSafeArea to ensure the dialog is not obscured by system UI.",
-    "Expansion notes for DialogThemeData: actionsPadding, iconColor, surfaceTintColor."
+    "Uses a custom Column layout (not AlertDialog) to match the Figma flat-action-row pattern.",
+    "Dialog width is fixed at 300 dp — insetPadding is calculated from screen width.",
+    "Actions are plain Material InkWell targets (not HumaxButton) to avoid padding/shape interference.",
+    "VerticalDivider between two actions; Container(height:1) for the horizontal divider above actions.",
+    "barrierDismissible is always false per Moni spec."
   ],
   "exampleUsage": {
-    "component": "AlertDialog",
-    "props": {
-      "title": "Text('Delete Item?')",
-      "content": "Text('Are you sure you want to delete this item? This action cannot be undone.')",
-      "actions": "[TextButton(child: Text('Cancel')), ElevatedButton(child: Text('Delete'))]",
-      "barrierDismissible": false
-    }
+    "singleAction": "HumaxDialog.show(context: context, variant: HumaxDialogVariant.success, icon: Icon(Icons.check_circle, size: 32), title: 'Success', content: 'Device registered.', confirmLabel: 'Done')",
+    "twoAction": "HumaxDialog.show(context: context, variant: HumaxDialogVariant.error, icon: Icon(Icons.error, size: 32), title: 'Sign In Error', content: 'Registered device limit reached.', confirmLabel: 'OK', cancelLabel: 'Cancel', onConfirm: handleOk)"
   }
 }

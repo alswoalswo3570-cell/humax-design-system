@@ -31,7 +31,7 @@ class HumaxColors {
   static const Color actionPrimaryHover = Color(0xFFD4A51F);
   static const Color actionPrimaryActive = Color(0xFFBF921B);
   static const Color actionPrimaryDisabled = Color(0xFFF5D98A);
-  static const Color actionPrimaryText = Color(0xFF333333);
+  static const Color actionPrimaryText = Color(0xFFFFFFFF);
   static const Color actionPrimaryDisabledText = Color(0xFFAAAAAA);
   static const Color actionSecondaryDefault = Color(0xFFFFFFFF);
   static const Color actionSecondaryHover = Color(0xFFF5F5F5);
@@ -94,7 +94,7 @@ class HumaxDarkColors {
   static const Color actionPrimaryHover = Color(0xFFF0C84D);
   static const Color actionPrimaryActive = Color(0xFFD4A51F);
   static const Color actionPrimaryDisabled = Color(0xFF5A4200);
-  static const Color actionPrimaryText = Color(0xFF1A1A1A);
+  static const Color actionPrimaryText = Color(0xFFFFFFFF);
   static const Color actionPrimaryDisabledText = Color(0xFF666666);
   static const Color actionSecondaryDefault = Color(0xFF262626);
   static const Color actionSecondaryHover = Color(0xFF333333);

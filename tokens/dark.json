@@ -28,7 +28,7 @@
         "hover": "#F0C84D",
         "active": "#D4A51F",
         "disabled": "#5A4200",
-        "text": "#1A1A1A",
+        "text": "#FFFFFF",
         "disabledText": "#666666"
       },
       "secondary": {

@@ -115,9 +115,9 @@ class HumaxButtonStyles {
 
   static TextStyle textStyleFor(HumaxButtonSize size) {
     switch (size) {
-      case HumaxButtonSize.sm: return HumaxTextStyle.captionPoint;
-      case HumaxButtonSize.md: return HumaxTextStyle.bodyPoint;
-      case HumaxButtonSize.lg: return HumaxTextStyle.bodyCommon;
+      case HumaxButtonSize.sm: return HumaxTextStyle.captionPoint;  // 12px/500
+      case HumaxButtonSize.md: return HumaxTextStyle.titleSmall;    // 16px/700 — Moni primary button spec
+      case HumaxButtonSize.lg: return HumaxTextStyle.titleSmall;    // 16px/700 — same spec, larger padding
     }
   }
 

@@ -639,7 +639,7 @@ export default function LayoutGrid() {
               <div className="h-20 pt-8 border-b border-gray-200 dark:border-gray-700 flex items-center px-4 shrink-0">
                 <span className="font-semibold text-sm text-gray-900 dark:text-white">Edit profile</span>
               </div>
-              <div className="flex-1 p-4 space-y-4 relative -top-12">
+              <div className="flex-1 p-4 space-y-4 overflow-hidden">
                 <div className="space-y-1">
                   <div className="h-3 w-16 bg-gray-200 dark:bg-gray-700 rounded" />
                   <div className="h-10 w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded" />
@@ -732,8 +732,15 @@ function CoexistTile({
   return (
     <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-xl border border-gray-200 dark:border-gray-700 flex flex-col items-center">
       <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">{title}</h3>
-      <div className="w-48 h-64 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg relative overflow-hidden shadow-sm">
+      {/* Phone mockup — 390:844 ratio matching actual mobile viewport */}
+      <div className="w-36 aspect-[390/844] bg-white dark:bg-gray-900 rounded-[1.75rem] border-[5px] border-gray-800 dark:border-black relative overflow-hidden shadow-xl">
+        {/* Notch */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-4 bg-gray-800 dark:bg-black rounded-b-xl z-30" />
+        {/* Push normal-flow content below the notch */}
+        <div className="h-5" />
         {children}
+        {/* Home indicator */}
+        <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-14 h-[3px] bg-gray-400 dark:bg-gray-500 rounded-full z-30" />
       </div>
       <p className="text-xs text-gray-500 dark:text-gray-400 mt-4 text-center">{description}</p>
     </div>
