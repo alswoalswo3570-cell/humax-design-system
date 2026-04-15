@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:humax_design_tokens/humax_design_tokens.dart';
+import '../../theme/humax_theme.dart';
 import '../button/button.dart';
 
 /// Variant of [HumaxDialog].
@@ -63,7 +64,7 @@ abstract class HumaxDialog {
     return showDialog<bool>(
       context: context,
       barrierDismissible: !isDestructive,
-      barrierColor: HumaxColors.backgroundOverlay,
+      barrierColor: context.humaxColors.backgroundOverlay,
       builder: (ctx) => _HumaxDialogWidget(
         title: title,
         content: content,
@@ -98,10 +99,11 @@ class _HumaxDialogWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.humaxColors;
     final isDestructive = variant == HumaxDialogVariant.destructive;
 
     return AlertDialog(
-      backgroundColor: HumaxColors.backgroundSurface,
+      backgroundColor: c.backgroundSurface,
       surfaceTintColor: Colors.transparent,
       elevation: 3,
       shape: RoundedRectangleBorder(
@@ -111,18 +113,18 @@ class _HumaxDialogWidget extends StatelessWidget {
           ? Text(
               title!,
               style: HumaxTextStyle.titleLarge
-                  .copyWith(color: HumaxColors.textPrimary),
+                  .copyWith(color: c.textPrimary),
             )
           : null,
       content: Text(
         content,
-        style: HumaxTextStyle.bodyCommon.copyWith(color: HumaxColors.textSecondary),
+        style: HumaxTextStyle.bodyCommon.copyWith(color: c.textSecondary),
       ),
       actionsPadding: const EdgeInsets.fromLTRB(
-        HumaxSpace.md,
-        HumaxSpace.xs,
-        HumaxSpace.md,
-        HumaxSpace.md,
+        HumaxSpace.m,
+        HumaxSpace.xxs,
+        HumaxSpace.m,
+        HumaxSpace.m,
       ),
       actions: [
         if (cancelLabel != null)

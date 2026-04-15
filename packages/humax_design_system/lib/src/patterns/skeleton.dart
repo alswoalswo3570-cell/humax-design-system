@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:humax_design_tokens/humax_design_tokens.dart';
+import '../theme/humax_theme.dart';
 
 /// A single shimmer-animated skeleton placeholder shape.
 ///
@@ -59,6 +60,7 @@ class _HumaxSkeletonState extends State<HumaxSkeleton>
 
   @override
   Widget build(BuildContext context) {
+    final c = context.humaxColors;
     return AnimatedBuilder(
       animation: _shimmer,
       builder: (context, _) {
@@ -71,9 +73,9 @@ class _HumaxSkeletonState extends State<HumaxSkeleton>
               begin: Alignment(_shimmer.value - 1, 0),
               end: Alignment(_shimmer.value + 1, 0),
               colors: [
-                HumaxColors.backgroundSurfaceHover,
-                HumaxColors.backgroundSurface,
-                HumaxColors.backgroundSurfaceHover,
+                c.backgroundSurfaceHover,
+                c.backgroundSurface,
+                c.backgroundSurfaceHover,
               ],
             ),
           ),
@@ -121,22 +123,22 @@ class HumaxSkeletonListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: HumaxSpace.md,
-        vertical: HumaxSpace.sm,
+        horizontal: HumaxSpace.m,
+        vertical: HumaxSpace.xs,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (showAvatar) ...[
             const HumaxSkeletonAvatar(),
-            const SizedBox(width: HumaxSpace.md),
+            const SizedBox(width: HumaxSpace.m),
           ],
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 HumaxSkeleton(width: double.infinity, height: 14),
-                const SizedBox(height: HumaxSpace.xs),
+                const SizedBox(height: HumaxSpace.xxs),
                 HumaxSkeleton(width: 180, height: 12),
               ],
             ),
@@ -207,9 +209,10 @@ class HumaxSkeletonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.humaxColors;
     return Container(
       decoration: BoxDecoration(
-        color: HumaxColors.backgroundSurface,
+        color: c.backgroundSurface,
         borderRadius: BorderRadius.circular(HumaxRadius.lg),
         boxShadow: HumaxShadow.sm,
       ),
@@ -224,7 +227,7 @@ class HumaxSkeletonCard extends StatelessWidget {
               borderRadius: 0,
             ),
           Padding(
-            padding: const EdgeInsets.all(HumaxSpace.md),
+            padding: const EdgeInsets.all(HumaxSpace.m),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -233,7 +236,7 @@ class HumaxSkeletonCard extends StatelessWidget {
                     width: i == lineCount - 1 ? 120 : double.infinity,
                     height: i == 0 ? 16 : 12,
                   ),
-                  if (i < lineCount - 1) const SizedBox(height: HumaxSpace.xs),
+                  if (i < lineCount - 1) const SizedBox(height: HumaxSpace.xxs),
                 ],
               ],
             ),

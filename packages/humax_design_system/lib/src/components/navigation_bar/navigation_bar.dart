@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:humax_design_tokens/humax_design_tokens.dart';
+import '../../theme/humax_theme.dart';
 
 /// A single destination entry for [HumaxNavigationBar].
 ///
@@ -67,30 +68,29 @@ class HumaxNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.humaxColors;
     return NavigationBar(
       selectedIndex: selectedIndex,
       onDestinationSelected: onDestinationSelected,
-      backgroundColor: HumaxColors.backgroundSurface,
-      surfaceTintColor: HumaxColors.backgroundSurfaceHover,
-      indicatorColor: HumaxColors.actionPrimaryDefault,
+      backgroundColor: c.backgroundSurface,
+      surfaceTintColor: c.backgroundSurfaceHover,
+      indicatorColor: c.actionPrimaryDefault,
       elevation: 3,
       labelTextStyle: WidgetStateProperty.resolveWith((states) {
         final isSelected = states.contains(WidgetState.selected);
         return HumaxTextStyle.captionPoint.copyWith(
-          color: isSelected
-              ? HumaxColors.textPrimary
-              : HumaxColors.textSecondary,
+          color: isSelected ? c.textPrimary : c.textSecondary,
           fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
         );
       }),
       iconTheme: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.disabled)) {
-          return IconThemeData(color: HumaxColors.textTertiary, size: 24);
+          return IconThemeData(color: c.textTertiary, size: 24);
         }
         if (states.contains(WidgetState.selected)) {
-          return IconThemeData(color: HumaxColors.actionPrimaryText, size: 24);
+          return IconThemeData(color: c.actionPrimaryText, size: 24);
         }
-        return IconThemeData(color: HumaxColors.textSecondary, size: 24);
+        return IconThemeData(color: c.textSecondary, size: 24);
       }),
       destinations: destinations.map((d) {
         return NavigationDestination(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:humax_design_tokens/humax_design_tokens.dart';
 import '../components/button/button.dart';
+import '../theme/humax_theme.dart';
 
 /// Size variant of [HumaxEmptyState].
 enum HumaxEmptyStateSize {
@@ -81,6 +82,7 @@ class HumaxEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.humaxColors;
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -105,33 +107,33 @@ class HumaxEmptyState extends StatelessWidget {
             child: Icon(
               icon,
               size: _iconSize,
-              color: HumaxColors.textTertiary,
+              color: c.textTertiary,
             ),
           ),
 
-        SizedBox(height: _isCompact ? HumaxSpace.sm : HumaxSpace.lg),
+        SizedBox(height: _isCompact ? HumaxSpace.xs : HumaxSpace.xl),
 
         // Headline
         Text(
           headline,
           style: (_isCompact ? HumaxTextStyle.bodyPoint : HumaxTextStyle.titleLarge)
-              .copyWith(color: HumaxColors.textPrimary),
+              .copyWith(color: c.textPrimary),
           textAlign: TextAlign.center,
         ),
 
         // Body
         if (body != null) ...[
-          const SizedBox(height: HumaxSpace.sm),
+          const SizedBox(height: HumaxSpace.xs),
           Text(
             body!,
-            style: HumaxTextStyle.bodyCommon.copyWith(color: HumaxColors.textSecondary),
+            style: HumaxTextStyle.bodyCommon.copyWith(color: c.textSecondary),
             textAlign: TextAlign.center,
           ),
         ],
 
         // Actions
         if (primaryActionLabel != null && onPrimaryAction != null) ...[
-          SizedBox(height: _isCompact ? HumaxSpace.md : HumaxSpace.xl),
+          SizedBox(height: _isCompact ? HumaxSpace.m : HumaxSpace.xxl),
           HumaxButton(
             label: primaryActionLabel!,
             onPressed: onPrimaryAction,
@@ -140,7 +142,7 @@ class HumaxEmptyState extends StatelessWidget {
         ],
 
         if (secondaryActionLabel != null && onSecondaryAction != null) ...[
-          const SizedBox(height: HumaxSpace.sm),
+          const SizedBox(height: HumaxSpace.xs),
           HumaxButton(
             label: secondaryActionLabel!,
             onPressed: onSecondaryAction,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:humax_design_tokens/humax_design_tokens.dart';
+import '../../theme/humax_theme.dart';
 
 /// A token-driven switch satisfying the Humax Switch contract.
 ///
@@ -53,73 +54,72 @@ class HumaxSwitch extends StatelessWidget {
   /// Accessible name override. Defaults to [label].
   final String? semanticsLabel;
 
-  WidgetStateProperty<Color?> get _trackColor {
+  WidgetStateProperty<Color?> _trackColor(HumaxColorScheme c) {
     return WidgetStateProperty.resolveWith((states) {
       if (states.contains(WidgetState.disabled)) {
-        return HumaxColors.borderSubtle;
+        return c.borderSubtle;
       }
       if (states.contains(WidgetState.selected)) {
-        return HumaxColors.actionPrimaryDefault;
+        return c.actionPrimaryDefault;
       }
-      return HumaxColors.borderDefault;
+      return c.borderDefault;
     });
   }
 
-  WidgetStateProperty<Color?> get _thumbColor {
+  WidgetStateProperty<Color?> _thumbColor(HumaxColorScheme c) {
     return WidgetStateProperty.resolveWith((states) {
       if (states.contains(WidgetState.disabled)) {
-        return HumaxColors.textTertiary;
+        return c.textTertiary;
       }
       if (states.contains(WidgetState.selected)) {
-        return HumaxColors.backgroundSurface;
+        return c.backgroundSurface;
       }
-      return HumaxColors.textSecondary;
+      return c.textSecondary;
     });
   }
 
-  WidgetStateProperty<Icon?>? get _thumbIcon {
+  WidgetStateProperty<Icon?>? _thumbIconFor(HumaxColorScheme c) {
     if (!showThumbIcon) return null;
     return WidgetStateProperty.resolveWith((states) {
       if (states.contains(WidgetState.selected)) {
-        return Icon(Icons.check, size: 14, color: HumaxColors.actionPrimaryDefault);
+        return Icon(Icons.check, size: 14, color: c.actionPrimaryDefault);
       }
-      return Icon(Icons.close, size: 14, color: HumaxColors.textTertiary);
+      return Icon(Icons.close, size: 14, color: c.textTertiary);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final c = context.humaxColors;
     return Semantics(
       label: semanticsLabel ?? label,
       child: SwitchListTile(
         value: value,
         onChanged: onChanged,
-        trackColor: _trackColor,
-        thumbColor: _thumbColor,
-        thumbIcon: _thumbIcon,
+        trackColor: _trackColor(c),
+        thumbColor: _thumbColor(c),
+        thumbIcon: _thumbIconFor(c),
         trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
         overlayColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.pressed)) {
-            return HumaxColors.actionPrimaryDefault.withOpacity(0.08);
+            return c.actionPrimaryDefault.withOpacity(0.08);
           }
           if (states.contains(WidgetState.focused)) {
-            return HumaxColors.actionPrimaryDefault.withOpacity(0.12);
+            return c.actionPrimaryDefault.withOpacity(0.12);
           }
           return Colors.transparent;
         }),
         title: Text(
           label,
           style: HumaxTextStyle.bodyCommon.copyWith(
-            color: onChanged == null
-                ? HumaxColors.textTertiary
-                : HumaxColors.textPrimary,
+            color: onChanged == null ? c.textTertiary : c.textPrimary,
           ),
         ),
         subtitle: subtitle != null
             ? Text(
                 subtitle!,
                 style: HumaxTextStyle.captionCommon
-                    .copyWith(color: HumaxColors.textSecondary),
+                    .copyWith(color: c.textSecondary),
               )
             : null,
       ),

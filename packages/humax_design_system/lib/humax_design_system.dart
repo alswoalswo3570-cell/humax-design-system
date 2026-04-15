@@ -6,6 +6,15 @@
 /// ```
 library humax_design_system;
 
+// Theme — dark-mode-aware color scheme
+export 'src/theme/humax_theme.dart';
+// Layout — breakpoint helpers
+export 'src/layout/breakpoint.dart';
+// Re-export token-layer types so callers don't need a separate tokens import
+// when they just want the scheme struct, breakpoint enum, or grid tier.
+export 'package:humax_design_tokens/humax_design_tokens.dart'
+    show HumaxColorScheme, HumaxBreakpoint, HumaxBreakpoints, HumaxGrid, HumaxGridTier;
+
 // Components — Tier 1
 export 'src/components/button/button.dart';
 export 'src/components/text_field/text_field.dart';

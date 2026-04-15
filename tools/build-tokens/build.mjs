@@ -204,6 +204,73 @@ ${body}
 `;
 }
 
+/**
+ * Generate a HumaxColorScheme immutable struct + light()/dark() factories.
+ * Used by HumaxTheme so widgets can read colors via context.humaxColors.* and
+ * automatically switch between light/dark at runtime. Field list is derived
+ * from the light palette, so keys stay in lock-step with generated HumaxColors.
+ */
+function genColorSchemeClass(lightColor, darkColor) {
+  const lightEntries = flattenColors(lightColor);
+  const darkEntries  = flattenColors(darkColor);
+  const lightKeys = new Set(lightEntries.map(([id]) => id));
+  const darkKeys  = new Set(darkEntries.map(([id]) => id));
+
+  // Sanity: if keys drift, fail the build loudly rather than emit silent zero values.
+  for (const id of lightKeys) {
+    if (!darkKeys.has(id)) {
+      throw new Error(`HumaxColorScheme: light has "${id}" but dark does not — token drift detected.`);
+    }
+  }
+  for (const id of darkKeys) {
+    if (!lightKeys.has(id)) {
+      throw new Error(`HumaxColorScheme: dark has "${id}" but light does not — token drift detected.`);
+    }
+  }
+
+  const fields = lightEntries.map(([id]) => id);
+
+  const fieldDecls = fields
+    .map((id) => `  final Color ${id};`)
+    .join('\n');
+
+  const ctorParams = fields
+    .map((id) => `    required this.${id},`)
+    .join('\n');
+
+  const lightFactoryBody = fields
+    .map((id) => `    ${id}: HumaxColors.${id},`)
+    .join('\n');
+
+  const darkFactoryBody = fields
+    .map((id) => `    ${id}: HumaxDarkColors.${id},`)
+    .join('\n');
+
+  return `// ─── HumaxColorScheme ───────────────────────────────────────────────────────
+/// Runtime, brightness-switchable color scheme consumed by HumaxTheme.
+///
+/// Prefer \`context.humaxColors.foo\` over \`HumaxColors.foo\` in widget code —
+/// static HumaxColors/HumaxDarkColors do not auto-switch with brightness.
+class HumaxColorScheme {
+${fieldDecls}
+
+  const HumaxColorScheme({
+${ctorParams}
+  });
+
+  /// Light palette — mirrors [HumaxColors].
+  factory HumaxColorScheme.light() => HumaxColorScheme(
+${lightFactoryBody}
+      );
+
+  /// Dark palette — mirrors [HumaxDarkColors].
+  factory HumaxColorScheme.dark() => HumaxColorScheme(
+${darkFactoryBody}
+      );
+}
+`;
+}
+
 function genSpaceClass(spaceObj) {
   const body = Object.entries(spaceObj)
     .map(([k, v]) => `  static const double ${toDartId(k)} = ${lengthToDouble(v)};`)
@@ -212,6 +279,75 @@ function genSpaceClass(spaceObj) {
 class HumaxSpace {
   HumaxSpace._();
 ${body}
+}
+`;
+}
+
+function genBreakpointClasses(bpObj) {
+  const entries = Object.entries(bpObj);
+  const body = entries
+    .map(([k, v]) => `  static const double ${toDartId(k)} = ${lengthToDouble(v)};`)
+    .join('\n');
+
+  const enumCases = entries
+    .map(([k]) => `  ${toDartId(k)},`)
+    .join('\n');
+
+  return `// ─── Breakpoints ─────────────────────────────────────────────────────────────
+class HumaxBreakpoints {
+  HumaxBreakpoints._();
+${body}
+}
+
+/// Viewport-width tier. Obtain the current tier via
+/// \`context.humaxBreakpoint\` (see layout/breakpoint.dart).
+enum HumaxBreakpoint {
+${enumCases}
+}
+`;
+}
+
+function genGridClasses(gridObj) {
+  const tierNames = Object.keys(gridObj);
+  const tierConsts = tierNames
+    .map((name) => {
+      const t = gridObj[name];
+      return `  static const HumaxGridTier ${toDartId(name)} = HumaxGridTier(\n` +
+             `    margin: ${lengthToDouble(t.margin)},\n` +
+             `    gutter: ${lengthToDouble(t.gutter)},\n` +
+             `    columns: ${t.columns},\n` +
+             `  );`;
+    })
+    .join('\n\n');
+
+  const switchArms = tierNames
+    .map((name) => `      HumaxBreakpoint.${toDartId(name)} => ${toDartId(name)},`)
+    .join('\n');
+
+  return `// ─── Grid ────────────────────────────────────────────────────────────────────
+/// Per-breakpoint grid specification: side margin, gutter between columns,
+/// and column count.
+class HumaxGridTier {
+  final double margin;
+  final double gutter;
+  final int columns;
+
+  const HumaxGridTier({
+    required this.margin,
+    required this.gutter,
+    required this.columns,
+  });
+}
+
+class HumaxGrid {
+  HumaxGrid._();
+
+${tierConsts}
+
+  /// Returns the grid tier for the given [HumaxBreakpoint].
+  static HumaxGridTier forBreakpoint(HumaxBreakpoint bp) => switch (bp) {
+${switchArms}
+      };
 }
 `;
 }
@@ -358,7 +494,10 @@ function buildDart() {
     genHeader(),
     genColorClass('HumaxColors',     light.color),
     genColorClass('HumaxDarkColors', dark.color),
+    genColorSchemeClass(light.color, dark.color),
     genSpaceClass(base.space),
+    genBreakpointClasses(base.breakpoint),
+    genGridClasses(base.grid),
     genRadiusClass(base.radius),
     genTypographyClasses(base.typography),
     genMotionClasses(base.motion),

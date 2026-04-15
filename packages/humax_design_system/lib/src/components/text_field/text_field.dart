@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:humax_design_tokens/humax_design_tokens.dart';
+import '../../theme/humax_theme.dart';
 
 /// State of the text field — controls border and label color.
 enum HumaxTextFieldState {
@@ -92,6 +93,7 @@ class HumaxTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.humaxColors;
     return Semantics(
       label: semanticsLabel ?? label,
       child: TextField(
@@ -105,9 +107,7 @@ class HumaxTextField extends StatelessWidget {
         onSubmitted: onSubmitted,
         maxLines: maxLines,
         style: HumaxTextStyle.bodyCommon.copyWith(
-          color: _isReadOnly
-              ? HumaxColors.textSecondary
-              : HumaxColors.textPrimary,
+          color: _isReadOnly ? c.textSecondary : c.textPrimary,
         ),
         decoration: InputDecoration(
           labelText: label,
@@ -118,67 +118,65 @@ class HumaxTextField extends StatelessWidget {
           // Colors
           filled: true,
           fillColor: _isReadOnly
-              ? HumaxColors.backgroundSurfaceHover
-              : HumaxColors.backgroundSurface,
+              ? c.backgroundSurfaceHover
+              : c.backgroundSurface,
 
           // Label style
           labelStyle: HumaxTextStyle.bodyPoint.copyWith(
-            color: _hasError
-                ? HumaxColors.feedbackErrorText
-                : HumaxColors.textSecondary,
+            color: _hasError ? c.feedbackErrorText : c.textSecondary,
           ),
           floatingLabelStyle: HumaxTextStyle.captionPoint.copyWith(
             color: _hasError
-                ? HumaxColors.feedbackErrorText
-                : HumaxColors.actionPrimaryDefault,
+                ? c.feedbackErrorText
+                : c.actionPrimaryDefault,
           ),
 
           // Helper / error text
           helperStyle: HumaxTextStyle.captionPoint.copyWith(
-            color: HumaxColors.textTertiary,
+            color: c.textTertiary,
           ),
           errorStyle: HumaxTextStyle.captionPoint.copyWith(
-            color: HumaxColors.feedbackErrorText,
+            color: c.feedbackErrorText,
           ),
 
           // Padding
           contentPadding: const EdgeInsets.symmetric(
-            horizontal: HumaxSpace.md,
-            vertical: HumaxSpace.sm,
+            horizontal: HumaxSpace.m,
+            vertical: HumaxSpace.xs,
           ),
 
           // Borders
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(HumaxRadius.md),
-            borderSide: BorderSide(color: HumaxColors.borderDefault),
+            borderSide: BorderSide(color: c.borderDefault),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(HumaxRadius.md),
             borderSide: BorderSide(
-              color: _hasError ? HumaxColors.borderError : HumaxColors.borderDefault,
+              color: _hasError ? c.borderError : c.borderDefault,
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(HumaxRadius.md),
             borderSide: BorderSide(
-              color: _hasError ? HumaxColors.borderError : HumaxColors.borderFocus,
+              color: _hasError ? c.borderError : c.borderFocus,
               width: HumaxFocusRing.thickness,
             ),
           ),
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(HumaxRadius.md),
-            borderSide: BorderSide(color: HumaxColors.borderError),
+            borderSide: BorderSide(color: c.borderError),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(HumaxRadius.md),
             borderSide: BorderSide(
-              color: HumaxColors.borderError,
+              color: c.borderError,
               width: HumaxFocusRing.thickness,
             ),
           ),
           disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(HumaxRadius.md),
-            borderSide: BorderSide(color: HumaxColors.borderSubtle),
+            borderSide: BorderSide(color: c.borderSubtle),
           ),
         ),
       ),

@@ -7,6 +7,74 @@ Versioning follows [Semantic Versioning](https://semver.org/) per package — se
 
 ## [Unreleased]
 
+### Spacing + Breakpoint + Grid — Moni Style Guide alignment (2026-04-15) — Phase B
+
+**Breaking change** for `HumaxSpace.*` identifiers. All 69 widget + example_app callsites migrated mechanically.
+
+**Spacing — 8 values matching Moni 4dp grid**
+
+| Old | px | New | px |
+| --- | --- | --- | --- |
+| `xs` | 4 | `xxs` | 4 |
+| `sm` | 8 | `xs` | 8 |
+| — | — | `s` | **12 (new)** |
+| `md` | 16 | `m` | 16 |
+| — | — | `l` | **20 (new)** |
+| `lg` | 24 | `xl` | 24 |
+| `xl` | 32 | `xxl` | 32 |
+| `twoXl` / `threeXl` / `fourXl` | 48 / 64 / 96 | ❌ removed | — |
+
+Callsites previously using 48/64/96 (3 total: `login_screen.dart` ×2, `error_state.dart` ×1) were migrated to `xxl` (32) per Moni guidance — slight vertical compression by design.
+
+**New — Breakpoints**
+- `tokens/base.json` → `breakpoint` section (compact 0 / medium 600 / expanded 840)
+- Generated `HumaxBreakpoints` class (const doubles) + `HumaxBreakpoint` enum (compact/medium/expanded)
+- New `packages/humax_design_system/lib/src/layout/breakpoint.dart`:
+  - `humaxBreakpointOf(BuildContext)` → current tier
+  - `context.humaxBreakpoint` extension for fluent access
+
+**New — Grid (3 tiers)**
+- `tokens/base.json` → `grid` section per breakpoint:
+  - compact:  margin 20, gutter 8, columns 4 (Moni-verified)
+  - medium:   margin 24, gutter 16, columns 8 (Material 3 guidance, awaiting Moni spec)
+  - expanded: margin 32, gutter 24, columns 12 (Material 3 guidance, awaiting Moni spec)
+- Generated `HumaxGridTier` immutable struct + `HumaxGrid` class with `compact` / `medium` / `expanded` consts and `HumaxGrid.forBreakpoint(bp)` switch helper
+
+**Build pipeline**
+- `tools/build-tokens/build.mjs`:
+  - New `genBreakpointClasses` — emits both consts and enum
+  - New `genGridClasses` — emits `HumaxGridTier` struct, tier consts, and `forBreakpoint` switch
+
+**Barrel export**
+- `packages/humax_design_system/lib/humax_design_system.dart` re-exports `HumaxBreakpoint`, `HumaxBreakpoints`, `HumaxGrid`, `HumaxGridTier` from tokens package for ergonomic imports.
+
+### Dark-mode infrastructure — `HumaxTheme` (2026-04-15) — Phase A
+
+**Breaking change** for direct consumers of the static `HumaxColors.*` API: widget code and apps should now read colors via `context.humaxColors.*` so that light/dark modes auto-switch.
+
+**New**
+- `HumaxColorScheme` — immutable struct mirroring all 58 semantic color fields, auto-generated in `packages/humax_design_tokens/lib/src/tokens.dart` alongside light/dark factories
+- `HumaxTheme` InheritedWidget + `HumaxTheme.of(context)` / `HumaxTheme.maybeOf(context)` / `BuildContextHumaxTheme.humaxColors` extension under `packages/humax_design_system/lib/src/theme/humax_theme.dart`
+- Falls back to deriving scheme from `Theme.of(context).brightness` when no `HumaxTheme` ancestor is present — existing apps won't crash
+- Field-parity + ancestor resolution tests at `packages/humax_design_system/test/theme/humax_theme_test.dart`
+- Barrel export re-exports `HumaxColorScheme` for ergonomics
+
+**Build pipeline**
+- `tools/build-tokens/build.mjs` now emits `HumaxColorScheme` + `.light()` / `.dark()` factories and throws loudly if light/dark keys drift
+
+**Migration (internal API-compatible)**
+- All 11 widgets + 3 patterns: internal color reads switched from `HumaxColors.*` to `context.humaxColors.*`. Public widget APIs unchanged.
+- Getters returning `WidgetStateProperty` (checkbox, radio, switch) refactored to methods that accept `HumaxColorScheme` — internal only.
+- `HumaxButtonStyles.styleFor`/`backgroundFor`/etc. now take `HumaxColorScheme c` as first parameter (internal, only consumed by `HumaxButton`).
+- `HumaxBottomSheet.decoration` / `.dragHandle` getters replaced by `decorationOf(context)` / `dragHandleOf(context)` methods **(breaking — but zero external consumers at 0.1.0)**.
+- `HumaxAppBar.sliver(...)` now requires `context` as a named parameter **(breaking for direct callers — none exist yet)**.
+- `apps/example_app/lib/main.dart` wraps the tree with `HumaxTheme` in `MaterialApp.builder`, switching on `Theme.of(context).brightness`.
+
+**Bug fixes surfaced during migration**
+- `snack_bar.dart` referenced non-existent `HumaxColors.feedbackErrorBg` → corrected to `feedbackErrorBackground`
+- `settings_screen.dart` referenced non-existent `HumaxColors.feedbackErrorDefault` (×2) → corrected to `actionDestructiveDefault`
+- `main.dart` referenced non-existent `HumaxColors.backgroundBase` → corrected to `backgroundPage`
+
 ### Typography — Moni Style Guide alignment (2026-04-15)
 
 **Breaking change** to `HumaxTextStyle`. All 6 legacy keys renamed to Moni naming; 9 new styles added. Widget callsites migrated.

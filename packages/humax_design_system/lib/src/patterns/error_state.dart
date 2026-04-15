@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:humax_design_tokens/humax_design_tokens.dart';
 import '../components/button/button.dart';
+import '../theme/humax_theme.dart';
 
 /// Semantic error type — drives default copy and icon.
 ///
@@ -144,44 +145,45 @@ class HumaxErrorState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.humaxColors;
     return Semantics(
       liveRegion: true,
       child: switch (variant) {
-        HumaxErrorVariant.pageLevelFull  => _buildFull(),
-        HumaxErrorVariant.sectionLevel   => _buildSection(),
-        HumaxErrorVariant.inlineRetry    => _buildInline(context),
+        HumaxErrorVariant.pageLevelFull  => _buildFull(c),
+        HumaxErrorVariant.sectionLevel   => _buildSection(c),
+        HumaxErrorVariant.inlineRetry    => _buildInline(c),
       },
     );
   }
 
-  Widget _buildFull() {
+  Widget _buildFull(HumaxColorScheme c) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(HumaxSpace.twoXl),
+        padding: const EdgeInsets.all(HumaxSpace.xxl),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               _defaultIcon(type),
               size: 48,
-              color: HumaxColors.feedbackErrorText,
+              color: c.feedbackErrorText,
             ),
-            const SizedBox(height: HumaxSpace.lg),
+            const SizedBox(height: HumaxSpace.xl),
             Text(
               _headline,
               style: HumaxTextStyle.titleLarge
-                  .copyWith(color: HumaxColors.textPrimary),
+                  .copyWith(color: c.textPrimary),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: HumaxSpace.sm),
+            const SizedBox(height: HumaxSpace.xs),
             Text(
               _body,
               style: HumaxTextStyle.bodyCommon
-                  .copyWith(color: HumaxColors.textSecondary),
+                  .copyWith(color: c.textSecondary),
               textAlign: TextAlign.center,
             ),
             if (onRetry != null) ...[
-              const SizedBox(height: HumaxSpace.xl),
+              const SizedBox(height: HumaxSpace.xxl),
               HumaxButton(
                 label: _action,
                 onPressed: isRetrying ? null : onRetry,
@@ -194,23 +196,23 @@ class HumaxErrorState extends StatelessWidget {
     );
   }
 
-  Widget _buildSection() {
+  Widget _buildSection(HumaxColorScheme c) {
     return Padding(
-      padding: const EdgeInsets.all(HumaxSpace.md),
+      padding: const EdgeInsets.all(HumaxSpace.m),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Icon(
             _defaultIcon(type),
             size: 24,
-            color: HumaxColors.feedbackErrorText,
+            color: c.feedbackErrorText,
           ),
-          const SizedBox(width: HumaxSpace.sm),
+          const SizedBox(width: HumaxSpace.xs),
           Expanded(
             child: Text(
               _headline,
               style: HumaxTextStyle.bodyPoint
-                  .copyWith(color: HumaxColors.textPrimary),
+                  .copyWith(color: c.textPrimary),
             ),
           ),
           if (onRetry != null)
@@ -226,13 +228,13 @@ class HumaxErrorState extends StatelessWidget {
     );
   }
 
-  Widget _buildInline(BuildContext context) {
+  Widget _buildInline(HumaxColorScheme c) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           '$_headline ',
-          style: HumaxTextStyle.captionCommon.copyWith(color: HumaxColors.textSecondary),
+          style: HumaxTextStyle.captionCommon.copyWith(color: c.textSecondary),
         ),
         if (onRetry != null)
           GestureDetector(
@@ -240,7 +242,7 @@ class HumaxErrorState extends StatelessWidget {
             child: Text(
               _action,
               style: HumaxTextStyle.captionCommon.copyWith(
-                color: HumaxColors.actionPrimaryDefault,
+                color: c.actionPrimaryDefault,
                 decoration: TextDecoration.underline,
               ),
             ),

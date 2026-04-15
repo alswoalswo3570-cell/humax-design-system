@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:humax_design_tokens/humax_design_tokens.dart';
+import '../../theme/humax_theme.dart';
 
 /// Variant of the app bar.
 ///
@@ -83,11 +84,11 @@ class HumaxAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   bool get _isTransparent => variant == HumaxAppBarVariant.transparent;
 
-  Color get _backgroundColor => _isTransparent
+  Color _backgroundColor(HumaxColorScheme c) => _isTransparent
       ? Colors.transparent
-      : HumaxColors.backgroundSurface;
+      : c.backgroundSurface;
 
-  Color get _foregroundColor => HumaxColors.textPrimary;
+  Color _foregroundColor(HumaxColorScheme c) => c.textPrimary;
 
   List<BoxShadow> get _shadow =>
       _isTransparent ? const [] : HumaxShadow.sm;
@@ -97,28 +98,29 @@ class HumaxAppBar extends StatelessWidget implements PreferredSizeWidget {
         kToolbarHeight + (bottom?.preferredSize.height ?? 0),
       );
 
-  Widget _buildTitle() {
+  Widget _buildTitle(HumaxColorScheme c) {
     return Semantics(
       header: true,
       label: titleSemantics ?? title,
       child: Text(
         title,
-        style: HumaxTextStyle.titleLarge.copyWith(color: _foregroundColor),
+        style: HumaxTextStyle.titleLarge.copyWith(color: _foregroundColor(c)),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final c = context.humaxColors;
     return AppBar(
-      title: _buildTitle(),
+      title: _buildTitle(c),
       leading: leading,
       automaticallyImplyLeading: automaticallyImplyLeading,
       actions: actions,
       bottom: bottom,
       centerTitle: centerTitle,
-      backgroundColor: _backgroundColor,
-      foregroundColor: _foregroundColor,
+      backgroundColor: _backgroundColor(c),
+      foregroundColor: _foregroundColor(c),
       surfaceTintColor: Colors.transparent,
       shadowColor: _shadow.isNotEmpty ? _shadow.first.color : Colors.transparent,
       elevation: _shadow.isNotEmpty ? 1 : 0,
@@ -128,7 +130,10 @@ class HumaxAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   /// Creates a [SliverAppBar] version for use inside [CustomScrollView].
+  ///
+  /// Requires [BuildContext] so colors auto-switch with [HumaxTheme].
   static Widget sliver({
+    required BuildContext context,
     required String title,
     HumaxAppBarVariant variant = HumaxAppBarVariant.standard,
     Widget? leading,
@@ -139,16 +144,17 @@ class HumaxAppBar extends StatelessWidget implements PreferredSizeWidget {
     bool floating = false,
     bool snap = false,
   }) {
+    final c = context.humaxColors;
     final isLarge = variant == HumaxAppBarVariant.large;
     final isTransparent = variant == HumaxAppBarVariant.transparent;
-    final bg = isTransparent ? Colors.transparent : HumaxColors.backgroundSurface;
+    final bg = isTransparent ? Colors.transparent : c.backgroundSurface;
 
     return SliverAppBar(
       title: Semantics(
         header: true,
         child: Text(
           title,
-          style: HumaxTextStyle.titleLarge.copyWith(color: HumaxColors.textPrimary),
+          style: HumaxTextStyle.titleLarge.copyWith(color: c.textPrimary),
         ),
       ),
       leading: leading,
@@ -160,7 +166,7 @@ class HumaxAppBar extends StatelessWidget implements PreferredSizeWidget {
       snap: snap,
       expandedHeight: isLarge ? 120 : kToolbarHeight,
       backgroundColor: bg,
-      foregroundColor: HumaxColors.textPrimary,
+      foregroundColor: c.textPrimary,
       surfaceTintColor: Colors.transparent,
       elevation: isTransparent ? 0 : 1,
       flexibleSpace: isLarge
@@ -168,7 +174,7 @@ class HumaxAppBar extends StatelessWidget implements PreferredSizeWidget {
               title: Text(
                 title,
                 style: HumaxTextStyle.headlineSmall
-                    .copyWith(color: HumaxColors.textPrimary),
+                    .copyWith(color: c.textPrimary),
               ),
               background: Container(color: bg),
               collapseMode: CollapseMode.pin,

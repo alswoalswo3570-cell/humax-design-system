@@ -134,18 +134,328 @@ class HumaxDarkColors {
   static const Color focusRingOffsetColor = Color(0xFF1A1A1A);
 }
 
+// ─── HumaxColorScheme ───────────────────────────────────────────────────────
+/// Runtime, brightness-switchable color scheme consumed by HumaxTheme.
+///
+/// Prefer `context.humaxColors.foo` over `HumaxColors.foo` in widget code —
+/// static HumaxColors/HumaxDarkColors do not auto-switch with brightness.
+class HumaxColorScheme {
+  final Color backgroundPage;
+  final Color backgroundSurface;
+  final Color backgroundSurfaceHover;
+  final Color backgroundSurfaceActive;
+  final Color backgroundInverse;
+  final Color backgroundOverlay;
+  final Color textPrimary;
+  final Color textSecondary;
+  final Color textTertiary;
+  final Color textDisabled;
+  final Color textInverse;
+  final Color borderSubtle;
+  final Color borderDefault;
+  final Color borderStrong;
+  final Color borderFocus;
+  final Color borderError;
+  final Color actionPrimaryDefault;
+  final Color actionPrimaryHover;
+  final Color actionPrimaryActive;
+  final Color actionPrimaryDisabled;
+  final Color actionPrimaryText;
+  final Color actionPrimaryDisabledText;
+  final Color actionSecondaryDefault;
+  final Color actionSecondaryHover;
+  final Color actionSecondaryActive;
+  final Color actionSecondaryDisabled;
+  final Color actionSecondaryText;
+  final Color actionSecondaryDisabledText;
+  final Color actionSecondaryBorder;
+  final Color actionSecondaryBorderHover;
+  final Color actionSecondaryBorderActive;
+  final Color actionSecondaryBorderDisabled;
+  final Color actionGhostDefault;
+  final Color actionGhostHover;
+  final Color actionGhostActive;
+  final Color actionGhostDisabled;
+  final Color actionGhostText;
+  final Color actionGhostDisabledText;
+  final Color actionDestructiveDefault;
+  final Color actionDestructiveHover;
+  final Color actionDestructiveActive;
+  final Color actionDestructiveDisabled;
+  final Color actionDestructiveText;
+  final Color actionDestructiveDisabledText;
+  final Color feedbackSuccessBackground;
+  final Color feedbackSuccessText;
+  final Color feedbackSuccessBorder;
+  final Color feedbackWarningBackground;
+  final Color feedbackWarningText;
+  final Color feedbackWarningBorder;
+  final Color feedbackErrorBackground;
+  final Color feedbackErrorText;
+  final Color feedbackErrorBorder;
+  final Color feedbackInfoBackground;
+  final Color feedbackInfoText;
+  final Color feedbackInfoBorder;
+  final Color focusRingColor;
+  final Color focusRingOffsetColor;
+
+  const HumaxColorScheme({
+    required this.backgroundPage,
+    required this.backgroundSurface,
+    required this.backgroundSurfaceHover,
+    required this.backgroundSurfaceActive,
+    required this.backgroundInverse,
+    required this.backgroundOverlay,
+    required this.textPrimary,
+    required this.textSecondary,
+    required this.textTertiary,
+    required this.textDisabled,
+    required this.textInverse,
+    required this.borderSubtle,
+    required this.borderDefault,
+    required this.borderStrong,
+    required this.borderFocus,
+    required this.borderError,
+    required this.actionPrimaryDefault,
+    required this.actionPrimaryHover,
+    required this.actionPrimaryActive,
+    required this.actionPrimaryDisabled,
+    required this.actionPrimaryText,
+    required this.actionPrimaryDisabledText,
+    required this.actionSecondaryDefault,
+    required this.actionSecondaryHover,
+    required this.actionSecondaryActive,
+    required this.actionSecondaryDisabled,
+    required this.actionSecondaryText,
+    required this.actionSecondaryDisabledText,
+    required this.actionSecondaryBorder,
+    required this.actionSecondaryBorderHover,
+    required this.actionSecondaryBorderActive,
+    required this.actionSecondaryBorderDisabled,
+    required this.actionGhostDefault,
+    required this.actionGhostHover,
+    required this.actionGhostActive,
+    required this.actionGhostDisabled,
+    required this.actionGhostText,
+    required this.actionGhostDisabledText,
+    required this.actionDestructiveDefault,
+    required this.actionDestructiveHover,
+    required this.actionDestructiveActive,
+    required this.actionDestructiveDisabled,
+    required this.actionDestructiveText,
+    required this.actionDestructiveDisabledText,
+    required this.feedbackSuccessBackground,
+    required this.feedbackSuccessText,
+    required this.feedbackSuccessBorder,
+    required this.feedbackWarningBackground,
+    required this.feedbackWarningText,
+    required this.feedbackWarningBorder,
+    required this.feedbackErrorBackground,
+    required this.feedbackErrorText,
+    required this.feedbackErrorBorder,
+    required this.feedbackInfoBackground,
+    required this.feedbackInfoText,
+    required this.feedbackInfoBorder,
+    required this.focusRingColor,
+    required this.focusRingOffsetColor,
+  });
+
+  /// Light palette — mirrors [HumaxColors].
+  factory HumaxColorScheme.light() => HumaxColorScheme(
+    backgroundPage: HumaxColors.backgroundPage,
+    backgroundSurface: HumaxColors.backgroundSurface,
+    backgroundSurfaceHover: HumaxColors.backgroundSurfaceHover,
+    backgroundSurfaceActive: HumaxColors.backgroundSurfaceActive,
+    backgroundInverse: HumaxColors.backgroundInverse,
+    backgroundOverlay: HumaxColors.backgroundOverlay,
+    textPrimary: HumaxColors.textPrimary,
+    textSecondary: HumaxColors.textSecondary,
+    textTertiary: HumaxColors.textTertiary,
+    textDisabled: HumaxColors.textDisabled,
+    textInverse: HumaxColors.textInverse,
+    borderSubtle: HumaxColors.borderSubtle,
+    borderDefault: HumaxColors.borderDefault,
+    borderStrong: HumaxColors.borderStrong,
+    borderFocus: HumaxColors.borderFocus,
+    borderError: HumaxColors.borderError,
+    actionPrimaryDefault: HumaxColors.actionPrimaryDefault,
+    actionPrimaryHover: HumaxColors.actionPrimaryHover,
+    actionPrimaryActive: HumaxColors.actionPrimaryActive,
+    actionPrimaryDisabled: HumaxColors.actionPrimaryDisabled,
+    actionPrimaryText: HumaxColors.actionPrimaryText,
+    actionPrimaryDisabledText: HumaxColors.actionPrimaryDisabledText,
+    actionSecondaryDefault: HumaxColors.actionSecondaryDefault,
+    actionSecondaryHover: HumaxColors.actionSecondaryHover,
+    actionSecondaryActive: HumaxColors.actionSecondaryActive,
+    actionSecondaryDisabled: HumaxColors.actionSecondaryDisabled,
+    actionSecondaryText: HumaxColors.actionSecondaryText,
+    actionSecondaryDisabledText: HumaxColors.actionSecondaryDisabledText,
+    actionSecondaryBorder: HumaxColors.actionSecondaryBorder,
+    actionSecondaryBorderHover: HumaxColors.actionSecondaryBorderHover,
+    actionSecondaryBorderActive: HumaxColors.actionSecondaryBorderActive,
+    actionSecondaryBorderDisabled: HumaxColors.actionSecondaryBorderDisabled,
+    actionGhostDefault: HumaxColors.actionGhostDefault,
+    actionGhostHover: HumaxColors.actionGhostHover,
+    actionGhostActive: HumaxColors.actionGhostActive,
+    actionGhostDisabled: HumaxColors.actionGhostDisabled,
+    actionGhostText: HumaxColors.actionGhostText,
+    actionGhostDisabledText: HumaxColors.actionGhostDisabledText,
+    actionDestructiveDefault: HumaxColors.actionDestructiveDefault,
+    actionDestructiveHover: HumaxColors.actionDestructiveHover,
+    actionDestructiveActive: HumaxColors.actionDestructiveActive,
+    actionDestructiveDisabled: HumaxColors.actionDestructiveDisabled,
+    actionDestructiveText: HumaxColors.actionDestructiveText,
+    actionDestructiveDisabledText: HumaxColors.actionDestructiveDisabledText,
+    feedbackSuccessBackground: HumaxColors.feedbackSuccessBackground,
+    feedbackSuccessText: HumaxColors.feedbackSuccessText,
+    feedbackSuccessBorder: HumaxColors.feedbackSuccessBorder,
+    feedbackWarningBackground: HumaxColors.feedbackWarningBackground,
+    feedbackWarningText: HumaxColors.feedbackWarningText,
+    feedbackWarningBorder: HumaxColors.feedbackWarningBorder,
+    feedbackErrorBackground: HumaxColors.feedbackErrorBackground,
+    feedbackErrorText: HumaxColors.feedbackErrorText,
+    feedbackErrorBorder: HumaxColors.feedbackErrorBorder,
+    feedbackInfoBackground: HumaxColors.feedbackInfoBackground,
+    feedbackInfoText: HumaxColors.feedbackInfoText,
+    feedbackInfoBorder: HumaxColors.feedbackInfoBorder,
+    focusRingColor: HumaxColors.focusRingColor,
+    focusRingOffsetColor: HumaxColors.focusRingOffsetColor,
+      );
+
+  /// Dark palette — mirrors [HumaxDarkColors].
+  factory HumaxColorScheme.dark() => HumaxColorScheme(
+    backgroundPage: HumaxDarkColors.backgroundPage,
+    backgroundSurface: HumaxDarkColors.backgroundSurface,
+    backgroundSurfaceHover: HumaxDarkColors.backgroundSurfaceHover,
+    backgroundSurfaceActive: HumaxDarkColors.backgroundSurfaceActive,
+    backgroundInverse: HumaxDarkColors.backgroundInverse,
+    backgroundOverlay: HumaxDarkColors.backgroundOverlay,
+    textPrimary: HumaxDarkColors.textPrimary,
+    textSecondary: HumaxDarkColors.textSecondary,
+    textTertiary: HumaxDarkColors.textTertiary,
+    textDisabled: HumaxDarkColors.textDisabled,
+    textInverse: HumaxDarkColors.textInverse,
+    borderSubtle: HumaxDarkColors.borderSubtle,
+    borderDefault: HumaxDarkColors.borderDefault,
+    borderStrong: HumaxDarkColors.borderStrong,
+    borderFocus: HumaxDarkColors.borderFocus,
+    borderError: HumaxDarkColors.borderError,
+    actionPrimaryDefault: HumaxDarkColors.actionPrimaryDefault,
+    actionPrimaryHover: HumaxDarkColors.actionPrimaryHover,
+    actionPrimaryActive: HumaxDarkColors.actionPrimaryActive,
+    actionPrimaryDisabled: HumaxDarkColors.actionPrimaryDisabled,
+    actionPrimaryText: HumaxDarkColors.actionPrimaryText,
+    actionPrimaryDisabledText: HumaxDarkColors.actionPrimaryDisabledText,
+    actionSecondaryDefault: HumaxDarkColors.actionSecondaryDefault,
+    actionSecondaryHover: HumaxDarkColors.actionSecondaryHover,
+    actionSecondaryActive: HumaxDarkColors.actionSecondaryActive,
+    actionSecondaryDisabled: HumaxDarkColors.actionSecondaryDisabled,
+    actionSecondaryText: HumaxDarkColors.actionSecondaryText,
+    actionSecondaryDisabledText: HumaxDarkColors.actionSecondaryDisabledText,
+    actionSecondaryBorder: HumaxDarkColors.actionSecondaryBorder,
+    actionSecondaryBorderHover: HumaxDarkColors.actionSecondaryBorderHover,
+    actionSecondaryBorderActive: HumaxDarkColors.actionSecondaryBorderActive,
+    actionSecondaryBorderDisabled: HumaxDarkColors.actionSecondaryBorderDisabled,
+    actionGhostDefault: HumaxDarkColors.actionGhostDefault,
+    actionGhostHover: HumaxDarkColors.actionGhostHover,
+    actionGhostActive: HumaxDarkColors.actionGhostActive,
+    actionGhostDisabled: HumaxDarkColors.actionGhostDisabled,
+    actionGhostText: HumaxDarkColors.actionGhostText,
+    actionGhostDisabledText: HumaxDarkColors.actionGhostDisabledText,
+    actionDestructiveDefault: HumaxDarkColors.actionDestructiveDefault,
+    actionDestructiveHover: HumaxDarkColors.actionDestructiveHover,
+    actionDestructiveActive: HumaxDarkColors.actionDestructiveActive,
+    actionDestructiveDisabled: HumaxDarkColors.actionDestructiveDisabled,
+    actionDestructiveText: HumaxDarkColors.actionDestructiveText,
+    actionDestructiveDisabledText: HumaxDarkColors.actionDestructiveDisabledText,
+    feedbackSuccessBackground: HumaxDarkColors.feedbackSuccessBackground,
+    feedbackSuccessText: HumaxDarkColors.feedbackSuccessText,
+    feedbackSuccessBorder: HumaxDarkColors.feedbackSuccessBorder,
+    feedbackWarningBackground: HumaxDarkColors.feedbackWarningBackground,
+    feedbackWarningText: HumaxDarkColors.feedbackWarningText,
+    feedbackWarningBorder: HumaxDarkColors.feedbackWarningBorder,
+    feedbackErrorBackground: HumaxDarkColors.feedbackErrorBackground,
+    feedbackErrorText: HumaxDarkColors.feedbackErrorText,
+    feedbackErrorBorder: HumaxDarkColors.feedbackErrorBorder,
+    feedbackInfoBackground: HumaxDarkColors.feedbackInfoBackground,
+    feedbackInfoText: HumaxDarkColors.feedbackInfoText,
+    feedbackInfoBorder: HumaxDarkColors.feedbackInfoBorder,
+    focusRingColor: HumaxDarkColors.focusRingColor,
+    focusRingOffsetColor: HumaxDarkColors.focusRingOffsetColor,
+      );
+}
+
 // ─── Spacing ─────────────────────────────────────────────────────────────────
 class HumaxSpace {
   HumaxSpace._();
   static const double none = 0;
-  static const double xs = 4;
-  static const double sm = 8;
-  static const double md = 16;
-  static const double lg = 24;
-  static const double xl = 32;
-  static const double twoXl = 48;
-  static const double threeXl = 64;
-  static const double fourXl = 96;
+  static const double xxs = 4;
+  static const double xs = 8;
+  static const double s = 12;
+  static const double m = 16;
+  static const double l = 20;
+  static const double xl = 24;
+  static const double xxl = 32;
+}
+
+// ─── Breakpoints ─────────────────────────────────────────────────────────────
+class HumaxBreakpoints {
+  HumaxBreakpoints._();
+  static const double compact = 0;
+  static const double medium = 600;
+  static const double expanded = 840;
+}
+
+/// Viewport-width tier. Obtain the current tier via
+/// `context.humaxBreakpoint` (see layout/breakpoint.dart).
+enum HumaxBreakpoint {
+  compact,
+  medium,
+  expanded,
+}
+
+// ─── Grid ────────────────────────────────────────────────────────────────────
+/// Per-breakpoint grid specification: side margin, gutter between columns,
+/// and column count.
+class HumaxGridTier {
+  final double margin;
+  final double gutter;
+  final int columns;
+
+  const HumaxGridTier({
+    required this.margin,
+    required this.gutter,
+    required this.columns,
+  });
+}
+
+class HumaxGrid {
+  HumaxGrid._();
+
+  static const HumaxGridTier compact = HumaxGridTier(
+    margin: 20,
+    gutter: 8,
+    columns: 4,
+  );
+
+  static const HumaxGridTier medium = HumaxGridTier(
+    margin: 24,
+    gutter: 16,
+    columns: 8,
+  );
+
+  static const HumaxGridTier expanded = HumaxGridTier(
+    margin: 32,
+    gutter: 24,
+    columns: 12,
+  );
+
+  /// Returns the grid tier for the given [HumaxBreakpoint].
+  static HumaxGridTier forBreakpoint(HumaxBreakpoint bp) => switch (bp) {
+      HumaxBreakpoint.compact => compact,
+      HumaxBreakpoint.medium => medium,
+      HumaxBreakpoint.expanded => expanded,
+      };
 }
 
 // ─── Border Radius ───────────────────────────────────────────────────────────

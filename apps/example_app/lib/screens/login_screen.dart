@@ -67,6 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.humaxColors;
     return Scaffold(
       appBar: HumaxAppBar(
         title: 'Sign in',
@@ -75,31 +76,31 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(
-            horizontal: HumaxSpace.lg,
-            vertical: HumaxSpace.md,
+            horizontal: HumaxSpace.xl,
+            vertical: HumaxSpace.m,
           ),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: HumaxSpace.xl),
+                const SizedBox(height: HumaxSpace.xxl),
 
                 // ── Headline ──────────────────────────────────────────────
                 Text(
                   'Welcome back',
                   style: HumaxTextStyle.headlineSmall
-                      .copyWith(color: HumaxColors.textPrimary),
+                      .copyWith(color: c.textPrimary),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: HumaxSpace.xs),
+                const SizedBox(height: HumaxSpace.xxs),
                 Text(
                   'Sign in to your Humax account',
                   style: HumaxTextStyle.bodyCommon
-                      .copyWith(color: HumaxColors.textSecondary),
+                      .copyWith(color: c.textSecondary),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: HumaxSpace.threeXl),
+                const SizedBox(height: HumaxSpace.xxl),
 
                 // ── Server error banner ───────────────────────────────────
                 if (_serverError != null) ...[
@@ -108,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     title: 'Sign in failed',
                     message: _serverError!,
                   ),
-                  const SizedBox(height: HumaxSpace.md),
+                  const SizedBox(height: HumaxSpace.m),
                 ],
 
                 // ── Email field ───────────────────────────────────────────
@@ -124,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                const SizedBox(height: HumaxSpace.md),
+                const SizedBox(height: HumaxSpace.m),
 
                 // ── Password field ────────────────────────────────────────
                 HumaxTextField(
@@ -142,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                const SizedBox(height: HumaxSpace.xs),
+                const SizedBox(height: HumaxSpace.xxs),
 
                 // ── Forgot password ───────────────────────────────────────
                 Align(
@@ -150,9 +151,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: TextButton(
                     onPressed: _handleForgotPassword,
                     style: TextButton.styleFrom(
-                      foregroundColor: HumaxColors.actionPrimaryDefault,
+                      foregroundColor: c.actionPrimaryDefault,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: HumaxSpace.xs),
+                          horizontal: HumaxSpace.xxs),
                     ),
                     child: Text(
                       'Forgot password?',
@@ -160,7 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: HumaxSpace.lg),
+                const SizedBox(height: HumaxSpace.xl),
 
                 // ── Primary CTA ───────────────────────────────────────────
                 HumaxButton(
@@ -170,23 +171,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   loading: _loading,
                   onPressed: _loading ? null : _handleLogin,
                 ),
-                const SizedBox(height: HumaxSpace.md),
+                const SizedBox(height: HumaxSpace.m),
 
                 // ── Divider ───────────────────────────────────────────────
                 Row(children: [
                   const Expanded(child: Divider()),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: HumaxSpace.sm),
+                        horizontal: HumaxSpace.xs),
                     child: Text(
                       'or',
                       style: HumaxTextStyle.captionCommon
-                          .copyWith(color: HumaxColors.textTertiary),
+                          .copyWith(color: c.textTertiary),
                     ),
                   ),
                   const Expanded(child: Divider()),
                 ]),
-                const SizedBox(height: HumaxSpace.md),
+                const SizedBox(height: HumaxSpace.m),
 
                 // ── Secondary CTA ─────────────────────────────────────────
                 HumaxButton(
@@ -196,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () => Navigator.pop(context),
                 ),
 
-                const SizedBox(height: HumaxSpace.fourXl),
+                const SizedBox(height: HumaxSpace.xxl),
               ],
             ),
           ),

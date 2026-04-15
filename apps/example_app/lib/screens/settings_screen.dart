@@ -29,48 +29,51 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void _showAppearanceSheet() {
     HumaxBottomSheet.show(
       context: context,
-      builder: (ctx) => Padding(
-        padding: const EdgeInsets.fromLTRB(
-          HumaxSpace.lg,
-          HumaxSpace.sm,
-          HumaxSpace.lg,
-          HumaxSpace.xl,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Appearance',
-              style: HumaxTextStyle.titleLarge
-                  .copyWith(color: HumaxColors.textPrimary),
-            ),
-            const SizedBox(height: HumaxSpace.sm),
-            ...['Light', 'Dark', 'System default'].map(
-              (option) => ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: Text(
-                  option,
-                  style: HumaxTextStyle.bodyCommon
-                      .copyWith(color: HumaxColors.textPrimary),
-                ),
-                trailing: _appearance == option
-                    ? Icon(Icons.check,
-                        color: HumaxColors.actionPrimaryDefault)
-                    : null,
-                onTap: () {
-                  setState(() => _appearance = option);
-                  Navigator.pop(ctx);
-                  HumaxSnackBar.show(
-                    context: context,
-                    message: 'Appearance set to $option',
-                  );
-                },
+      builder: (ctx) {
+        final c = ctx.humaxColors;
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(
+            HumaxSpace.xl,
+            HumaxSpace.xs,
+            HumaxSpace.xl,
+            HumaxSpace.xxl,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Appearance',
+                style: HumaxTextStyle.titleLarge
+                    .copyWith(color: c.textPrimary),
               ),
-            ),
-          ],
-        ),
-      ),
+              const SizedBox(height: HumaxSpace.xs),
+              ...['Light', 'Dark', 'System default'].map(
+                (option) => ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(
+                    option,
+                    style: HumaxTextStyle.bodyCommon
+                        .copyWith(color: c.textPrimary),
+                  ),
+                  trailing: _appearance == option
+                      ? Icon(Icons.check,
+                          color: c.actionPrimaryDefault)
+                      : null,
+                  onTap: () {
+                    setState(() => _appearance = option);
+                    Navigator.pop(ctx);
+                    HumaxSnackBar.show(
+                      context: context,
+                      message: 'Appearance set to $option',
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -121,10 +124,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.humaxColors;
     return Scaffold(
       appBar: HumaxAppBar(title: 'Settings'),
       body: ListView(
-        padding: const EdgeInsets.symmetric(vertical: HumaxSpace.sm),
+        padding: const EdgeInsets.symmetric(vertical: HumaxSpace.xs),
         children: [
           // ── Preferences ────────────────────────────────────────────────
           _SectionHeader('Preferences'),
@@ -151,8 +155,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
 
           Divider(
-            height: HumaxSpace.lg * 2,
-            color: HumaxColors.borderDefault,
+            height: HumaxSpace.xl * 2,
+            color: c.borderDefault,
           ),
 
           // ── Connected devices ──────────────────────────────────────────
@@ -160,7 +164,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
           if (_devices.isEmpty)
             Padding(
-              padding: const EdgeInsets.all(HumaxSpace.xl),
+              padding: const EdgeInsets.all(HumaxSpace.xxl),
               child: HumaxEmptyState(
                 icon: Icons.devices_outlined,
                 headline: 'No devices linked',
@@ -180,22 +184,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ..._devices.map(
               (device) => ListTile(
                 contentPadding: const EdgeInsets.symmetric(
-                  horizontal: HumaxSpace.md,
-                  vertical: HumaxSpace.xs,
+                  horizontal: HumaxSpace.m,
+                  vertical: HumaxSpace.xxs,
                 ),
                 leading: Icon(
                   Icons.tv_outlined,
-                  color: HumaxColors.textSecondary,
+                  color: c.textSecondary,
                 ),
                 title: Text(
                   device,
                   style: HumaxTextStyle.bodyCommon
-                      .copyWith(color: HumaxColors.textPrimary),
+                      .copyWith(color: c.textPrimary),
                 ),
                 trailing: IconButton(
                   icon: Icon(
                     Icons.delete_outline,
-                    color: HumaxColors.feedbackErrorDefault,
+                    color: c.actionDestructiveDefault,
                   ),
                   tooltip: 'Remove device',
                   onPressed: () => _removeDevice(device),
@@ -204,8 +208,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
 
           Divider(
-            height: HumaxSpace.lg * 2,
-            color: HumaxColors.borderDefault,
+            height: HumaxSpace.xl * 2,
+            color: c.borderDefault,
           ),
 
           // ── Account ────────────────────────────────────────────────────
@@ -214,10 +218,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
           _SettingsRow(
             label: 'Sign out',
             onTap: _handleSignOut,
-            textColor: HumaxColors.feedbackErrorDefault,
+            textColor: c.actionDestructiveDefault,
           ),
 
-          const SizedBox(height: HumaxSpace.xl),
+          const SizedBox(height: HumaxSpace.xxl),
         ],
       ),
     );
@@ -232,17 +236,18 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.humaxColors;
     return Padding(
       padding: const EdgeInsets.fromLTRB(
-        HumaxSpace.md,
-        HumaxSpace.md,
-        HumaxSpace.md,
-        HumaxSpace.xs,
+        HumaxSpace.m,
+        HumaxSpace.m,
+        HumaxSpace.m,
+        HumaxSpace.xxs,
       ),
       child: Text(
         label.toUpperCase(),
         style: HumaxTextStyle.captionPoint.copyWith(
-          color: HumaxColors.textTertiary,
+          color: c.textTertiary,
           letterSpacing: 0.8,
         ),
       ),
@@ -265,13 +270,14 @@ class _SettingsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.humaxColors;
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: HumaxSpace.md),
+      contentPadding: const EdgeInsets.symmetric(horizontal: HumaxSpace.m),
       onTap: onTap,
       title: Text(
         label,
         style: HumaxTextStyle.bodyCommon.copyWith(
-          color: textColor ?? HumaxColors.textPrimary,
+          color: textColor ?? c.textPrimary,
         ),
       ),
       trailing: Row(
@@ -281,11 +287,11 @@ class _SettingsRow extends StatelessWidget {
             Text(
               value!,
               style: HumaxTextStyle.bodyCommon
-                  .copyWith(color: HumaxColors.textSecondary),
+                  .copyWith(color: c.textSecondary),
             ),
-            const SizedBox(width: HumaxSpace.xs),
+            const SizedBox(width: HumaxSpace.xxs),
           ],
-          Icon(Icons.chevron_right, color: HumaxColors.textTertiary, size: 20),
+          Icon(Icons.chevron_right, color: c.textTertiary, size: 20),
         ],
       ),
     );

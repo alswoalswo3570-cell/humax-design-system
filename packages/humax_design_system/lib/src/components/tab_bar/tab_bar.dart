@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:humax_design_tokens/humax_design_tokens.dart';
+import '../../theme/humax_theme.dart';
 
 /// Scrollability variant of [HumaxTabBar].
 enum HumaxTabBarVariant {
@@ -72,30 +73,30 @@ class HumaxTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _buildTabBar();
+    return _buildTabBar(context.humaxColors);
   }
 
-  TabBar _buildTabBar() {
+  TabBar _buildTabBar(HumaxColorScheme c) {
     return TabBar(
       controller: controller,
       isScrollable: variant == HumaxTabBarVariant.scrollable,
       tabAlignment: variant == HumaxTabBarVariant.scrollable
           ? TabAlignment.start
           : TabAlignment.fill,
-      labelColor: HumaxColors.actionPrimaryDefault,
-      unselectedLabelColor: HumaxColors.textSecondary,
+      labelColor: c.actionPrimaryDefault,
+      unselectedLabelColor: c.textSecondary,
       labelStyle: HumaxTextStyle.bodyPoint
           .copyWith(fontWeight: FontWeight.w600),
       unselectedLabelStyle: HumaxTextStyle.bodyPoint,
-      indicatorColor: HumaxColors.actionPrimaryDefault,
-      indicatorWeight: HumaxSpace.xs,
+      indicatorColor: c.actionPrimaryDefault,
+      indicatorWeight: HumaxSpace.xxs,
       indicatorSize: TabBarIndicatorSize.tab,
       overlayColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.pressed)) {
-          return HumaxColors.actionPrimaryDefault.withOpacity(0.08);
+          return c.actionPrimaryDefault.withOpacity(0.08);
         }
         if (states.contains(WidgetState.focused)) {
-          return HumaxColors.actionPrimaryDefault.withOpacity(0.12);
+          return c.actionPrimaryDefault.withOpacity(0.12);
         }
         return Colors.transparent;
       }),

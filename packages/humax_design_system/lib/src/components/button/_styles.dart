@@ -5,12 +5,17 @@ import 'button.dart';
 
 /// Internal styling helpers for HumaxButton.
 /// Not part of the public API — import button.dart instead.
+///
+/// Color methods accept a [HumaxColorScheme] so that the same style helper
+/// can resolve to light or dark colors depending on the enclosing
+/// `HumaxTheme`. Callers read the scheme once via `context.humaxColors`
+/// in `build()` and pass it to these helpers.
 class HumaxButtonStyles {
   HumaxButtonStyles._();
 
   // ── Background ─────────────────────────────────────────────────────────────
 
-  static Color backgroundFor(
+  static Color backgroundFor(HumaxColorScheme c,
       HumaxButtonVariant variant, Set<MaterialState> states) {
     final disabled = states.contains(MaterialState.disabled);
     final pressed  = states.contains(MaterialState.pressed);
@@ -18,60 +23,60 @@ class HumaxButtonStyles {
 
     switch (variant) {
       case HumaxButtonVariant.filled:
-        if (disabled) return HumaxColors.actionPrimaryDisabled;
-        if (pressed)  return HumaxColors.actionPrimaryActive;
-        if (hovered)  return HumaxColors.actionPrimaryHover;
-        return HumaxColors.actionPrimaryDefault;
+        if (disabled) return c.actionPrimaryDisabled;
+        if (pressed)  return c.actionPrimaryActive;
+        if (hovered)  return c.actionPrimaryHover;
+        return c.actionPrimaryDefault;
 
       case HumaxButtonVariant.outlined:
-        if (disabled) return HumaxColors.actionSecondaryDisabled;
-        if (pressed)  return HumaxColors.actionSecondaryActive;
-        if (hovered)  return HumaxColors.actionSecondaryHover;
-        return HumaxColors.actionSecondaryDefault;
+        if (disabled) return c.actionSecondaryDisabled;
+        if (pressed)  return c.actionSecondaryActive;
+        if (hovered)  return c.actionSecondaryHover;
+        return c.actionSecondaryDefault;
 
       case HumaxButtonVariant.text:
-        if (disabled) return HumaxColors.actionGhostDisabled;
-        if (pressed)  return HumaxColors.actionGhostActive;
-        if (hovered)  return HumaxColors.actionGhostHover;
-        return HumaxColors.actionGhostDefault;
+        if (disabled) return c.actionGhostDisabled;
+        if (pressed)  return c.actionGhostActive;
+        if (hovered)  return c.actionGhostHover;
+        return c.actionGhostDefault;
 
       case HumaxButtonVariant.destructive:
-        if (disabled) return HumaxColors.actionDestructiveDisabled;
-        if (pressed)  return HumaxColors.actionDestructiveActive;
-        if (hovered)  return HumaxColors.actionDestructiveHover;
-        return HumaxColors.actionDestructiveDefault;
+        if (disabled) return c.actionDestructiveDisabled;
+        if (pressed)  return c.actionDestructiveActive;
+        if (hovered)  return c.actionDestructiveHover;
+        return c.actionDestructiveDefault;
     }
   }
 
   // ── Foreground ─────────────────────────────────────────────────────────────
 
-  static Color foregroundFor(
+  static Color foregroundFor(HumaxColorScheme c,
       HumaxButtonVariant variant, Set<MaterialState> states) {
     final disabled = states.contains(MaterialState.disabled);
 
     switch (variant) {
       case HumaxButtonVariant.filled:
         return disabled
-            ? HumaxColors.actionPrimaryDisabledText
-            : HumaxColors.actionPrimaryText;
+            ? c.actionPrimaryDisabledText
+            : c.actionPrimaryText;
       case HumaxButtonVariant.outlined:
         return disabled
-            ? HumaxColors.actionSecondaryDisabledText
-            : HumaxColors.actionSecondaryText;
+            ? c.actionSecondaryDisabledText
+            : c.actionSecondaryText;
       case HumaxButtonVariant.text:
         return disabled
-            ? HumaxColors.actionGhostDisabledText
-            : HumaxColors.actionGhostText;
+            ? c.actionGhostDisabledText
+            : c.actionGhostText;
       case HumaxButtonVariant.destructive:
         return disabled
-            ? HumaxColors.actionDestructiveDisabledText
-            : HumaxColors.actionDestructiveText;
+            ? c.actionDestructiveDisabledText
+            : c.actionDestructiveText;
     }
   }
 
   // ── Border ─────────────────────────────────────────────────────────────────
 
-  static BorderSide borderFor(
+  static BorderSide borderFor(HumaxColorScheme c,
       HumaxButtonVariant variant, Set<MaterialState> states) {
     if (variant != HumaxButtonVariant.outlined) return BorderSide.none;
 
@@ -80,12 +85,12 @@ class HumaxButtonStyles {
     final hovered  = states.contains(MaterialState.hovered);
 
     final color = disabled
-        ? HumaxColors.actionSecondaryBorderDisabled
+        ? c.actionSecondaryBorderDisabled
         : pressed
-            ? HumaxColors.actionSecondaryBorderActive
+            ? c.actionSecondaryBorderActive
             : hovered
-                ? HumaxColors.actionSecondaryBorderHover
-                : HumaxColors.actionSecondaryBorder;
+                ? c.actionSecondaryBorderHover
+                : c.actionSecondaryBorder;
 
     return BorderSide(color: color, width: 1);
   }
@@ -96,13 +101,13 @@ class HumaxButtonStyles {
     switch (size) {
       case HumaxButtonSize.sm:
         return const EdgeInsets.symmetric(
-            horizontal: HumaxSpace.sm, vertical: HumaxSpace.xs);
+            horizontal: HumaxSpace.xs, vertical: HumaxSpace.xxs);
       case HumaxButtonSize.md:
         return const EdgeInsets.symmetric(
-            horizontal: HumaxSpace.md, vertical: HumaxSpace.sm);
+            horizontal: HumaxSpace.m, vertical: HumaxSpace.xs);
       case HumaxButtonSize.lg:
         return const EdgeInsets.symmetric(
-            horizontal: HumaxSpace.lg, vertical: HumaxSpace.md);
+            horizontal: HumaxSpace.xl, vertical: HumaxSpace.m);
     }
   }
 
@@ -128,12 +133,13 @@ class HumaxButtonStyles {
 
   // ── Assembled ButtonStyle ──────────────────────────────────────────────────
 
-  static ButtonStyle styleFor(HumaxButtonVariant variant, HumaxButtonSize size) {
+  static ButtonStyle styleFor(HumaxColorScheme c,
+      HumaxButtonVariant variant, HumaxButtonSize size) {
     return ButtonStyle(
       backgroundColor: MaterialStateProperty.resolveWith(
-          (s) => backgroundFor(variant, s)),
+          (s) => backgroundFor(c, variant, s)),
       foregroundColor: MaterialStateProperty.resolveWith(
-          (s) => foregroundFor(variant, s)),
+          (s) => foregroundFor(c, variant, s)),
       overlayColor: MaterialStateProperty.all(Colors.transparent),
       elevation: MaterialStateProperty.all(0),
       shadowColor: MaterialStateProperty.all(Colors.transparent),
@@ -143,7 +149,7 @@ class HumaxButtonStyles {
       shape: MaterialStateProperty.resolveWith(
         (s) => RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(HumaxRadius.md),
-          side: borderFor(variant, s),
+          side: borderFor(c, variant, s),
         ),
       ),
       animationDuration: HumaxDuration.fast,

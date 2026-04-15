@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:humax_design_tokens/humax_design_tokens.dart';
+import '../../theme/humax_theme.dart';
 
 /// A token-driven checkbox satisfying the Humax Checkbox contract.
 ///
@@ -71,36 +72,37 @@ class HumaxCheckbox extends StatelessWidget {
   final ListTileControlAffinity controlAffinity;
 
   /// Token-bound fill color per state.
-  WidgetStateProperty<Color?> get _fillColor {
+  WidgetStateProperty<Color?> _fillColor(HumaxColorScheme c) {
     return WidgetStateProperty.resolveWith((states) {
       if (states.contains(WidgetState.disabled)) {
-        return HumaxColors.textTertiary.withOpacity(0.4);
+        return c.textTertiary.withOpacity(0.4);
       }
       if (states.contains(WidgetState.selected)) {
-        return HumaxColors.actionPrimaryDefault;
+        return c.actionPrimaryDefault;
       }
       return Colors.transparent;
     });
   }
 
   /// Token-bound side (border) per state.
-  WidgetStateProperty<BorderSide> get _side {
+  WidgetStateProperty<BorderSide> _side(HumaxColorScheme c) {
     return WidgetStateProperty.resolveWith((states) {
       if (states.contains(WidgetState.disabled)) {
-        return BorderSide(color: HumaxColors.borderSubtle);
+        return BorderSide(color: c.borderSubtle);
       }
       if (isError) {
-        return BorderSide(color: HumaxColors.feedbackErrorText, width: 2);
+        return BorderSide(color: c.feedbackErrorText, width: 2);
       }
       if (states.contains(WidgetState.selected)) {
-        return BorderSide(color: HumaxColors.actionPrimaryDefault, width: 2);
+        return BorderSide(color: c.actionPrimaryDefault, width: 2);
       }
-      return BorderSide(color: HumaxColors.borderDefault);
+      return BorderSide(color: c.borderDefault);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final c = context.humaxColors;
     return Semantics(
       label: semanticsLabel ?? label,
       child: CheckboxListTile(
@@ -111,30 +113,28 @@ class HumaxCheckbox extends StatelessWidget {
         title: Text(
           label,
           style: HumaxTextStyle.bodyCommon.copyWith(
-            color: onChanged == null
-                ? HumaxColors.textTertiary
-                : HumaxColors.textPrimary,
+            color: onChanged == null ? c.textTertiary : c.textPrimary,
           ),
         ),
         subtitle: subtitle != null
             ? Text(
                 subtitle!,
                 style: HumaxTextStyle.captionCommon
-                    .copyWith(color: HumaxColors.textSecondary),
+                    .copyWith(color: c.textSecondary),
               )
             : null,
-        fillColor: _fillColor,
-        checkColor: HumaxColors.actionPrimaryText,
-        side: _side,
+        fillColor: _fillColor(c),
+        checkColor: c.actionPrimaryText,
+        side: _side(c),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(HumaxRadius.sm),
         ),
         overlayColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.pressed)) {
-            return HumaxColors.actionPrimaryDefault.withOpacity(0.08);
+            return c.actionPrimaryDefault.withOpacity(0.08);
           }
           if (states.contains(WidgetState.focused)) {
-            return HumaxColors.actionPrimaryDefault.withOpacity(0.12);
+            return c.actionPrimaryDefault.withOpacity(0.12);
           }
           return Colors.transparent;
         }),

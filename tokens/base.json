@@ -48,14 +48,23 @@
   },
   "space": {
     "none": "0px",
-    "xs": "0.25rem",
-    "sm": "0.5rem",
-    "md": "1rem",
-    "lg": "1.5rem",
-    "xl": "2rem",
-    "2xl": "3rem",
-    "3xl": "4rem",
-    "4xl": "6rem"
+    "xxs": "4px",
+    "xs":  "8px",
+    "s":   "12px",
+    "m":   "16px",
+    "l":   "20px",
+    "xl":  "24px",
+    "xxl": "32px"
+  },
+  "breakpoint": {
+    "compact":  "0px",
+    "medium":   "600px",
+    "expanded": "840px"
+  },
+  "grid": {
+    "compact":  { "margin": "20px", "gutter": "8px",  "columns": 4 },
+    "medium":   { "margin": "24px", "gutter": "16px", "columns": 8 },
+    "expanded": { "margin": "32px", "gutter": "24px", "columns": 12 }
   },
   "radius": {
     "none": "0px",

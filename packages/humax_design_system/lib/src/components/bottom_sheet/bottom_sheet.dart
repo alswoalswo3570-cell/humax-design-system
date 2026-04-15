@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:humax_design_tokens/humax_design_tokens.dart';
+import '../../theme/humax_theme.dart';
 
 /// Shows a token-driven **modal** bottom sheet.
 ///
 /// Wraps [showModalBottomSheet] with Humax token defaults:
-/// - `backgroundColor`: `HumaxColors.backgroundSurface`
+/// - `backgroundColor`: `context.humaxColors.backgroundSurface`
 /// - Top corners: `HumaxRadius.lg`
 /// - Drag handle: enabled by default
-/// - Scrim: `HumaxColors.backgroundOverlay`
+/// - Scrim: `context.humaxColors.backgroundOverlay`
 ///
 /// ```dart
 /// HumaxBottomSheet.show(
@@ -45,6 +46,7 @@ abstract class HumaxBottomSheet {
     bool useSafeArea = true,
     bool isScrollControlled = false,
   }) {
+    final c = context.humaxColors;
     return showModalBottomSheet<T>(
       context: context,
       isDismissible: isDismissible,
@@ -52,8 +54,8 @@ abstract class HumaxBottomSheet {
       showDragHandle: showDragHandle,
       useSafeArea: useSafeArea,
       isScrollControlled: isScrollControlled,
-      backgroundColor: HumaxColors.backgroundSurface,
-      barrierColor: HumaxColors.backgroundOverlay,
+      backgroundColor: c.backgroundSurface,
+      barrierColor: c.backgroundOverlay,
       elevation: 1,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
@@ -66,30 +68,38 @@ abstract class HumaxBottomSheet {
 
   /// A [BoxDecoration] that applies the same surface + radius tokens used
   /// by [show]. Use this when building a standard (persistent) bottom sheet.
-  static BoxDecoration get decoration => BoxDecoration(
-        color: HumaxColors.backgroundSurface,
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(HumaxRadius.lg),
-        ),
-        boxShadow: HumaxShadow.sm,
-      );
+  ///
+  /// Takes a [BuildContext] so the decoration auto-switches with dark mode.
+  static BoxDecoration decorationOf(BuildContext context) {
+    final c = context.humaxColors;
+    return BoxDecoration(
+      color: c.backgroundSurface,
+      borderRadius: const BorderRadius.vertical(
+        top: Radius.circular(HumaxRadius.lg),
+      ),
+      boxShadow: HumaxShadow.sm,
+    );
+  }
 
   /// A pre-styled drag handle widget matching the Humax drag handle tokens.
   ///
   /// Place this at the top of a custom sheet body when [showDragHandle] is
   /// `false` but you still want to render the handle manually.
-  static Widget get dragHandle => Semantics(
-        label: 'Drag to dismiss',
-        child: Center(
-          child: Container(
-            margin: const EdgeInsets.only(top: HumaxSpace.sm),
-            width: 32,
-            height: 4,
-            decoration: BoxDecoration(
-              color: HumaxColors.borderStrong,
-              borderRadius: BorderRadius.circular(HumaxRadius.full),
-            ),
+  static Widget dragHandleOf(BuildContext context) {
+    final c = context.humaxColors;
+    return Semantics(
+      label: 'Drag to dismiss',
+      child: Center(
+        child: Container(
+          margin: const EdgeInsets.only(top: HumaxSpace.xs),
+          width: 32,
+          height: 4,
+          decoration: BoxDecoration(
+            color: c.borderStrong,
+            borderRadius: BorderRadius.circular(HumaxRadius.full),
           ),
         ),
-      );
+      ),
+    );
+  }
 }

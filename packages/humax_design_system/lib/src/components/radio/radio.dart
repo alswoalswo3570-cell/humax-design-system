@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:humax_design_tokens/humax_design_tokens.dart';
+import '../../theme/humax_theme.dart';
 
 /// A single radio option within a [HumaxRadioGroup].
 class HumaxRadioOption<T> {
@@ -59,25 +60,25 @@ class HumaxRadioGroup<T> extends StatelessWidget {
   /// Options to display.
   final List<HumaxRadioOption<T>> options;
 
-  WidgetStateProperty<Color?> get _fillColor {
+  WidgetStateProperty<Color?> _fillColor(HumaxColorScheme c) {
     return WidgetStateProperty.resolveWith((states) {
       if (states.contains(WidgetState.disabled)) {
-        return HumaxColors.textTertiary.withOpacity(0.4);
+        return c.textTertiary.withOpacity(0.4);
       }
       if (states.contains(WidgetState.selected)) {
-        return HumaxColors.actionPrimaryDefault;
+        return c.actionPrimaryDefault;
       }
-      return HumaxColors.borderDefault;
+      return c.borderDefault;
     });
   }
 
-  WidgetStateProperty<Color?> get _overlayColor {
+  WidgetStateProperty<Color?> _overlayColor(HumaxColorScheme c) {
     return WidgetStateProperty.resolveWith((states) {
       if (states.contains(WidgetState.pressed)) {
-        return HumaxColors.actionPrimaryDefault.withOpacity(0.08);
+        return c.actionPrimaryDefault.withOpacity(0.08);
       }
       if (states.contains(WidgetState.focused)) {
-        return HumaxColors.actionPrimaryDefault.withOpacity(0.12);
+        return c.actionPrimaryDefault.withOpacity(0.12);
       }
       return Colors.transparent;
     });
@@ -85,6 +86,7 @@ class HumaxRadioGroup<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.humaxColors;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: options.map((option) {
@@ -96,22 +98,20 @@ class HumaxRadioGroup<T> extends StatelessWidget {
             groupValue: value,
             onChanged: onChanged,
             selected: isSelected,
-            activeColor: HumaxColors.actionPrimaryDefault,
-            fillColor: _fillColor,
-            overlayColor: _overlayColor,
+            activeColor: c.actionPrimaryDefault,
+            fillColor: _fillColor(c),
+            overlayColor: _overlayColor(c),
             title: Text(
               option.label,
               style: HumaxTextStyle.bodyCommon.copyWith(
-                color: onChanged == null
-                    ? HumaxColors.textTertiary
-                    : HumaxColors.textPrimary,
+                color: onChanged == null ? c.textTertiary : c.textPrimary,
               ),
             ),
             subtitle: option.subtitle != null
                 ? Text(
                     option.subtitle!,
                     style: HumaxTextStyle.captionCommon
-                        .copyWith(color: HumaxColors.textSecondary),
+                        .copyWith(color: c.textSecondary),
                   )
                 : null,
             controlAffinity: ListTileControlAffinity.leading,

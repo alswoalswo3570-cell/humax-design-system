@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:humax_design_tokens/humax_design_tokens.dart';
+import '../../theme/humax_theme.dart';
 
 /// Variant of [HumaxSnackBar].
 ///
@@ -65,19 +66,20 @@ abstract class HumaxSnackBar {
             ? const Duration(milliseconds: 10000)
             : const Duration(milliseconds: 4000));
 
+    final c = context.humaxColors;
     final isError = variant == HumaxSnackBarVariant.error;
 
     final backgroundColor = isError
-        ? HumaxColors.feedbackErrorBg
-        : HumaxColors.backgroundInverse;
+        ? c.feedbackErrorBackground
+        : c.backgroundInverse;
 
     final textColor = isError
-        ? HumaxColors.feedbackErrorText
-        : HumaxColors.textInverse;
+        ? c.feedbackErrorText
+        : c.textInverse;
 
     final actionTextColor = isError
-        ? HumaxColors.textInverse
-        : HumaxColors.actionPrimaryDefault;
+        ? c.textInverse
+        : c.actionPrimaryDefault;
 
     final snackBar = SnackBar(
       behavior: SnackBarBehavior.floating,
@@ -90,8 +92,8 @@ abstract class HumaxSnackBar {
         borderRadius: BorderRadius.circular(HumaxRadius.md),
       ),
       padding: const EdgeInsets.symmetric(
-        horizontal: HumaxSpace.md,
-        vertical: HumaxSpace.sm,
+        horizontal: HumaxSpace.m,
+        vertical: HumaxSpace.xs,
       ),
       content: Text(
         message,

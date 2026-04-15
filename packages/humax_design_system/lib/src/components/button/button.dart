@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:humax_design_tokens/humax_design_tokens.dart';
+import '../../theme/humax_theme.dart';
 import '_styles.dart';
 
 /// Visual style of the button.
@@ -88,13 +89,13 @@ class HumaxButton extends StatelessWidget {
 
   bool get _isDisabled => onPressed == null;
 
-  Widget _buildChild() {
+  Widget _buildChild(HumaxColorScheme c) {
     final textStyle = HumaxButtonStyles.textStyleFor(size);
 
     if (isLoading) {
       final spinnerSize = HumaxButtonStyles.spinnerSizeFor(size);
       final spinnerColor =
-          HumaxButtonStyles.foregroundFor(variant, const <MaterialState>{});
+          HumaxButtonStyles.foregroundFor(c, variant, const <MaterialState>{});
       return SizedBox(
         width: spinnerSize,
         height: spinnerSize,
@@ -110,7 +111,7 @@ class HumaxButton extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           leadingIcon!,
-          const SizedBox(width: HumaxSpace.xs),
+          const SizedBox(width: HumaxSpace.xxs),
           Text(label, style: textStyle),
         ],
       );
@@ -121,12 +122,14 @@ class HumaxButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.humaxColors;
+
     // Disable interaction when loading or when onPressed is null.
     final effectiveOnPressed =
         (isLoading || _isDisabled) ? null : onPressed;
 
-    final style = HumaxButtonStyles.styleFor(variant, size);
-    final child = _buildChild();
+    final style = HumaxButtonStyles.styleFor(c, variant, size);
+    final child = _buildChild(c);
 
     final button = switch (variant) {
       HumaxButtonVariant.filled ||
