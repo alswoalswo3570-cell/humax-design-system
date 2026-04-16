@@ -105,17 +105,17 @@ export default function Components() {
                       <p className="text-center font-bold" style={{ fontSize: 14, lineHeight: "20px", color: "#DC362E" }}>
                         Sign In Error Information
                       </p>
-                      <p className="text-center" style={{ fontSize: 11, lineHeight: "16px", color: "#181818" }}>
+                      <p className="text-center" style={{ fontSize: 11, lineHeight: "16px", color: "var(--color-text-primary)" }}>
                         There are already registered devices. Please delete the existing device and try again.
                       </p>
                     </div>
                     {/* Divider */}
-                    <div style={{ height: 1, backgroundColor: "#EEEEEE" }} />
+                    <div style={{ height: 1, backgroundColor: "var(--humax-color-border-subtle)" }} />
                     {/* Action row */}
                     <div className="flex bg-white dark:bg-gray-800" style={{ height: 44 }}>
-                      <div className="flex-1 flex items-center justify-center" style={{ fontSize: 13, fontWeight: 700, color: "#999999" }}>Cancel</div>
-                      <div style={{ width: 1, backgroundColor: "#EEEEEE" }} />
-                      <div className="flex-1 flex items-center justify-center" style={{ fontSize: 13, fontWeight: 700, color: "#000000" }}>OK</div>
+                      <div className="flex-1 flex items-center justify-center" style={{ fontSize: 13, fontWeight: 700, color: "var(--humax-color-text-tertiary)" }}>Cancel</div>
+                      <div style={{ width: 1, backgroundColor: "var(--humax-color-border-subtle)" }} />
+                      <div className="flex-1 flex items-center justify-center" style={{ fontSize: 13, fontWeight: 700, color: "var(--color-text-primary)" }}>OK</div>
                     </div>
                   </div>
                 </div>
@@ -1097,7 +1097,7 @@ const DIALOG_CONFIG: Record<DialogType, DialogConfig> = {
     variant: "error",
     icon: <AlertCircle size={32} color="#DC362E" />,
     titleColor: "#DC362E",
-    title: "Sign In Error Information",
+    title: "Sign In Error",
     body: "There are already registered devices. Please delete the existing device and try again.",
     confirmLabel: "OK",
     cancelLabel: "Cancel",
@@ -1109,7 +1109,7 @@ const DIALOG_CONFIG: Record<DialogType, DialogConfig> = {
     icon: <CheckCircle2 size={32} color="#6FD94A" />,
     titleColor: "#6FD94A",
     title: "Success",
-    body: "There are already registered devices. Please delete the existing device and try again.",
+    body: "Your device has been registered successfully.",
     confirmLabel: "Done",
     triggerLabel: "Success",
     triggerHover: "hover:border-green-300 hover:bg-green-50 dark:hover:border-green-700 dark:hover:bg-green-900/10",
@@ -1118,18 +1118,18 @@ const DIALOG_CONFIG: Record<DialogType, DialogConfig> = {
     variant: "warning",
     icon: <AlertTriangle size={32} color="#EAB722" />,
     titleColor: "#EAB722",
-    title: "Sign In Error Information",
-    body: "There are already registered devices. Please delete the existing device and try again.",
+    title: "Device Limit Warning",
+    body: "You are approaching the maximum device limit. Remove unused devices to avoid disruption.",
     confirmLabel: "OK",
     triggerLabel: "Warning",
     triggerHover: "hover:border-amber-300 hover:bg-amber-50 dark:hover:border-amber-700 dark:hover:bg-amber-900/10",
   },
   info: {
     variant: "info",
-    icon: <Info size={32} color="#333333" />,
-    titleColor: "#333333",
-    title: "Sign In Error Information",
-    body: "There are already registered devices. Please delete the existing device and try again.",
+    icon: <Info size={32} style={{ color: "var(--color-text-primary)" }} />,
+    titleColor: "var(--color-text-primary)",
+    title: "Device Registration",
+    body: "You can register up to 3 devices on your account. Manage devices in Account Settings.",
     confirmLabel: "OK",
     cancelLabel: "Cancel",
     triggerLabel: "Info",
@@ -1142,13 +1142,23 @@ function MoniDialog({
   cfg, onClose,
 }: { cfg: DialogConfig; onClose: () => void }) {
   return (
-    <div style={{ width: 300 }} className="rounded-lg overflow-hidden shadow-2xl">
+    <div
+      role="alertdialog"
+      aria-modal="true"
+      aria-labelledby="moni-dialog-title"
+      style={{ width: 300 }}
+      className="rounded-lg overflow-hidden shadow-2xl"
+    >
       {/* Content area */}
-      <div className="bg-white dark:bg-gray-800 px-4 pt-4 pb-4 flex flex-col items-center gap-2">
+      <div
+        className="px-4 pt-4 pb-4 flex flex-col items-center gap-2"
+        style={{ backgroundColor: "var(--color-background-surface)" }}
+      >
         {/* Icon — 32×32 */}
         <div style={{ width: 32, height: 32, flexShrink: 0 }}>{cfg.icon}</div>
         {/* Title — colored by variant */}
         <p
+          id="moni-dialog-title"
           className="text-center font-bold"
           style={{ fontSize: 18, lineHeight: "26px", color: cfg.titleColor }}
         >
@@ -1157,42 +1167,51 @@ function MoniDialog({
         {/* Body */}
         <p
           className="text-center"
-          style={{ fontSize: 14, lineHeight: "18px", color: "#181818", fontWeight: 400 }}
+          style={{ fontSize: 14, lineHeight: "18px", color: "var(--color-text-primary)", fontWeight: 400 }}
         >
           {cfg.body}
         </p>
       </div>
 
       {/* Horizontal divider */}
-      <div style={{ height: 1, backgroundColor: "#EEEEEE" }} />
+      <div style={{ height: 1, backgroundColor: "var(--humax-color-border-subtle)" }} />
 
       {/* Action row — 56px */}
       {cfg.cancelLabel ? (
-        <div className="flex bg-white dark:bg-gray-800" style={{ height: 56 }}>
+        <div style={{ display: "flex", height: 56, backgroundColor: "var(--color-background-surface)" }}>
           {/* Cancel */}
           <button
+            type="button"
             onClick={onClose}
-            className="flex-1 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-            style={{ fontSize: 16, fontWeight: 700, color: "#999999", borderBottomLeftRadius: 8 }}
+            className="flex-1 flex items-center justify-center transition-colors"
+            style={{ fontSize: 16, fontWeight: 700, color: "var(--humax-color-text-tertiary)", borderBottomLeftRadius: 8 }}
+            onMouseEnter={e => (e.currentTarget.style.backgroundColor = "var(--humax-color-background-surfaceHover)")}
+            onMouseLeave={e => (e.currentTarget.style.backgroundColor = "transparent")}
           >
             {cfg.cancelLabel}
           </button>
           {/* Vertical divider */}
-          <div style={{ width: 1, backgroundColor: "#EEEEEE", alignSelf: "stretch" }} />
+          <div style={{ width: 1, backgroundColor: "var(--humax-color-border-subtle)", alignSelf: "stretch" }} />
           {/* Confirm */}
           <button
+            type="button"
             onClick={onClose}
-            className="flex-1 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-            style={{ fontSize: 16, fontWeight: 700, color: "#000000", borderBottomRightRadius: 8 }}
+            className="flex-1 flex items-center justify-center transition-colors"
+            style={{ fontSize: 16, fontWeight: 700, color: "var(--color-text-primary)", borderBottomRightRadius: 8 }}
+            onMouseEnter={e => (e.currentTarget.style.backgroundColor = "var(--humax-color-background-surfaceHover)")}
+            onMouseLeave={e => (e.currentTarget.style.backgroundColor = "transparent")}
           >
             {cfg.confirmLabel}
           </button>
         </div>
       ) : (
         <button
+          type="button"
           onClick={onClose}
-          className="w-full flex items-center justify-center bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-          style={{ height: 56, fontSize: 16, fontWeight: 700, color: "#000000", borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }}
+          className="w-full flex items-center justify-center transition-colors"
+          style={{ height: 56, fontSize: 16, fontWeight: 700, color: "var(--color-text-primary)", backgroundColor: "var(--color-background-surface)", borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }}
+          onMouseEnter={e => (e.currentTarget.style.backgroundColor = "var(--humax-color-background-surfaceHover)")}
+          onMouseLeave={e => (e.currentTarget.style.backgroundColor = "var(--color-background-surface)")}
         >
           {cfg.confirmLabel}
         </button>
@@ -1215,33 +1234,33 @@ function DialogDemo() {
             <div key={type} className="flex flex-col items-start gap-1.5">
               <span className="text-[10px] font-semibold font-mono text-gray-400 uppercase tracking-wider">{type}</span>
               <div className="rounded-lg overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700" style={{ width: 240, transform: "scale(1)", transformOrigin: "top left" }}>
-                <div className="bg-white dark:bg-gray-800 px-3 pt-3 pb-3 flex flex-col items-center gap-1.5">
+                <div className="px-3 pt-3 pb-3 flex flex-col items-center gap-1.5" style={{ backgroundColor: "var(--color-background-surface)" }}>
                   <div style={{ width: 24, height: 24, flexShrink: 0 }}>
                     {type === "error"   && <AlertCircle size={24} color="#DC362E" />}
                     {type === "success" && <CheckCircle2 size={24} color="#6FD94A" />}
                     {type === "warning" && <AlertTriangle size={24} color="#EAB722" />}
-                    {type === "info"    && <Info size={24} color="#333333" />}
+                    {type === "info"    && <Info size={24} style={{ color: "var(--color-text-primary)" }} />}
                   </div>
                   <p className="text-center font-bold leading-tight" style={{ fontSize: 13, color: DIALOG_CONFIG[type].titleColor }}>
                     {DIALOG_CONFIG[type].title}
                   </p>
-                  <p className="text-center" style={{ fontSize: 10, lineHeight: "14px", color: "#181818" }}>
+                  <p className="text-center" style={{ fontSize: 10, lineHeight: "14px", color: "var(--color-text-primary)" }}>
                     {DIALOG_CONFIG[type].body}
                   </p>
                 </div>
-                <div style={{ height: 1, backgroundColor: "#EEEEEE" }} />
+                <div style={{ height: 1, backgroundColor: "var(--humax-color-border-subtle)" }} />
                 {DIALOG_CONFIG[type].cancelLabel ? (
-                  <div className="flex bg-white dark:bg-gray-800" style={{ height: 40 }}>
-                    <div className="flex-1 flex items-center justify-center" style={{ fontSize: 12, fontWeight: 700, color: "#999999" }}>
+                  <div className="flex" style={{ height: 40, backgroundColor: "var(--color-background-surface)" }}>
+                    <div className="flex-1 flex items-center justify-center" style={{ fontSize: 12, fontWeight: 700, color: "var(--humax-color-text-tertiary)" }}>
                       {DIALOG_CONFIG[type].cancelLabel}
                     </div>
-                    <div style={{ width: 1, backgroundColor: "#EEEEEE" }} />
-                    <div className="flex-1 flex items-center justify-center" style={{ fontSize: 12, fontWeight: 700, color: "#000000" }}>
+                    <div style={{ width: 1, backgroundColor: "var(--humax-color-border-subtle)" }} />
+                    <div className="flex-1 flex items-center justify-center" style={{ fontSize: 12, fontWeight: 700, color: "var(--color-text-primary)" }}>
                       {DIALOG_CONFIG[type].confirmLabel}
                     </div>
                   </div>
                 ) : (
-                  <div className="flex items-center justify-center bg-white dark:bg-gray-800" style={{ height: 40, fontSize: 12, fontWeight: 700, color: "#000000" }}>
+                  <div className="flex items-center justify-center" style={{ height: 40, fontSize: 12, fontWeight: 700, color: "var(--color-text-primary)", backgroundColor: "var(--color-background-surface)" }}>
                     {DIALOG_CONFIG[type].confirmLabel}
                   </div>
                 )}
@@ -1272,7 +1291,7 @@ function DialogDemo() {
                 {type === "error"   && <AlertCircle size={28} color="#DC362E" />}
                 {type === "success" && <CheckCircle2 size={28} color="#6FD94A" />}
                 {type === "warning" && <AlertTriangle size={28} color="#EAB722" />}
-                {type === "info"    && <Info size={28} color="#555" />}
+                {type === "info"    && <Info size={28} style={{ color: "var(--color-text-primary)" }} />}
               </div>
               <span className="text-[11px] font-medium text-gray-600 dark:text-gray-400">{DIALOG_CONFIG[type].triggerLabel}</span>
             </button>
@@ -1280,13 +1299,13 @@ function DialogDemo() {
         </div>
       </div>
 
-      {/* Full-spec modal overlay */}
+      {/* Full-spec modal overlay — barrierDismissible: false per Moni spec */}
       {activeType && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* No onClick on barrier — matches Flutter barrierDismissible: false */}
           <div
             className="absolute inset-0"
-            style={{ backgroundColor: "rgba(51,51,51,0.4)" }}
-            onClick={close}
+            style={{ backgroundColor: "var(--humax-color-background-overlay)" }}
           />
           <div className="relative animate-in zoom-in-95 duration-150">
             <MoniDialog cfg={DIALOG_CONFIG[activeType]} onClose={close} />

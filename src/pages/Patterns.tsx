@@ -1,14 +1,32 @@
 import React, { useState } from "react";
-import { CheckCircle2, AlertCircle, X, ArrowLeft, Trash2, Archive, Copy, Check, LayoutTemplate } from "lucide-react";
+import {
+  CheckCircle2,
+  AlertCircle,
+  AlertTriangle,
+  Info,
+  X,
+  ArrowLeft,
+  Trash2,
+  Archive,
+  Copy,
+  Check,
+  LayoutTemplate,
+  ChevronDown,
+} from "lucide-react";
 import { cn } from "../lib/utils";
+import baseTokens from "../../tokens/base.json";
 
 import { Link } from "react-router-dom";
 
 // --- Reusable UI components for previews ---
 
+// Canonical preview primitives — kept in sync with src/pages/Components.tsx
+// so the /patterns page uses the same typography, height, and variant spec as
+// the /components matrix. If you change tokens or sizing there, update here too.
+
 function Button({ variant = "filled", size = "md", loading = false, disabled = false, className, children, ...props }: any) {
-  const baseStyles = "group relative inline-flex items-center justify-center font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98] overflow-hidden";
-  
+  const baseStyles = "group relative inline-flex items-center justify-center font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98] overflow-hidden select-none";
+
   const variants: any = {
     filled: {
       backgroundColor: "var(--color-action-primary-default)",
@@ -32,22 +50,27 @@ function Button({ variant = "filled", size = "md", loading = false, disabled = f
     },
   };
 
+  // Typography + min-height synced with Components.tsx Button (tokens/base.json).
+  //   sm → captionPoint (12/500), 32px
+  //   md → titleSmall   (16/700), 44px   ← Moni primary CTA spec
+  //   lg → titleSmall   (16/700), 52px
+  const ts = (baseTokens as any).typography.textStyle;
   const sizes: any = {
-    sm: { padding: "var(--space-xs) var(--space-sm)", fontSize: "0.75rem", borderRadius: "var(--radius-md)", minHeight: "32px" },
-    md: { padding: "var(--space-sm) var(--space-md)", fontSize: "0.875rem", borderRadius: "var(--radius-md)", minHeight: "48px" },
-    lg: { padding: "var(--space-md) var(--space-lg)", fontSize: "1rem", borderRadius: "var(--radius-md)", minHeight: "56px" },
+    sm: { padding: "var(--space-xs) var(--space-sm)", fontSize: ts.captionPoint.fontSize, fontWeight: ts.captionPoint.fontWeight, lineHeight: ts.captionPoint.lineHeight, borderRadius: "var(--radius-md)", minHeight: "32px" },
+    md: { padding: "var(--space-sm) var(--space-md)", fontSize: ts.titleSmall.fontSize,   fontWeight: ts.titleSmall.fontWeight,   lineHeight: ts.titleSmall.lineHeight,   borderRadius: "var(--radius-md)", minHeight: "44px" },
+    lg: { padding: "var(--space-md) var(--space-lg)", fontSize: ts.titleSmall.fontSize,   fontWeight: ts.titleSmall.fontWeight,   lineHeight: ts.titleSmall.lineHeight,   borderRadius: "var(--radius-md)", minHeight: "52px" },
   };
 
   return (
-    <button 
-      className={cn(baseStyles, className)} 
-      style={{ ...variants[variant], ...sizes[size], opacity: loading ? 0.7 : undefined, cursor: loading ? 'wait' : undefined }}
+    <button
+      className={cn(baseStyles, className)}
+      style={{ ...variants[variant], ...sizes[size], opacity: loading ? 0.8 : undefined, cursor: loading ? 'wait' : undefined }}
       disabled={disabled || loading}
-      {...props} 
+      {...props}
     >
-      <span className="absolute inset-0 bg-black/0 group-active:bg-black/10 dark:group-active:bg-white/10 transition-colors pointer-events-none" />
+      <span className="absolute inset-0 bg-black/0 group-hover:bg-black/5 group-active:bg-black/10 dark:group-hover:bg-white/5 dark:group-active:bg-white/10 transition-colors pointer-events-none" />
       {loading && (
-        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-current relative z-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-current relative z-10 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
@@ -59,9 +82,9 @@ function Button({ variant = "filled", size = "md", loading = false, disabled = f
 
 function Input({ className, error, ...props }: any) {
   return (
-    <input 
+    <input
       className={cn(
-        "flex h-12 w-full px-3 py-2 text-sm focus:outline-none focus:ring-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors",
+        "flex h-11 w-full px-3 py-2 text-sm focus:outline-none focus:ring-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors",
         className
       )}
       style={{
@@ -91,22 +114,55 @@ function MobileFrame({ children, className }: any) {
   );
 }
 
-function SnackBar({ message, action, onClose, variant = "default" }: any) {
-  const variants: any = {
-    default: "bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900",
-    error: "bg-red-600 dark:bg-red-500 text-white",
-  };
+// SnackBar variants synced with Components.tsx TOAST_CONFIG — same icon, same
+// bg/border/text classes so the patterns preview matches the component spec.
+type SnackType = "success" | "error" | "warning" | "info";
 
-  const actionVariants: any = {
-    default: "text-indigo-400 dark:text-indigo-600",
-    error: "text-white",
-  };
+const SNACK_CONFIG: Record<SnackType, { icon: React.ReactNode; bg: string; border: string; text: string }> = {
+  success: {
+    icon: <CheckCircle2 className="w-5 h-5 text-green-500 dark:text-green-400 shrink-0" />,
+    bg: "bg-white dark:bg-gray-800",
+    border: "border-green-200 dark:border-green-800/50",
+    text: "text-gray-900 dark:text-white",
+  },
+  error: {
+    icon: <AlertCircle className="w-5 h-5 text-red-500 dark:text-red-400 shrink-0" />,
+    bg: "bg-white dark:bg-gray-800",
+    border: "border-red-200 dark:border-red-800/50",
+    text: "text-gray-900 dark:text-white",
+  },
+  warning: {
+    icon: <AlertTriangle className="w-5 h-5 text-amber-500 dark:text-amber-400 shrink-0" />,
+    bg: "bg-white dark:bg-gray-800",
+    border: "border-amber-200 dark:border-amber-800/50",
+    text: "text-gray-900 dark:text-white",
+  },
+  info: {
+    icon: <Info className="w-5 h-5 text-blue-500 dark:text-blue-400 shrink-0" />,
+    bg: "bg-white dark:bg-gray-800",
+    border: "border-blue-200 dark:border-blue-800/50",
+    text: "text-gray-900 dark:text-white",
+  },
+};
+
+function SnackBar({ message, action, type = "info" }: { message: string; action?: { label: string; onClick: () => void }; type?: SnackType }) {
+  const cfg = SNACK_CONFIG[type];
 
   return (
-    <div className={cn("absolute bottom-6 left-4 right-4 px-4 py-3 rounded-lg shadow-lg flex items-center justify-between animate-in slide-in-from-bottom-5 duration-300 z-40", variants[variant])}>
-      <span className="text-sm font-medium">{message}</span>
+    <div
+      className={cn(
+        "absolute bottom-6 left-4 right-4 flex items-center gap-3 px-4 py-3 rounded-xl border shadow-lg animate-in slide-in-from-bottom-4 duration-300 z-40",
+        cfg.bg,
+        cfg.border
+      )}
+    >
+      {cfg.icon}
+      <span className={cn("flex-1 text-sm font-medium", cfg.text)}>{message}</span>
       {action && (
-        <button onClick={action.onClick} className={cn("text-sm font-bold uppercase tracking-wider hover:opacity-80 transition-opacity", actionVariants[variant])}>
+        <button
+          onClick={action.onClick}
+          className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:opacity-80 transition-opacity shrink-0"
+        >
           {action.label}
         </button>
       )}
@@ -137,7 +193,7 @@ function SuccessFeedbackPreview() {
             setTimeout(() => setShowSnack(false), 3000);
           }}>Save Changes</Button>
         </div>
-        {showSnack && <SnackBar message="Profile updated successfully" />}
+        {showSnack && <SnackBar type="success" message="Profile updated successfully" />}
       </div>
     </MobileFrame>
   );
@@ -281,15 +337,77 @@ function UndoFlowPreview() {
           )}
         </div>
 
-        {showSnack && <SnackBar message="Conversation archived" action={{ label: "Undo", onClick: handleUndo }} />}
+        {showSnack && <SnackBar type="info" message="Conversation archived" action={{ label: "Undo", onClick: handleUndo }} />}
       </div>
     </MobileFrame>
   );
 }
 
+// --- Category Header + Accordion ---
+
+function CategoryHeader({ title, description }: { title: string; description?: string }) {
+  return (
+    <div className="pt-8 pb-3">
+      <h2 className="text-xs font-bold uppercase tracking-[0.14em] text-indigo-600 dark:text-indigo-400">
+        {title}
+      </h2>
+      {description && (
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{description}</p>
+      )}
+    </div>
+  );
+}
+
+function PatternAccordion({
+  title,
+  subtitle,
+  defaultOpen = false,
+  children,
+}: {
+  title: string;
+  subtitle?: string;
+  defaultOpen?: boolean;
+  children: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+
+  return (
+    <div className="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden bg-white dark:bg-gray-800 shadow-sm">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="w-full flex items-center justify-between px-5 py-4 hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors text-left focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-inset"
+      >
+        <div className="min-w-0 pr-4">
+          <h3 className="text-base font-semibold text-gray-900 dark:text-white truncate">
+            {title}
+          </h3>
+          {subtitle && (
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5 truncate">
+              {subtitle}
+            </p>
+          )}
+        </div>
+        <ChevronDown
+          className={cn(
+            "w-5 h-5 text-gray-400 dark:text-gray-500 flex-shrink-0 transition-transform duration-200",
+            open && "rotate-180"
+          )}
+        />
+      </button>
+      {open && (
+        <div className="border-t border-gray-200 dark:border-gray-700 p-6 animate-in fade-in slide-in-from-top-2 duration-200">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // --- Main Page Component ---
 
-function PatternSection({ title, overview, whenToUse, components, layout, accessibility, example, children }: any) {
+function PatternSection({ whenToUse, components, layout, accessibility, example, children }: any) {
   const [copied, setCopied] = useState(false);
 
   const copyCode = () => {
@@ -299,12 +417,7 @@ function PatternSection({ title, overview, whenToUse, components, layout, access
   };
 
   return (
-    <section className="space-y-6">
-      <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
-        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">{title}</h2>
-        <p className="text-gray-600 dark:text-gray-300 mt-2 text-lg">{overview}</p>
-      </div>
-
+    <div className="space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           {/* Preview */}
@@ -365,7 +478,7 @@ function PatternSection({ title, overview, whenToUse, components, layout, access
           <div>
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-3">Reference Data</h3>
             <div className="bg-gray-900 rounded-xl p-4 overflow-x-auto relative group h-[500px] overflow-y-auto">
-              <button 
+              <button
                 className="absolute top-2 right-2 text-xs text-gray-400 hover:text-white transition-colors px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 opacity-0 group-hover:opacity-100 flex items-center gap-1"
                 onClick={copyCode}
               >
@@ -379,120 +492,153 @@ function PatternSection({ title, overview, whenToUse, components, layout, access
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
 export default function Patterns() {
   return (
-    <div className="space-y-12 animate-in fade-in duration-500 pb-20">
-      <div>
+    <div className="animate-in fade-in duration-500 pb-20">
+      <div className="mb-6">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Patterns</h1>
         <p className="mt-2 text-lg text-gray-600 dark:text-gray-300">
           Mobile-first Flutter-oriented patterns showing how tokens, layout rules, and components work together.
         </p>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          각 섹션은 기본 접힘 상태입니다. 필요한 패턴만 펼쳐서 확인하세요.
+        </p>
       </div>
 
-      <PatternSection
-        title="1. Success Feedback Pattern"
-        overview="Providing non-blocking confirmation that an action completed successfully without interrupting the user's flow."
-        whenToUse={[
-          "After saving settings or profile changes",
-          "When an item is successfully created or updated",
-          "After completing a background task (e.g., 'Download complete')"
-        ]}
-        components={["SnackBar", "Button", "AppBar"]}
-        layout={[
-          "SnackBar floats above the bottom safe area and any bottom navigation.",
-          "Does not block interaction with the rest of the screen."
-        ]}
-        accessibility={[
-          "Automatically announced by screen readers.",
-          "Duration must be at least 4000ms for readability."
-        ]}
-        example={{
-          pattern: "Success Feedback",
-          flutterImplementation: "ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Profile updated successfully'), behavior: SnackBarBehavior.floating))"
-        }}
-      >
-        <SuccessFeedbackPreview />
-      </PatternSection>
+      {/* ───── 피드백 ───── */}
+      <CategoryHeader
+        title="피드백 · Feedback"
+        description="사용자 액션의 결과를 즉시·비차단형으로 알리는 패턴"
+      />
+      <div className="space-y-3">
+        <PatternAccordion
+          title="Success Feedback"
+          subtitle="저장·업데이트 완료를 비차단 Snackbar로 알림"
+        >
+          <PatternSection
+            whenToUse={[
+              "After saving settings or profile changes",
+              "When an item is successfully created or updated",
+              "After completing a background task (e.g., 'Download complete')",
+            ]}
+            components={["SnackBar", "Button", "AppBar"]}
+            layout={[
+              "SnackBar floats above the bottom safe area and any bottom navigation.",
+              "Does not block interaction with the rest of the screen.",
+            ]}
+            accessibility={[
+              "Automatically announced by screen readers.",
+              "Duration must be at least 4000ms for readability.",
+            ]}
+            example={{
+              pattern: "Success Feedback",
+              flutterImplementation:
+                "ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Profile updated successfully'), behavior: SnackBarBehavior.floating))",
+            }}
+          >
+            <SuccessFeedbackPreview />
+          </PatternSection>
+        </PatternAccordion>
 
-      <PatternSection
-        title="2. Destructive Confirmation Pattern"
-        overview="Forcing the user to explicitly confirm an action that cannot be easily undone, preventing accidental data loss."
-        whenToUse={[
-          "Deleting an account or profile",
-          "Removing a critical item from a database",
-          "Discarding unsaved changes in a complex form"
-        ]}
-        components={["Dialog", "Button (destructive)", "Button (text)"]}
-        layout={[
-          "Dialog is centered on screen with a backdrop blur to focus attention.",
-          "Actions are stacked vertically on mobile for better touch targets, with the primary destructive action first or clearly highlighted."
-        ]}
-        accessibility={[
-          "Focus is trapped within the dialog until dismissed.",
-          "Can be dismissed via the Escape key or tapping the backdrop."
-        ]}
-        example={{
-          pattern: "Destructive Confirmation",
-          flutterImplementation: "showDialog(context: context, builder: (context) => AlertDialog(title: Text('Delete account?'), actions: [TextButton(child: Text('Cancel')), FilledButton(child: Text('Delete'), style: destructiveStyle)]))"
-        }}
-      >
-        <DestructiveConfirmationPreview />
-      </PatternSection>
+        <PatternAccordion
+          title="Destructive Confirmation"
+          subtitle="되돌릴 수 없는 액션 전 명시적 확인 Dialog"
+        >
+          <PatternSection
+            whenToUse={[
+              "Deleting an account or profile",
+              "Removing a critical item from a database",
+              "Discarding unsaved changes in a complex form",
+            ]}
+            components={["Dialog", "Button (destructive)", "Button (text)"]}
+            layout={[
+              "Dialog is centered on screen with a backdrop blur to focus attention.",
+              "Actions are stacked vertically on mobile for better touch targets, with the primary destructive action first or clearly highlighted.",
+            ]}
+            accessibility={[
+              "Focus is trapped within the dialog until dismissed.",
+              "Can be dismissed via the Escape key or tapping the backdrop.",
+            ]}
+            example={{
+              pattern: "Destructive Confirmation",
+              flutterImplementation:
+                "showDialog(context: context, builder: (context) => AlertDialog(title: Text('Delete account?'), actions: [TextButton(child: Text('Cancel')), FilledButton(child: Text('Delete'), style: destructiveStyle)]))",
+            }}
+          >
+            <DestructiveConfirmationPreview />
+          </PatternSection>
+        </PatternAccordion>
 
-      <PatternSection
-        title="3. Form Submit + Error Pattern"
-        overview="Handling form validation, loading states, and submission errors gracefully within a scrollable view."
-        whenToUse={[
-          "Login and registration forms",
-          "Data entry screens (e.g., adding a payment method)",
-          "Checkout flows"
-        ]}
-        components={["TextField", "Button (loading/disabled)", "AppBar"]}
-        layout={[
-          "Form content is scrollable (SingleChildScrollView in Flutter).",
-          "Primary CTA is sticky at the bottom, above the safe area, ensuring it's always reachable.",
-          "Keyboard appearance pushes the scrollable content up, but the sticky CTA remains visible if implemented correctly."
-        ]}
-        accessibility={[
-          "Error text is programmatically linked to the input field.",
-          "Loading state disables the button to prevent double submission and provides visual feedback."
-        ]}
-        example={{
-          pattern: "Form Submit + Error",
-          flutterImplementation: "Column(children: [Expanded(child: SingleChildScrollView(child: Form(...))), SafeArea(child: Padding(padding: EdgeInsets.all(16), child: FilledButton(onPressed: isLoading ? null : submit, child: isLoading ? CircularProgressIndicator() : Text('Save'))))])"
-        }}
-      >
-        <FormSubmitErrorPreview />
-      </PatternSection>
+        <PatternAccordion
+          title="Undo Flow"
+          subtitle="삭제·아카이브 직후 되돌리기 링크 제공"
+        >
+          <PatternSection
+            whenToUse={[
+              "Archiving emails or messages",
+              "Removing items from a list or cart",
+              "Dismissing notifications",
+            ]}
+            components={["SnackBar (with action)", "ListTile/Card"]}
+            layout={[
+              "SnackBar floats at the bottom.",
+              "List animates the removal of the item smoothly.",
+            ]}
+            accessibility={[
+              "SnackBar with an action must remain visible longer (up to 10000ms) to give users time to interact.",
+              "Action must be reachable via keyboard navigation.",
+            ]}
+            example={{
+              pattern: "Undo Flow",
+              flutterImplementation:
+                "ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Conversation archived'), action: SnackBarAction(label: 'Undo', onPressed: () => undoArchive()), duration: Duration(milliseconds: 10000)))",
+            }}
+          >
+            <UndoFlowPreview />
+          </PatternSection>
+        </PatternAccordion>
+      </div>
 
-      <PatternSection
-        title="4. Undo Flow Pattern"
-        overview="Allowing users to quickly reverse a destructive action immediately after it happens, providing a smoother UX than upfront confirmation."
-        whenToUse={[
-          "Archiving emails or messages",
-          "Removing items from a list or cart",
-          "Dismissing notifications"
-        ]}
-        components={["SnackBar (with action)", "ListTile/Card"]}
-        layout={[
-          "SnackBar floats at the bottom.",
-          "List animates the removal of the item smoothly."
-        ]}
-        accessibility={[
-          "SnackBar with an action must remain visible longer (up to 10000ms) to give users time to interact.",
-          "Action must be reachable via keyboard navigation."
-        ]}
-        example={{
-          pattern: "Undo Flow",
-          flutterImplementation: "ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Conversation archived'), action: SnackBarAction(label: 'Undo', onPressed: () => undoArchive()), duration: Duration(milliseconds: 10000)))"
-        }}
-      >
-        <UndoFlowPreview />
-      </PatternSection>
+      {/* ───── 사용자 플로우 ───── */}
+      <CategoryHeader
+        title="사용자 플로우 · User Flow"
+        description="폼·인증·결제 등 사용자가 단계적으로 완료하는 과업"
+      />
+      <div className="space-y-3">
+        <PatternAccordion
+          title="Form Submit + Error"
+          subtitle="스크롤 가능한 폼 + sticky CTA + 인라인 에러"
+        >
+          <PatternSection
+            whenToUse={[
+              "Login and registration forms",
+              "Data entry screens (e.g., adding a payment method)",
+              "Checkout flows",
+            ]}
+            components={["TextField", "Button (loading/disabled)", "AppBar"]}
+            layout={[
+              "Form content is scrollable (SingleChildScrollView in Flutter).",
+              "Primary CTA is sticky at the bottom, above the safe area, ensuring it's always reachable.",
+              "Keyboard appearance pushes the scrollable content up, but the sticky CTA remains visible if implemented correctly.",
+            ]}
+            accessibility={[
+              "Error text is programmatically linked to the input field.",
+              "Loading state disables the button to prevent double submission and provides visual feedback.",
+            ]}
+            example={{
+              pattern: "Form Submit + Error",
+              flutterImplementation:
+                "Column(children: [Expanded(child: SingleChildScrollView(child: Form(...))), SafeArea(child: Padding(padding: EdgeInsets.all(16), child: FilledButton(onPressed: isLoading ? null : submit, child: isLoading ? CircularProgressIndicator() : Text('Save'))))])",
+            }}
+          >
+            <FormSubmitErrorPreview />
+          </PatternSection>
+        </PatternAccordion>
+      </div>
     </div>
   );
 }
