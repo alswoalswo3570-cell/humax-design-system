@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Search, Home, User, Settings, X, ExternalLink,
   Eye, EyeOff, ChevronLeft, Bell, AlertCircle,
@@ -623,7 +623,7 @@ function Input({
 
 function InputWithAdornment({
   prefix, prefixText, suffix, className, ...props
-}: React.InputHTMLAttributes<HTMLInputElement> & {
+}: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'suffix'> & {
   prefix?: React.ReactNode;
   prefixText?: string;
   suffix?: React.ReactNode;

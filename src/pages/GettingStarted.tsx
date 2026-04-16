@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function GettingStarted() {
   const copyToClipboard = (text: string) => navigator.clipboard.writeText(text);
 
