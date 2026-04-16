@@ -110,11 +110,11 @@ export default function Components() {
                       </p>
                     </div>
                     {/* Divider */}
-                    <div style={{ height: 1, backgroundColor: "var(--humax-color-border-subtle)" }} />
+                    <div style={{ height: 1, backgroundColor: "var(--color-border-subtle)" }} />
                     {/* Action row */}
                     <div className="flex bg-white dark:bg-gray-800" style={{ height: 44 }}>
-                      <div className="flex-1 flex items-center justify-center" style={{ fontSize: 13, fontWeight: 700, color: "var(--humax-color-text-tertiary)" }}>Cancel</div>
-                      <div style={{ width: 1, backgroundColor: "var(--humax-color-border-subtle)" }} />
+                      <div className="flex-1 flex items-center justify-center" style={{ fontSize: 13, fontWeight: 700, color: "var(--color-text-tertiary)" }}>Cancel</div>
+                      <div style={{ width: 1, backgroundColor: "var(--color-border-subtle)" }} />
                       <div className="flex-1 flex items-center justify-center" style={{ fontSize: 13, fontWeight: 700, color: "var(--color-text-primary)" }}>OK</div>
                     </div>
                   </div>
@@ -1174,7 +1174,7 @@ function MoniDialog({
       </div>
 
       {/* Horizontal divider */}
-      <div style={{ height: 1, backgroundColor: "var(--humax-color-border-subtle)" }} />
+      <div style={{ height: 1, backgroundColor: "var(--color-border-subtle)" }} />
 
       {/* Action row — 56px */}
       {cfg.cancelLabel ? (
@@ -1184,21 +1184,21 @@ function MoniDialog({
             type="button"
             onClick={onClose}
             className="flex-1 flex items-center justify-center transition-colors"
-            style={{ fontSize: 16, fontWeight: 700, color: "var(--humax-color-text-tertiary)", borderBottomLeftRadius: 8 }}
-            onMouseEnter={e => (e.currentTarget.style.backgroundColor = "var(--humax-color-background-surfaceHover)")}
+            style={{ fontSize: 16, fontWeight: 700, color: "var(--color-text-tertiary)", borderBottomLeftRadius: 8 }}
+            onMouseEnter={e => (e.currentTarget.style.backgroundColor = "var(--color-background-surfaceHover)")}
             onMouseLeave={e => (e.currentTarget.style.backgroundColor = "transparent")}
           >
             {cfg.cancelLabel}
           </button>
           {/* Vertical divider */}
-          <div style={{ width: 1, backgroundColor: "var(--humax-color-border-subtle)", alignSelf: "stretch" }} />
+          <div style={{ width: 1, backgroundColor: "var(--color-border-subtle)", alignSelf: "stretch" }} />
           {/* Confirm */}
           <button
             type="button"
             onClick={onClose}
             className="flex-1 flex items-center justify-center transition-colors"
             style={{ fontSize: 16, fontWeight: 700, color: "var(--color-text-primary)", borderBottomRightRadius: 8 }}
-            onMouseEnter={e => (e.currentTarget.style.backgroundColor = "var(--humax-color-background-surfaceHover)")}
+            onMouseEnter={e => (e.currentTarget.style.backgroundColor = "var(--color-background-surfaceHover)")}
             onMouseLeave={e => (e.currentTarget.style.backgroundColor = "transparent")}
           >
             {cfg.confirmLabel}
@@ -1210,7 +1210,7 @@ function MoniDialog({
           onClick={onClose}
           className="w-full flex items-center justify-center transition-colors"
           style={{ height: 56, fontSize: 16, fontWeight: 700, color: "var(--color-text-primary)", backgroundColor: "var(--color-background-surface)", borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }}
-          onMouseEnter={e => (e.currentTarget.style.backgroundColor = "var(--humax-color-background-surfaceHover)")}
+          onMouseEnter={e => (e.currentTarget.style.backgroundColor = "var(--color-background-surfaceHover)")}
           onMouseLeave={e => (e.currentTarget.style.backgroundColor = "var(--color-background-surface)")}
         >
           {cfg.confirmLabel}
@@ -1248,13 +1248,13 @@ function DialogDemo() {
                     {DIALOG_CONFIG[type].body}
                   </p>
                 </div>
-                <div style={{ height: 1, backgroundColor: "var(--humax-color-border-subtle)" }} />
+                <div style={{ height: 1, backgroundColor: "var(--color-border-subtle)" }} />
                 {DIALOG_CONFIG[type].cancelLabel ? (
                   <div className="flex" style={{ height: 40, backgroundColor: "var(--color-background-surface)" }}>
-                    <div className="flex-1 flex items-center justify-center" style={{ fontSize: 12, fontWeight: 700, color: "var(--humax-color-text-tertiary)" }}>
+                    <div className="flex-1 flex items-center justify-center" style={{ fontSize: 12, fontWeight: 700, color: "var(--color-text-tertiary)" }}>
                       {DIALOG_CONFIG[type].cancelLabel}
                     </div>
-                    <div style={{ width: 1, backgroundColor: "var(--humax-color-border-subtle)" }} />
+                    <div style={{ width: 1, backgroundColor: "var(--color-border-subtle)" }} />
                     <div className="flex-1 flex items-center justify-center" style={{ fontSize: 12, fontWeight: 700, color: "var(--color-text-primary)" }}>
                       {DIALOG_CONFIG[type].confirmLabel}
                     </div>
@@ -1305,7 +1305,7 @@ function DialogDemo() {
           {/* No onClick on barrier — matches Flutter barrierDismissible: false */}
           <div
             className="absolute inset-0"
-            style={{ backgroundColor: "var(--humax-color-background-overlay)" }}
+            style={{ backgroundColor: "var(--color-background-overlay)" }}
           />
           <div className="relative animate-in zoom-in-95 duration-150">
             <MoniDialog cfg={DIALOG_CONFIG[activeType]} onClose={close} />
